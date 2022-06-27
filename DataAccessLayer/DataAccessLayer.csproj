@@ -50,6 +50,8 @@
     <Compile Include="ISampleEntityDetailsDAL.cs" />
     <Compile Include="Mapping\BaseItemFromDataReaderMapper.cs" />
     <Compile Include="Mapping\Interface\IMapper.cs" />
+    <Compile Include="Parameters\ParametersConfigurator.cs" />
+    <Compile Include="Parameters\ParametersContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleEntityDAL.cs" />
     <Compile Include="SampleEntityDetailsDAL.cs" />

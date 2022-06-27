@@ -4,7 +4,7 @@ using System;
 namespace Entities.SampleEntity
 {
     [LoadCommand("ID")]
-    [SaveCommand("xp_SetSampleEntityDetails")]
+    [SaveCommand("xp_SaveSampleEntityDetails")]
     public class SampleEntityDetails
     {
         #region Поля
@@ -71,7 +71,6 @@ namespace Entities.SampleEntity
         }
 
         [LoadParameter]
-        [SaveParameter]
         public DateTime CreatedDate
         {
             get { return _createdDate; }
@@ -83,7 +82,6 @@ namespace Entities.SampleEntity
         }
 
         [LoadParameter]
-        [SaveParameter]
         public DateTime LastModifiedDate
         {
             get { return _lastModifiedDate; }
@@ -95,7 +93,6 @@ namespace Entities.SampleEntity
         }
 
         [LoadParameter]
-        [SaveParameter]
         public int CreatedByUserID
         {
             get { return _createdByUserID; }

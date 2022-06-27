@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Entities.SampleEntity
 {
     [LoadCommand("ID")]
-    [SaveCommand("xp_SetSampleEntity")]
+    [SaveCommand("xp_SaveSampleEntity")]
     public class SampleEntity
     {
         #region Поля
@@ -23,7 +23,7 @@ namespace Entities.SampleEntity
 
         #region Свойства
 
-        [LoadParameter("ID")]
+        [LoadParameter]
         [SaveParameter]
         public int ID
         {
@@ -60,7 +60,6 @@ namespace Entities.SampleEntity
         }
 
         [LoadParameter]
-        [SaveParameter]
         public DateTime CreatedDate
         {
             get { return _createdDate; }
@@ -72,7 +71,6 @@ namespace Entities.SampleEntity
         }
 
         [LoadParameter]
-        [SaveParameter]
         public DateTime LastModifiedDate
         {
             get { return _lastModifiedDate; }
@@ -84,7 +82,6 @@ namespace Entities.SampleEntity
         }
 
         [LoadParameter]
-        [SaveParameter]
         public int CreatedByUserID
         {
             get { return _createdByUserID; }
@@ -115,6 +112,15 @@ namespace Entities.SampleEntity
                 if (_sampleEntityDetailsList != value)
                     _sampleEntityDetailsList = value;
             }
+        }
+
+        #endregion
+
+        #region Constructor
+
+        public SampleEntity()
+        {
+            _sampleEntityDetailsList = new List<SampleEntityDetails>();
         }
 
         #endregion

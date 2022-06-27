@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.DataReaders;
 using DataAccessLayer.Mapping.Interface;
+using DataAccessLayer.Parameters;
 using Entities.SampleEntity;
 using System.Collections.Generic;
 
@@ -36,7 +37,11 @@ namespace DataAccessLayer
                     var item = new SampleEntity();
                     _baseMapper.Map(drd, item);
 
-                    item.SampleEntityDetailsList = _sampleEntitiesDetailsDAL.GetSampleEntityDetails(item.ID);
+                    // Собираем параметры  для удобной передачи в методы
+                    var parameters = new ParametersContainer();
+                    parameters.Add<SampleEntity>(nameof(item.ID), item.ID);
+
+                    item.SampleEntityDetailsList = _sampleEntitiesDetailsDAL.GetSampleEntityDetails(parameters);
                     result.Add(item);
                 });
 
@@ -47,10 +52,17 @@ namespace DataAccessLayer
         {
             _dataBaseDAL.DoInTransaction(conn =>
             {
-                _dataBaseDAL.SetBaseItem(sampleEntity, conn, null);
+                // Получаем ID в демонстрационных целях
+                var sampleEntityID = _dataBaseDAL.SetBaseItem(sampleEntity, conn, null);
+                // Предлагаю вынести ID, CreatedDate, LastModifiedDate, CreatedByUserID, LastModifiedByUserID
+                // в базовый объект
 
                 _dataBaseDAL.SaveCollection(sampleEntity.SampleEntityDetailsList,
-                    sampleEntityDetail => _sampleEntitiesDetailsDAL.SetSampleEntityDetails(sampleEntityDetail, conn));
+                    sampleEntityDetail =>
+                    {
+                        sampleEntityDetail.SampleEntityID = sampleEntityID;
+                        _sampleEntitiesDetailsDAL.SetSampleEntityDetails(sampleEntityDetail, conn);
+                    });
             });
         }
     }

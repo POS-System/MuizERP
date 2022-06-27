@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.DataReaders;
 using DataAccessLayer.Mapping.Interface;
+using DataAccessLayer.Parameters;
 using Entities.SampleEntity;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -19,7 +20,7 @@ namespace DataAccessLayer
             _baseMapper = baseMapper;
         }
 
-        public IEnumerable<SampleEntityDetails> GetSampleEntityDetails(int sampleEntityID)
+        public IEnumerable<SampleEntityDetails> GetSampleEntityDetails(ParametersContainer parameters)
         {
             var result = new List<SampleEntityDetails>();
 
@@ -27,6 +28,8 @@ namespace DataAccessLayer
                 sqlCmd =>
                 {
                     sqlCmd.CommandText = "xp_GetSampleEntityDetails";
+                    ParametersConfigurator.ConfigureSqlCommand(sqlCmd, parameters);
+                    //sqlCmd.Parameters.AddWithValue("@p_sampleEntityID", sampleEntityID);
                 },
                 drd =>
                 {

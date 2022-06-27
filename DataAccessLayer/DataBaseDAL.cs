@@ -306,7 +306,7 @@ namespace DataAccessLayer
         /// <param name="item"></param>
         /// <param name="connection"></param>
         /// <param name="configureSetCommand"></param>
-        public void SetBaseItem(object item, SqlConnection connection, ConfigureSetCommand configureSetCommand)
+        public int SetBaseItem(object item, SqlConnection connection, ConfigureSetCommand configureSetCommand)
         {
             var sqlSetCmd = CreateSetStoredProcedure(item, connection);
 
@@ -314,6 +314,16 @@ namespace DataAccessLayer
                 configureSetCommand(sqlSetCmd);
 
             SetBaseItem(sqlSetCmd);
+
+            // ¬ демонстрационных цел€х
+            // ѕредлагаю не возвращать ID, а проставл€ть его в сохран€емом объекте
+            var itemId = 0;
+
+            var parameterId = sqlSetCmd.Parameters["@p_ID"];
+            if (parameterId.Direction == ParameterDirection.InputOutput)
+                itemId = (int)parameterId.Value;
+
+            return itemId;
         }
 
         /// <summary>
@@ -350,9 +360,9 @@ namespace DataAccessLayer
                 // получаем название параметра
                 var parameterName = parameter.Name;
 
-                // ≈сли не задано, используем название свойства
+                // ≈сли не задано, используем название свойства с префиксом @p_
                 if (string.IsNullOrEmpty(parameterName))
-                    parameterName = property.Name;
+                    parameterName = $"@p_{property.Name}";
 
                 // настраиваем параметр
                 var value = property.GetValue(item, null);
@@ -376,6 +386,9 @@ namespace DataAccessLayer
 
                 if (parameter.Size > 0) sqlParameter.Size = parameter.Size;
                 sqlParameter.Direction = parameter.Direction;
+
+                if (sqlParameter.ParameterName == "@p_ID")
+                    sqlParameter.Direction = ParameterDirection.InputOutput;
 
                 // добавл€ем параметр
                 sqlCommand.Parameters.Add(sqlParameter);
