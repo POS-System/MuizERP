@@ -45,6 +45,7 @@
     <Compile Include="Base\Attributes\LoadParameterAttribute.cs" />
     <Compile Include="Base\Attributes\SaveCommandAttribute.cs" />
     <Compile Include="Base\Attributes\SaveParameterAttribute.cs" />
+    <Compile Include="Base\BaseEntity.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\GeneratingStoredProcedureNotSupportedException.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\MappingException.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\SqlDataReaderExpectsOnlyOneRecordException.cs" />

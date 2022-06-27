@@ -1,49 +1,50 @@
 ﻿using DataAccessLayer.DataReaders;
 using DataAccessLayer.Mapping.Interface;
 using DataAccessLayer.Parameters;
+using Entities.Base;
 using Entities.SampleEntity;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data;
 using System.Data.SqlClient;
+using System.Transactions;
 
 namespace DataAccessLayer
 {
-    internal sealed class SampleEntityDetailsDAL : ISampleEntityDetailsDAL
-    {
-        private IMapper<SqlDataReaderWithSchema, object> _baseMapper;
-        private DataBaseDAL _dataBaseDAL;
+    internal sealed class SampleEntityDetailsDAL : IEntityDAL<SampleEntityDetails>
+    {        
+        private DataBaseDAL dataBaseDAL;
+        private IConvert<SqlDataReaderWithSchema, object> convertor;
 
-        public SampleEntityDetailsDAL(
-            DataBaseDAL dataBaseDAL,
-            IMapper<SqlDataReaderWithSchema, object> baseMapper)
+        public SampleEntityDetailsDAL(DataBaseDAL _dataBaseDAL, IConvert<SqlDataReaderWithSchema, object> _convertor)
         {
-            _dataBaseDAL = dataBaseDAL;
-            _baseMapper = baseMapper;
+            dataBaseDAL = _dataBaseDAL;
+            convertor = _convertor;
         }
 
-        public IEnumerable<SampleEntityDetails> GetSampleEntityDetails(ParametersContainer parameters)
+        public ObservableCollection<SampleEntityDetails> GetItems(IParametersContainer parameters)
         {
-            var result = new List<SampleEntityDetails>();
+            var result = new ObservableCollection<SampleEntityDetails>();
 
-            _dataBaseDAL.ReadCollectionWithSchema(
+            dataBaseDAL.ReadCollectionWithSchema(
                 sqlCmd =>
                 {
                     sqlCmd.CommandText = "xp_GetSampleEntityDetails";
-                    ParametersConfigurator.ConfigureSqlCommand(sqlCmd, parameters);
-                    //sqlCmd.Parameters.AddWithValue("@p_sampleEntityID", sampleEntityID);
+                    ParametersConfigurator.ConfigureSqlCommand(sqlCmd, parameters);                    
                 },
                 drd =>
                 {
                     var item = new SampleEntityDetails();
-                    _baseMapper.Map(drd, item);
+                    convertor.Convert(drd, item);
                     result.Add(item);
                 });
 
             return result;
         }
 
-        public void SetSampleEntityDetails(SampleEntityDetails sampleEntityDetails, SqlConnection conn)
+        public void SaveItem(SampleEntityDetails _sampleEntityDetails, SqlConnection _conn)
         {
-            _dataBaseDAL.SetBaseItem(sampleEntityDetails, conn, null);
+            dataBaseDAL.SetBaseItem(_sampleEntityDetails, _conn, null);
         }
     }
 }

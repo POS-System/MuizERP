@@ -1,33 +1,35 @@
 ﻿using DataAccessLayer.DataReaders;
+using DataAccessLayer.Delegates;
 using DataAccessLayer.Mapping.Interface;
 using DataAccessLayer.Parameters;
+using Entities.Base;
 using Entities.SampleEntity;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Transactions;
 
 namespace DataAccessLayer
 {
-    internal class SampleEntityDAL : ISampleEntityDAL
+    internal class SampleEntityDAL : IEntityDAL<SampleEntity>
     {
-        private IMapper<SqlDataReaderWithSchema, object> _baseMapper;
-        
-        private DataBaseDAL _dataBaseDAL;
-        private ISampleEntityDetailsDAL _sampleEntitiesDetailsDAL;
+        private DataBaseDAL dataBaseDAL;
+        private IEntityDAL<SampleEntityDetails> sampleEntitiesDetailsDAL;
+        private IConvert<SqlDataReaderWithSchema, object> convertor;
 
-        public SampleEntityDAL(
-            DataBaseDAL dataBaseDAL,
-            ISampleEntityDetailsDAL sampleEntityDetailsDAL,
-            IMapper<SqlDataReaderWithSchema, object> baseMapper)
+        public SampleEntityDAL(DataBaseDAL _dataBaseDAL, IConvert<SqlDataReaderWithSchema, object> _convertor, IEntityDAL<SampleEntityDetails> _sampleEntityDetailsDAL = null)
         {
-            _dataBaseDAL = dataBaseDAL;
-            _sampleEntitiesDetailsDAL = sampleEntityDetailsDAL;
-            _baseMapper = baseMapper;
+            dataBaseDAL = _dataBaseDAL;
+            sampleEntitiesDetailsDAL = _sampleEntityDetailsDAL;
+            convertor = _convertor;
         }
 
-        public IEnumerable<SampleEntity> GetSampleEntities()
+        public ObservableCollection<SampleEntity> GetItems(IParametersContainer parametersContainer)
         {
-            var result = new List<SampleEntity>();
+            var result = new ObservableCollection<SampleEntity>();
 
-            _dataBaseDAL.ReadCollectionWithSchema(
+            dataBaseDAL.ReadCollectionWithSchema(
                 sqlCmd =>
                 {
                     sqlCmd.CommandText = "xp_GetSampleEntities";
@@ -35,35 +37,31 @@ namespace DataAccessLayer
                 drd =>
                 {
                     var item = new SampleEntity();
-                    _baseMapper.Map(drd, item);
+                    convertor.Convert(drd, item);
 
                     // Собираем параметры  для удобной передачи в методы
                     var parameters = new ParametersContainer();
                     parameters.Add<SampleEntity>(nameof(item.ID), item.ID);
 
-                    item.SampleEntityDetailsList = _sampleEntitiesDetailsDAL.GetSampleEntityDetails(parameters);
+                    item.SampleEntityDetailsList = sampleEntitiesDetailsDAL.GetItems(parameters);
                     result.Add(item);
                 });
 
             return result;
         }
 
-        public void SetSampleEntity(SampleEntity sampleEntity)
-        {
-            _dataBaseDAL.DoInTransaction(conn =>
+        public void SaveItem(SampleEntity _baseEntity, SqlConnection _conn)
+        {            
+            dataBaseDAL.DoInTransaction(conn =>
             {
-                // Получаем ID в демонстрационных целях
-                var sampleEntityID = _dataBaseDAL.SetBaseItem(sampleEntity, conn, null);
-                // Предлагаю вынести ID, CreatedDate, LastModifiedDate, CreatedByUserID, LastModifiedByUserID
-                // в базовый объект
-
-                _dataBaseDAL.SaveCollection(sampleEntity.SampleEntityDetailsList,
+                dataBaseDAL.SetBaseItem(_baseEntity, conn, null);
+                dataBaseDAL.SaveCollection(_baseEntity.SampleEntityDetailsList,
                     sampleEntityDetail =>
                     {
-                        sampleEntityDetail.SampleEntityID = sampleEntityID;
-                        _sampleEntitiesDetailsDAL.SetSampleEntityDetails(sampleEntityDetail, conn);
+                        sampleEntityDetail.SampleEntityID = _baseEntity.ID;
+                        sampleEntitiesDetailsDAL.SaveItem(sampleEntityDetail, conn);
                     });
-            });
-        }
+            });            
+        }  
     }
 }

@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 
 namespace DataAccessLayer.Parameters
 {
-    public class ParametersContainer
+    public class ParametersContainer : IParametersContainer
     {
         private Dictionary<string, object> _parameters;
 

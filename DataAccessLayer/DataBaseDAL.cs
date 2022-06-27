@@ -411,10 +411,20 @@ namespace DataAccessLayer
                 itemSaveAction(item);
         }
 
+        public SqlConnection GetConnection()
+        {
+            //return new SqlConnection(@"packet size=4096; data source=SERV72\TAMUZ; persist security info=True; initial catalog=JDB_ERP_1; Integrated Security = SSPI");
+            if (_connectionInTransaction == null)
+            {
+                SqlConnection sqlConnection = new SqlConnection(@"packet size=4096; data source=SERV72\TAMUZ; persist security info=True; initial catalog=JDB_ERP_1; Integrated Security = SSPI;multipleactiveresultsets=True");
+                _connectionInTransaction = sqlConnection;
+            }
+            return _connectionInTransaction;
+        }
+
         private SqlConnection CreateSqlConnection()
         {
             return new SqlConnection(@"packet size=4096; data source=SERV72\TAMUZ; persist security info=True; initial catalog=JDB_ERP_1; Integrated Security = SSPI;");
-            
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Mapping;
+using Entities.SampleEntity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,27 +10,26 @@ namespace DataAccessLayer
 {
     public class ContainerDAL
     {
-        private SampleEntityDAL _sampleEntityDAL;
-        private SampleEntityDetailsDAL _sampleEntityDetailsDAL;
+        private SampleEntityDAL sampleEntityDAL;
+        private SampleEntityDetailsDAL sampleEntityDetailsDAL;
 
-        public ISampleEntityDAL SampleEntityDAL
+        public IEntityDAL<SampleEntity> SampleEntityDAL
         {
-            get { return _sampleEntityDAL; }
+            get { return sampleEntityDAL; }
         }
 
-        public ISampleEntityDetailsDAL SampleEntityDetailsDAL
+        public IEntityDAL<SampleEntityDetails> SampleEntityDetailsDAL
         {
-            get { return _sampleEntityDetailsDAL; }
+            get { return sampleEntityDetailsDAL; }
         }
 
         public ContainerDAL()
         {
             var dataBaseDAL = new DataBaseDAL();
-            var baseMapper = new BaseItemFromDataReaderMapper();
+            var convertor = new Convertor();
 
-            var sampleEntityDetailsDAL = _sampleEntityDetailsDAL = new SampleEntityDetailsDAL(dataBaseDAL, baseMapper);
-            _sampleEntityDAL = new SampleEntityDAL(dataBaseDAL, sampleEntityDetailsDAL, baseMapper);
-
+            sampleEntityDetailsDAL = new SampleEntityDetailsDAL(dataBaseDAL, convertor);
+            sampleEntityDAL = new SampleEntityDAL(dataBaseDAL, convertor, sampleEntityDetailsDAL);
         }
     }
 }
