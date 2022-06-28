@@ -25,7 +25,8 @@ namespace Entities.Base.Attributes
         public bool UseEmptyCommandName { get; private set; }
 
         #endregion
-
+        public SaveCommandAttribute() : this(string.Empty, false)
+        { }
 
         public SaveCommandAttribute(string name) : this(name, false)
         {}

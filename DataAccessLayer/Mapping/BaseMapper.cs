@@ -10,9 +10,9 @@ namespace DataAccessLayer.Mapping
     /// <summary>
     /// Класс маппер из объекта <see cref="SqlDataReaderWithSchema"/> в <see cref="object"/>
     /// </summary>
-    internal sealed class Convertor : IConvert<SqlDataReaderWithSchema, object>
+    internal sealed class BaseMapper : IMapper<SqlDataReaderWithSchema, object>
     {
-        public void Convert(SqlDataReaderWithSchema drd, object currentItem)
+        public void Map(SqlDataReaderWithSchema drd, object currentItem)
         {
             var currentItemType = currentItem.GetType();
 

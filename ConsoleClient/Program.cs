@@ -1,8 +1,11 @@
 ﻿using DataAccessLayer;
-using Entities.SampleEntity;
+using Entities.SampleEntityN;
+using Entities.SampleEntityDetailsN;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Entities.SampleEntity;
+using DataAccessLayer.Parameters;
 
 namespace ConsoleClient
 {
@@ -13,19 +16,23 @@ namespace ConsoleClient
             var containerDAL = new ContainerDAL();
             var sampleEntityDAL = containerDAL.SampleEntityDAL;
 
+            SampleEntityFilter sampleEntityFilter = new SampleEntityFilter();
+            sampleEntityFilter.ValueMax = 300;
+            sampleEntityFilter.ValueMin = 0;
+            sampleEntityFilter.UserName = "And";
+
+            ParametersContainer parametersContainer = new ParametersContainer();
+            parametersContainer.AddRange(sampleEntityFilter);
+
             // Тестовая загрузка
-             var sampleEntities = sampleEntityDAL.GetItems();
+            var sampleEntities = sampleEntityDAL.GetItems(parametersContainer);
 
             // Тестовая выгрузка
             var newSampleEntity = new SampleEntity
             {
-                Value = 400,
-                Description = "Четыреста",
-                LastModifiedDate = DateTime.Now,
-                CreatedDate = DateTime.Now,
-                LastModifiedByUserID = 1,
-                CreatedByUserID = 1,
-                AddUserID = 1,
+                Value = 500,
+                Description = "Пятсот",
+                ModifyUserID = 1,
 
                 SampleEntityDetailsList = new ObservableCollection<SampleEntityDetails>
                 {
@@ -33,31 +40,19 @@ namespace ConsoleClient
                     {
                         Value = 1,
                         Description = "Детали 1",
-                        LastModifiedDate = DateTime.Now,
-                        CreatedDate = DateTime.Now,
-                        LastModifiedByUserID = 1,
-                        CreatedByUserID = 1,
-                        AddUserID = 1,
+                        ModifyUserID = 1,
                     },
                     new SampleEntityDetails()
                     {
                         Value = 2,
-                        Description = "Детали 2",
-                        LastModifiedDate = DateTime.Now,
-                        CreatedDate = DateTime.Now,
-                        LastModifiedByUserID = 1,
-                        CreatedByUserID = 1,
-                        AddUserID = 1,
+                        Description = "Детали 2",                        
+                        ModifyUserID = 1,
                     },
                     new SampleEntityDetails()
                     {
                         Value = 3,
                         Description = "Детали 3",
-                        LastModifiedDate = DateTime.Now,
-                        CreatedDate = DateTime.Now,
-                        LastModifiedByUserID = 1,
-                        CreatedByUserID = 1,
-                        AddUserID = 1,
+                        ModifyUserID = 1,
                     }}
             };
             

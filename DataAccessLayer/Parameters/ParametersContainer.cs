@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Entities.Base;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace DataAccessLayer.Parameters
@@ -23,6 +24,19 @@ namespace DataAccessLayer.Parameters
             var name = $"{typeof(T).Name}{fieldName}";
             Add(name, value);
 
+        }
+
+        public void AddRange(IFilter filter)
+        {
+            _parameters.Clear();
+            var type = filter.GetType();
+            var props = type.GetProperties();
+            foreach (var property in props)
+            {  
+                var parameterName = property.Name;
+                var value = property.GetValue(filter, null);
+                Add(parameterName, value);
+            }            
         }
 
         public void Remove(string name)

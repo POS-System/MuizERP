@@ -2,9 +2,10 @@
 using Entities.Base.Attributes;
 using System;
 
-namespace Entities.SampleEntity
+namespace Entities.SampleEntityDetailsN
 {   
-    [SaveCommand("xp_SaveSampleEntityDetails")]
+    [SaveCommand]
+    [LoadCommand]
     public class SampleEntityDetails : BaseEntity
     {
         #region Поля        

@@ -10,6 +10,7 @@ using Entities.Exceptions.InnerApplicationExceptions;
 using Entities.Utils;
 using IsolationLevel = System.Transactions.IsolationLevel;
 using Entities.Exceptions.LogicExceptions;
+using Entities.Base;
 
 namespace DataAccessLayer
 {
@@ -85,12 +86,27 @@ namespace DataAccessLayer
         /// <param name="init">Делегат, инициализирующий sql команду.</param>
         /// <param name="read">Делегат, выполняющий чтение данных из датаридера в объект. И добавляющий объект в коллекцию.</param>
         /// <param name="source">Источник подключения.</param>
-        public void ReadCollectionWithSchema(InitSqlCommand init, ReadDataReaderWithSchema read)
+        public void ReadCollectionWithSchema<T>(InitSqlCommand init, ReadDataReaderWithSchema read)
         {
             DoInConnectionSession(sqlConn =>
             {
                 var sqlCmd = sqlConn.CreateCommand();
                 sqlCmd.CommandType = CommandType.StoredProcedure;
+
+                var type = typeof(T);
+                var loadCommand = type.GetCustomAttribute<LoadCommandAttribute>();
+
+                if (loadCommand == null)
+                    throw new GeneratingStoredProcedureNotSupportedException(string.Format("Объект '{0}' не поддерживает генерацию команды загрузка." +
+                                            "Отсутствует [LoadCommandAttribute] аттрибут.", type));
+                /*if (string.IsNullOrEmpty(saveCommand.Name) && !saveCommand.UseEmptyCommandName)
+                    throw new GeneratingStoredProcedureNotSupportedException(string.Format("Объект '{0}' не поддерживает генерацию команды сохранения." +
+                                            "Отсутствует параметр 'Name' аттрибута [SaveCommandAttribute].", type));*/
+
+                sqlCmd.CommandText = loadCommand.Name;
+                if (string.IsNullOrEmpty(sqlCmd.CommandText) && !loadCommand.UseEmptyCommandName)
+                    sqlCmd.CommandText = $"xp_Get{type.Name}";
+
                 init(sqlCmd);
 
                 using (var drd = sqlCmd.ExecuteReader())
@@ -110,9 +126,9 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="commandName">Название хранимой процедуры для выолнения.</param>
         /// <param name="read">Делегат, выполняющий чтение данных из датаридера в объект. И добавляющий объект в коллекцию.</param>
-        public void ReadCollectionWithSchema(string commandName, ReadDataReaderWithSchema read)
+        public void ReadCollectionWithSchema<T>(string commandName, ReadDataReaderWithSchema read)
         {
-            ReadCollectionWithSchema(sqlCmd => { sqlCmd.CommandText = commandName; }, read);
+            ReadCollectionWithSchema<T>(sqlCmd => { sqlCmd.CommandText = commandName; }, read);
         }
 
         /// <summary>
@@ -306,24 +322,18 @@ namespace DataAccessLayer
         /// <param name="item"></param>
         /// <param name="connection"></param>
         /// <param name="configureSetCommand"></param>
-        public int SetBaseItem(object item, SqlConnection connection, ConfigureSetCommand configureSetCommand)
+        public void SetBaseItem(BaseEntity item, SqlConnection connection, ConfigureSetCommand configureSetCommand)
         {
             var sqlSetCmd = CreateSetStoredProcedure(item, connection);
 
             if (configureSetCommand != null)
                 configureSetCommand(sqlSetCmd);
 
-            SetBaseItem(sqlSetCmd);
-
-            // В демонстрационных целях
-            // Предлагаю не возвращать ID, а проставлять его в сохраняемом объекте
-            var itemId = 0;
+            SetBaseItem(sqlSetCmd);          
 
             var parameterId = sqlSetCmd.Parameters["@p_ID"];
-            if (parameterId.Direction == ParameterDirection.InputOutput)
-                itemId = (int)parameterId.Value;
-
-            return itemId;
+            if (parameterId.Direction == ParameterDirection.InputOutput)            
+                item.ID = (int)parameterId.Value;                    
         }
 
         /// <summary>
@@ -343,11 +353,16 @@ namespace DataAccessLayer
             if (saveCommand == null)
                 throw new GeneratingStoredProcedureNotSupportedException(string.Format("Объект '{0}' не поддерживает генерацию команды сохранения." +
                                         "Отсутствует [SaveCommandAttribute] аттрибут.", type));
-            if (string.IsNullOrEmpty(saveCommand.Name) && !saveCommand.UseEmptyCommandName)
+            /*if (string.IsNullOrEmpty(saveCommand.Name) && !saveCommand.UseEmptyCommandName)
                 throw new GeneratingStoredProcedureNotSupportedException(string.Format("Объект '{0}' не поддерживает генерацию команды сохранения." +
-                                        "Отсутствует параметр 'Name' аттрибута [SaveCommandAttribute].", type));
+                                        "Отсутствует параметр 'Name' аттрибута [SaveCommandAttribute].", type));*/
+
+            
 
             sqlCommand.CommandText = saveCommand.Name;
+            if (string.IsNullOrEmpty(sqlCommand.CommandText) && !saveCommand.UseEmptyCommandName)
+                sqlCommand.CommandText = $"xp_Save{type.Name}";
+
             sqlCommand.CommandTimeout = saveCommand.Timeout;
 
             var props = type.GetProperties();

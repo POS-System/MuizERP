@@ -10,27 +10,42 @@ namespace Entities.Base
 {
     public class BaseEntity : INotifyPropertyChanged
     {
-        private Int32 iD;
-        private Int32 addUserID;        
+        private Int32 _ID;
+        private Int32 _modifyUserID;        
         
-        private DateTime createdDate;
-        private DateTime lastModifiedDate;
-        private Int32 createdByUserID;
-        private Int32 lastModifiedByUserID;       
+        private DateTime _createdDate;
+        private DateTime _lastModifiedDate;
+        private Int32 _createdByUserID;
+        private Int32 _lastModifiedByUserID;
 
         [LoadParameter]
         [SaveParameter]
-        public Int32 ID
+        public int ID
         {
             get
             {
-                return iD;
+                return _ID;
             }
 
             set
             {
-                iD = value;
+                _ID = value;
                 OnPropertyChanged("ID");
+            }
+        }
+        
+        [SaveParameter]
+        public int ModifyUserID
+        {
+            get
+            {
+                return _modifyUserID;
+            }
+
+            set
+            {
+                _modifyUserID = value;
+                OnPropertyChanged("ModifyUserID");
             }
         }
 
@@ -39,73 +54,58 @@ namespace Entities.Base
         {
             get
             {
-                return createdDate;
+                return _createdDate;
             }
 
             set
             {
-                createdDate = value;
+                _createdDate = value;
                 OnPropertyChanged("CreatedDate");
             }
         }
 
-        [LoadParameter]        
+        [LoadParameter]       
         public DateTime LastModifiedDate
         {
             get
             {
-                return lastModifiedDate;
+                return _lastModifiedDate;
             }
 
             set
             {
-                lastModifiedDate = value;
+                _lastModifiedDate = value;
                 OnPropertyChanged("LastModifiedDate");
             }
         }
 
-        [LoadParameter]        
-        public Int32 CreatedByUserID
+        [LoadParameter]
+        public int CreatedByUserID
         {
             get
             {
-                return createdByUserID;
+                return _createdByUserID;
             }
 
             set
             {
-                createdByUserID = value;
+                _createdByUserID = value;
                 OnPropertyChanged("CreatedByUserID");
             }
         }
 
-        [LoadParameter]        
-        public Int32 LastModifiedByUserID
+        [LoadParameter]
+        public int LastModifiedByUserID
         {
             get
             {
-                return lastModifiedByUserID;
+                return _lastModifiedByUserID;
             }
 
             set
             {
-                lastModifiedByUserID = value;
+                _lastModifiedByUserID = value;
                 OnPropertyChanged("LastModifiedByUserID");
-            }
-        }
-
-        [SaveParameter]
-        public int AddUserID
-        {
-            get
-            {
-                return addUserID;
-            }
-
-            set
-            {
-                addUserID = value;
-                OnPropertyChanged("AddUserID");
             }
         }
 

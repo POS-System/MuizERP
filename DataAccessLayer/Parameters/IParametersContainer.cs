@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,8 @@ namespace DataAccessLayer.Parameters
         void Add<T>(string fieldName, object value);
 
         void Remove(string name);
+
+        void AddRange(IFilter filter);
 
         Dictionary<string, object> GetParameters();        
     }

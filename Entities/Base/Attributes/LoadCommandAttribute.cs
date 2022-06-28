@@ -6,32 +6,35 @@ namespace Entities.Base.Attributes
     [AttributeUsage(AttributeTargets.Class)]
     public class LoadCommandAttribute : Attribute
     {
-
-
-        #region Свойства
+        #region Свойства  
+        /// <summary>
+        /// Название хранимой процедуры для сохранения объекта
+        /// </summary>
+        public string Name { get; private set; }        
 
         /// <summary>
-        /// Название ключевого поля в SqlDataReader
+        /// Свойство для отключения проверки на пустое название хранимой процедуры
         /// </summary>
-        public string IdFieldName { get; private set; }
-
-        /// <summary>
-        /// Название поля временной версии объекта в SqlDataReader, дополняещего ключ 
-        /// </summary>
-        public string VersionDateFieldName { get; private set; }
+        public bool UseEmptyCommandName { get; private set; }
 
         #endregion
+        public LoadCommandAttribute() : this(string.Empty, false)
+        {
+        }
+
+        public LoadCommandAttribute(string name) : this(name, false)
+        {
+        }
 
         /// <summary>
         /// Класс параметров для чтения данных из SqlDataReader
         /// </summary>
         /// <param name="idFieldName">Название ключевого поля в SqlDataReader</param>
-        /// <param name="versionDateFieldName">Название поля временной версии объекта в SqlDataReader, дополняещего ключ (По умолчанию "begin_date")</param>
-        public LoadCommandAttribute(string idFieldName, string versionDateFieldName = "begin_date")
+        /// <param name="versionDateFieldName">Название поля временной версии объекта в SqlDataReader, дополняещего ключ (По умолчанию "begin_date")</param>       
+        public LoadCommandAttribute(string name, bool useEmptyCommandName)
         {
-            IdFieldName = idFieldName;
-            VersionDateFieldName = versionDateFieldName;
+            Name = name;
+            UseEmptyCommandName = useEmptyCommandName;
         }
-
     }
 }

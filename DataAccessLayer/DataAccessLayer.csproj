@@ -47,8 +47,8 @@
     <Compile Include="DataReaders\DataReaderWithSchema.cs" />
     <Compile Include="Delegates\Delegates.cs" />
     <Compile Include="IEntityDAL.cs" />
-    <Compile Include="Mapping\Convertor.cs" />
-    <Compile Include="Mapping\Interface\IConvert.cs" />
+    <Compile Include="Mapping\BaseMapper.cs" />
+    <Compile Include="Mapping\Interface\IMapper.cs" />
     <Compile Include="Parameters\IParametersContainer.cs" />
     <Compile Include="Parameters\ParametersConfigurator.cs" />
     <Compile Include="Parameters\ParametersContainer.cs" />
