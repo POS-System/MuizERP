@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="MuizClient.Controls.ToolBarControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MuizClient.Controls"
+             mc:Ignorable="d" 
+             Name="control"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <ToolBar Height="32">
+            <!--Template="{StaticResource btTemplate}"-->
+            <!--<Button Content="Добавить" Click="Add_Button_Click" />-->
+            <!--<Button Content="Изменить" Click="Edit_Button_Click" />
+            <Button Content="Удалить" Click="Remove_Button_Click" />-->
+            <local:ToolBarButtonControl 
+                Text="Добавить" 
+                ButtonClick="Add_Button_Click"
+                ImgAlign="Right"
+                ImgSource="pack://application:,,,/Assets/Icons/view-grid-plus.png"
+            />
+            <local:ToolBarButtonControl 
+                Text="Изменить" 
+                ButtonClick="Edit_Button_Click"
+                IsEnabledRule="{Binding ElementName=control, Path=EditButtonEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                ImgAlign="Left"
+                ImgSource="pack://application:,,,/Assets/Icons/view-dashboard-edit.png"
+            />
+            <local:ToolBarButtonControl 
+                Text="Удалить" 
+                ButtonClick="Remove_Button_Click" 
+                IsEnabledRule="{Binding ElementName=control, Path=RemoveButtonEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                ImgSource="pack://application:,,,/Assets/Icons/view-grid-plus.png"
+            />
+        </ToolBar>
+    </Grid>
+</UserControl>
