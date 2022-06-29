@@ -29,8 +29,6 @@ namespace Entities.Base.Attributes
         /// <summary>
         /// Класс параметров для чтения данных из SqlDataReader
         /// </summary>
-        /// <param name="idFieldName">Название ключевого поля в SqlDataReader</param>
-        /// <param name="versionDateFieldName">Название поля временной версии объекта в SqlDataReader, дополняещего ключ (По умолчанию "begin_date")</param>       
         public LoadCommandAttribute(string name, bool useEmptyCommandName)
         {
             Name = name;

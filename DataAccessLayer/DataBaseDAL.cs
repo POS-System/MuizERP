@@ -22,8 +22,11 @@ namespace DataAccessLayer
         [ThreadStatic]
         private static SqlConnection _connectionInTransaction;
 
-        public DataBaseDAL()
+        private readonly string _connectionString;
+
+        public DataBaseDAL(string connectionString)
         {
+            _connectionString = connectionString;
         }
 
         /// <summary>
@@ -85,7 +88,6 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="init">Делегат, инициализирующий sql команду.</param>
         /// <param name="read">Делегат, выполняющий чтение данных из датаридера в объект. И добавляющий объект в коллекцию.</param>
-        /// <param name="source">Источник подключения.</param>
         public void ReadCollectionWithSchema<T>(InitSqlCommand init, ReadDataReaderWithSchema read)
         {
             DoInConnectionSession(sqlConn =>
@@ -95,14 +97,10 @@ namespace DataAccessLayer
 
                 var type = typeof(T);
                 var loadCommand = type.GetCustomAttribute<LoadCommandAttribute>();
-
                 if (loadCommand == null)
                     throw new GeneratingStoredProcedureNotSupportedException(string.Format("Объект '{0}' не поддерживает генерацию команды загрузка." +
                                             "Отсутствует [LoadCommandAttribute] аттрибут.", type));
-                /*if (string.IsNullOrEmpty(saveCommand.Name) && !saveCommand.UseEmptyCommandName)
-                    throw new GeneratingStoredProcedureNotSupportedException(string.Format("Объект '{0}' не поддерживает генерацию команды сохранения." +
-                                            "Отсутствует параметр 'Name' аттрибута [SaveCommandAttribute].", type));*/
-
+          
                 sqlCmd.CommandText = loadCommand.Name;
                 if (string.IsNullOrEmpty(sqlCmd.CommandText) && !loadCommand.UseEmptyCommandName)
                     sqlCmd.CommandText = $"xp_Get{type.Name}";
@@ -353,11 +351,6 @@ namespace DataAccessLayer
             if (saveCommand == null)
                 throw new GeneratingStoredProcedureNotSupportedException(string.Format("Объект '{0}' не поддерживает генерацию команды сохранения." +
                                         "Отсутствует [SaveCommandAttribute] аттрибут.", type));
-            /*if (string.IsNullOrEmpty(saveCommand.Name) && !saveCommand.UseEmptyCommandName)
-                throw new GeneratingStoredProcedureNotSupportedException(string.Format("Объект '{0}' не поддерживает генерацию команды сохранения." +
-                                        "Отсутствует параметр 'Name' аттрибута [SaveCommandAttribute].", type));*/
-
-            
 
             sqlCommand.CommandText = saveCommand.Name;
             if (string.IsNullOrEmpty(sqlCommand.CommandText) && !saveCommand.UseEmptyCommandName)
@@ -439,7 +432,9 @@ namespace DataAccessLayer
 
         private SqlConnection CreateSqlConnection()
         {
-            return new SqlConnection(@"packet size=4096; data source=SERV72\TAMUZ; persist security info=True; initial catalog=JDB_ERP_1; Integrated Security = SSPI;");
+            //return new SqlConnection(@"packet size=4096; data source=SERV72\TAMUZ; persist security info=True; initial catalog=JDB_ERP_1; Integrated Security = SSPI;");
+            return new SqlConnection(_connectionString);
         }
+
     }
 }

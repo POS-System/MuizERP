@@ -1,16 +1,13 @@
 ﻿using Entities.Base.Attributes;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entities.Base
 {
     public class BaseEntity : INotifyPropertyChanged
     {
         private Int32 _ID;
+        private Int32 _companyID;
         private Int32 _modifyUserID;        
         
         private DateTime _createdDate;
@@ -31,6 +28,22 @@ namespace Entities.Base
             {
                 _ID = value;
                 OnPropertyChanged("ID");
+            }
+        }
+
+        [LoadParameter]
+        [SaveParameter]
+        public int CompanyID
+        {
+            get
+            {
+                return _companyID;
+            }
+
+            set
+            {
+                _companyID = value;
+                OnPropertyChanged("CompanyID");
             }
         }
         

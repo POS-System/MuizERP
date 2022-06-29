@@ -1,36 +1,39 @@
 ﻿using DataAccessLayer.Mapping;
-using Entities.SampleEntityN;
+using Entities.SampleEntity;
 using Entities.SampleEntityDetailsN;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Entities.User;
 
 namespace DataAccessLayer
 {
     public class ContainerDAL
     {
-        private SampleEntityDAL sampleEntityDAL;
-        private SampleEntityDetailsDAL sampleEntityDetailsDAL;
+        private SampleEntityDAL _sampleEntityDAL;
+        private SampleEntityDetailsDAL _sampleEntityDetailsDAL;
+        private UserDAL _userDAL;
 
         public IEntityDAL<SampleEntity> SampleEntityDAL
         {
-            get { return sampleEntityDAL; }
+            get { return _sampleEntityDAL; }
         }
 
         public IEntityDAL<SampleEntityDetails> SampleEntityDetailsDAL
         {
-            get { return sampleEntityDetailsDAL; }
+            get { return _sampleEntityDetailsDAL; }
         }
 
-        public ContainerDAL()
+        public IEntityDAL<User> UserDAL
         {
-            DataBaseDAL dataBaseDAL = new DataBaseDAL();
-            BaseMapper mapper = new BaseMapper();
+            get { return _userDAL; }
+        }
 
-            sampleEntityDetailsDAL = new SampleEntityDetailsDAL(dataBaseDAL, mapper);
-            sampleEntityDAL = new SampleEntityDAL(dataBaseDAL, mapper, sampleEntityDetailsDAL);
+        public ContainerDAL(string connectionString)
+        {
+            DataBaseDAL dataBaseDAL = new DataBaseDAL(connectionString);
+            BaseMapper baseMapper = new BaseMapper();
+
+            _sampleEntityDetailsDAL = new SampleEntityDetailsDAL(dataBaseDAL, baseMapper);
+            _sampleEntityDAL = new SampleEntityDAL(dataBaseDAL, baseMapper, _sampleEntityDetailsDAL);
+            _userDAL = new UserDAL(dataBaseDAL, baseMapper);
         }
     }
 }

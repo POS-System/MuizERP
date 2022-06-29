@@ -1,14 +1,9 @@
 ﻿using DataAccessLayer.DataReaders;
 using DataAccessLayer.Mapping.Interface;
 using DataAccessLayer.Parameters;
-using Entities.Base;
-using Entities.SampleEntityN;
 using Entities.SampleEntityDetailsN;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Transactions;
 
 namespace DataAccessLayer
 {

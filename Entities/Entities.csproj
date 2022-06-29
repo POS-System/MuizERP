@@ -57,6 +57,7 @@
     <Compile Include="SampleEntity\SampleEntity.cs" />
     <Compile Include="SampleEntityDetails\SampleEntityDetails.cs" />
     <Compile Include="SampleEntity\SampleEntityFilter.cs" />
+    <Compile Include="User\User.cs" />
     <Compile Include="Utils\TypeExtendingMethods.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

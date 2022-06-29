@@ -1,14 +1,12 @@
 ﻿using Entities.Base;
 using Entities.Base.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Entities.SampleEntityDetailsN;
+using System.Collections.ObjectModel;
 
-namespace Entities.SampleEntityN
+namespace Entities.SampleEntity
 {
-    [SaveCommand]
     [LoadCommand]
+    [SaveCommand("xp_SaveSampleEntity")]
     public class SampleEntity : BaseEntity
     {
         #region Поля
@@ -45,7 +43,6 @@ namespace Entities.SampleEntityN
             }
         }        
 
-        [SaveParameter]
         public ObservableCollection<SampleEntityDetails> SampleEntityDetailsList
         {
             get { return _sampleEntityDetailsList; }
