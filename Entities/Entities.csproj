@@ -41,12 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\Attributes\HierarhyCommnadAttribute.cs" />
     <Compile Include="Base\Attributes\LoadCommandAttribute.cs" />
     <Compile Include="Base\Attributes\LoadParameterAttribute.cs" />
     <Compile Include="Base\Attributes\SaveCommandAttribute.cs" />
     <Compile Include="Base\Attributes\SaveParameterAttribute.cs" />
     <Compile Include="Base\BaseEntity.cs" />
+    <Compile Include="Base\Enums\EHierarhyDirection.cs" />
     <Compile Include="Base\IFilter.cs" />
+    <Compile Include="Company\Company.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\GeneratingStoredProcedureNotSupportedException.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\MappingException.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\SqlDataReaderExpectsOnlyOneRecordException.cs" />

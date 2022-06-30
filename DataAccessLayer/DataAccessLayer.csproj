@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompanyDAL.cs" />
     <Compile Include="ContainerDAL.cs" />
     <Compile Include="DataBaseDAL.cs" />
     <Compile Include="DataReaders\DataReaderWithSchema.cs" />

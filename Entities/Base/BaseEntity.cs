@@ -6,6 +6,8 @@ namespace Entities.Base
 {
     public class BaseEntity : INotifyPropertyChanged
     {
+        #region Fields
+
         private Int32 _ID;
         private Int32 _companyID;
         private Int32 _modifyUserID;        
@@ -15,15 +17,15 @@ namespace Entities.Base
         private Int32 _createdByUserID;
         private Int32 _lastModifiedByUserID;
 
+        #endregion
+
+        #region Properties
+
         [LoadParameter]
         [SaveParameter]
         public int ID
         {
-            get
-            {
-                return _ID;
-            }
-
+            get { return _ID; }
             set
             {
                 _ID = value;
@@ -31,15 +33,11 @@ namespace Entities.Base
             }
         }
 
-        [LoadParameter]
+        //[LoadParameter]
         [SaveParameter]
         public int CompanyID
         {
-            get
-            {
-                return _companyID;
-            }
-
+            get { return _companyID; }
             set
             {
                 _companyID = value;
@@ -50,11 +48,7 @@ namespace Entities.Base
         [SaveParameter]
         public int ModifyUserID
         {
-            get
-            {
-                return _modifyUserID;
-            }
-
+            get { return _modifyUserID; }
             set
             {
                 _modifyUserID = value;
@@ -65,11 +59,7 @@ namespace Entities.Base
         [LoadParameter]        
         public DateTime CreatedDate
         {
-            get
-            {
-                return _createdDate;
-            }
-
+            get { return _createdDate; }
             set
             {
                 _createdDate = value;
@@ -80,11 +70,7 @@ namespace Entities.Base
         [LoadParameter]       
         public DateTime LastModifiedDate
         {
-            get
-            {
-                return _lastModifiedDate;
-            }
-
+            get { return _lastModifiedDate; }
             set
             {
                 _lastModifiedDate = value;
@@ -95,11 +81,7 @@ namespace Entities.Base
         [LoadParameter]
         public int CreatedByUserID
         {
-            get
-            {
-                return _createdByUserID;
-            }
-
+            get { return _createdByUserID; }
             set
             {
                 _createdByUserID = value;
@@ -110,17 +92,15 @@ namespace Entities.Base
         [LoadParameter]
         public int LastModifiedByUserID
         {
-            get
-            {
-                return _lastModifiedByUserID;
-            }
-
+            get { return _lastModifiedByUserID; }
             set
             {
                 _lastModifiedByUserID = value;
                 OnPropertyChanged("LastModifiedByUserID");
             }
         }
+
+        #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
@@ -129,8 +109,6 @@ namespace Entities.Base
         }
 
         public BaseEntity()
-        {
-
-        }
+        { }
     }
 }

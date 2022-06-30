@@ -11,6 +11,7 @@ using Entities.Utils;
 using IsolationLevel = System.Transactions.IsolationLevel;
 using Entities.Exceptions.LogicExceptions;
 using Entities.Base;
+using MuizEnums;
 
 namespace DataAccessLayer
 {
@@ -98,12 +99,20 @@ namespace DataAccessLayer
                 var type = typeof(T);
                 var loadCommand = type.GetCustomAttribute<LoadCommandAttribute>();
                 if (loadCommand == null)
-                    throw new GeneratingStoredProcedureNotSupportedException(string.Format("Объект '{0}' не поддерживает генерацию команды загрузка." +
-                                            "Отсутствует [LoadCommandAttribute] аттрибут.", type));
+                    throw new GeneratingStoredProcedureNotSupportedException(
+                        string.Format("Объект '{0}' не поддерживает генерацию команды загрузка." +
+                            "Отсутствует [LoadCommandAttribute] аттрибут.", type));
           
                 sqlCmd.CommandText = loadCommand.Name;
                 if (string.IsNullOrEmpty(sqlCmd.CommandText) && !loadCommand.UseEmptyCommandName)
                     sqlCmd.CommandText = $"xp_Get{type.Name}";
+
+                var hierarchyCommand = type.GetCustomAttribute<HierarhyCommnadAttribute>();
+                if (hierarchyCommand != null)
+                {
+                    var directionUp = hierarchyCommand.Direction == HierarhyDirection.Up;
+                    sqlCmd.Parameters.AddWithValue("@p_directionUp", directionUp);
+                }
 
                 init(sqlCmd);
 

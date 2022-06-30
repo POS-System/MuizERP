@@ -1,5 +1,7 @@
 ﻿using DataAccessLayer;
 using DataAccessLayer.Parameters;
+using Entities.Company;
+using Entities.User;
 using System;
 using System.Configuration;
 
@@ -12,10 +14,40 @@ namespace ConsoleClient
             var connectionString = ConfigurationManager.ConnectionStrings["ConnectionERP"].ConnectionString;
             var containerDAL = new ContainerDAL(connectionString);
 
-            var userDAL = containerDAL.UserDAL;
+            var companyDAL = containerDAL.CompanyDAL;
 
             var parametersContainer = new ParametersContainer();
-            var users = userDAL.GetItems(parametersContainer);
+            parametersContainer.Add<Company>("ID", 3);
+
+            var companies = companyDAL.GetItems(parametersContainer);
+
+            var userDAL = containerDAL.UserDAL;
+
+            var newUser = new User
+            {
+                CompanyID = 2,
+                FirstName = "Test 1",
+                LastName = "Test 2",
+                SecondName = "Test 3",
+                BirthDay = new DateTime(2022, 06, 30),
+                Email = "new@email.ru",
+                GenderID = 0,
+                Login = "login",
+                Password = "password",
+                Phone = "+71236549854",
+                Active = true,
+                Color = "Color 1",
+                Number = 777,
+                RoleID = 1,
+                ThemeID = 1,
+                INN = "123456789878",
+                ModifyUserID = 1
+            };
+
+            userDAL.SaveItem(newUser);
+
+            //var parametersContainer = new ParametersContainer();
+            //var users = userDAL.GetItems(parametersContainer);
 
             //var sampleEntityDAL = containerDAL.SampleEntityDAL;
 
@@ -50,7 +82,7 @@ namespace ConsoleClient
             //            ModifyUserID = 1,
             //        }}
             //};
-            
+
             //sampleEntityDAL.SaveItem(newSampleEntity);
 
             Console.ReadKey();
