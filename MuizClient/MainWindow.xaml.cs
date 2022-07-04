@@ -77,7 +77,7 @@ namespace MuizClient
 
 
 
-            var userDAL = containerDAL.UserDAL;
+            var userDAL = containerDAL.UserRepository;
             grid.InitGridData(userDAL);
         }
 

@@ -10,9 +10,7 @@ namespace Entities.Base.Parameters
 
         void Remove(string name);
 
-        void Clear();
-
-        void Clear();
+        void Clear();        
 
         Dictionary<string, object> GetParameters();        
     }

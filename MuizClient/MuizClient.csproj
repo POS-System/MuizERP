@@ -154,18 +154,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Resource Include="Assets\Fonts\Roboto-Black.ttf" />
-    <Resource Include="Assets\Fonts\Roboto-BlackItalic.ttf" />
-    <Resource Include="Assets\Fonts\Roboto-Bold.ttf" />
-    <Resource Include="Assets\Fonts\Roboto-BoldItalic.ttf" />
-    <Resource Include="Assets\Fonts\Roboto-Italic.ttf" />
-    <Resource Include="Assets\Fonts\Roboto-Light.ttf" />
-    <Resource Include="Assets\Fonts\Roboto-LightItalic.ttf" />
-    <Resource Include="Assets\Fonts\Roboto-Medium.ttf" />
-    <Resource Include="Assets\Fonts\Roboto-MediumItalic.ttf" />
-    <Resource Include="Assets\Fonts\Roboto-Regular.ttf" />
-    <Resource Include="Assets\Fonts\Roboto-Thin.ttf" />
-    <Resource Include="Assets\Fonts\Roboto-ThinItalic.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -193,6 +181,8 @@
       <Name>Entities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Assets\Fonts\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,6 +1,8 @@
 ﻿using DataAccessLayer;
 using DataAccessLayer.Parameters;
+using DataAccessLayer.Repositories.Interfaces.Base;
 using Entities.Base;
+using Entities.Base.Parameters;
 using Entities.User;
 using MuizClient.Controls.Grid.GridFilter;
 using MuizClient.Models;
@@ -25,6 +27,12 @@ namespace MuizClient.Controls
         Type _itemType;
         CollectionViewSource _collectionVS;
         ObservableCollection<IBaseEntity> _collection;
+
+        private readonly ParametersContainer _parametersContainer = new ParametersContainer();
+        Action updateGridData;
+        
+        public delegate void DSaveGridData(BaseEntity baseEntity);
+        DSaveGridData saveGridData;
 
         public GridControl()
         {
@@ -72,6 +80,8 @@ namespace MuizClient.Controls
 
                 _collection.Add(yo);
 
+                saveGridData(yo);
+
                 //grid.ItemsSource.Add(yo);
             }
 
@@ -81,6 +91,19 @@ namespace MuizClient.Controls
             //phone.Company = "Company" + (phonesList.Count + 1).ToString();
             //phone.Price = phonesList.Count * 100;
             //phonesList.Add(phone);
+        }
+
+        public void InitGridData<T>(IGetItems<T> iGetItems, ISave<T> iSave) where T : BaseEntity
+        {
+            _itemType = typeof(T);
+
+            if (grid?.Columns?.Count < 1) GenerateColumns<T>();
+
+            updateGridData = () => SetGridData(iGetItems.GetItems(_parametersContainer));
+            
+            saveGridData = (item) => iSave.SaveItem(item as T); 
+
+            updateGridData();
         }
 
         private void Edit_Button_Click()
@@ -156,21 +179,8 @@ namespace MuizClient.Controls
         }
 
 
-        #region Data
-
-        private readonly ParametersContainer _parametersContainer = new ParametersContainer();
-        Action updateGridData;
-
-        public void InitGridData<T>(IEntityDAL<T> entityDAL)
-        {
-            _itemType = typeof(T);
-
-            if (grid?.Columns?.Count < 1) GenerateColumns<T>();
-
-            updateGridData = () => SetGridData(entityDAL.GetItems(_parametersContainer));
-            //saveGridData = () => SetGridData(entityDAL.GetItems(_parametersContainer));
-            updateGridData();
-        }
+        #region Data        
+        
 
         private void FilterGridData()
         {
