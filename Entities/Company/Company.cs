@@ -6,11 +6,12 @@ namespace Entities.Company
 {
     [LoadCommand]
     [HierarhyCommnad(HierarhyDirection.Up)]
-    public class Company : BaseEntity
+    [SaveCommand(IgnoreProperties = new[] { "CompanyID" })]
+    public class Company : BaseSortableEntity
     {
         #region Fields
 
-        private int _parentID;
+        private int? _parentID;
         private string _name;
         private string _inn;
 
@@ -18,8 +19,9 @@ namespace Entities.Company
 
         #region Properties
 
-        [LoadParameter]
-        public int ParentID
+        [LoadParameter(Nullable = true)]
+        [SaveParameter]
+        public int? ParentID
         {
             get { return _parentID; }
             set
@@ -34,7 +36,7 @@ namespace Entities.Company
         public string Name
         {
             get { return _name; }
-            set 
+            set
             {
                 _name = value;
                 OnPropertyChanged("ParentID");
@@ -43,7 +45,7 @@ namespace Entities.Company
         
         [LoadParameter]
         [SaveParameter]
-        public string Inn
+        public string INN
         {
             get { return _inn; }
             set

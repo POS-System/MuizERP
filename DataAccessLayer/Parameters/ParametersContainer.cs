@@ -1,6 +1,5 @@
 ﻿using Entities.Base;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 
 namespace DataAccessLayer.Parameters
 {
@@ -15,7 +14,9 @@ namespace DataAccessLayer.Parameters
 
         public void Add(string name, object value)
         {
-            if (!_parameters.ContainsKey(name))
+            if (_parameters.ContainsKey(name))
+                _parameters[name] = value;
+            else
                 _parameters.Add(name, value);
         }
 
@@ -32,11 +33,11 @@ namespace DataAccessLayer.Parameters
             var type = filter.GetType();
             var props = type.GetProperties();
             foreach (var property in props)
-            {  
+            {
                 var parameterName = property.Name;
                 var value = property.GetValue(filter, null);
                 Add(parameterName, value);
-            }            
+            }
         }
 
         public void Remove(string name)

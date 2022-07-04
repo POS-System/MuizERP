@@ -13,9 +13,9 @@ namespace DataAccessLayer
     {
         private DataBaseDAL _dataBaseDAL;
         private IEntityDAL<SampleEntityDetails> _sampleEntitiesDetailsDAL;
-        private IMapper<SqlDataReaderWithSchema, object> _mapper;
+        private IMapper<SqlDataReaderWithSchema, BaseEntity> _mapper;
 
-        public SampleEntityDAL(DataBaseDAL dataBaseDAL, IMapper<SqlDataReaderWithSchema, object> mapper, IEntityDAL<SampleEntityDetails> sampleEntitiesDetailsDAL = null)
+        public SampleEntityDAL(DataBaseDAL dataBaseDAL, IMapper<SqlDataReaderWithSchema, BaseEntity> mapper, IEntityDAL<SampleEntityDetails> sampleEntitiesDetailsDAL = null)
         {
             _dataBaseDAL = dataBaseDAL;
             _sampleEntitiesDetailsDAL = sampleEntitiesDetailsDAL;
@@ -63,7 +63,7 @@ namespace DataAccessLayer
 
             _dataBaseDAL.ReadCollectionWithSchema<SampleEntity>(
                 sqlCmd =>
-                {                    
+                {
                     ParametersConfigurator.ConfigureSqlCommand(sqlCmd, parametersContainer);
                 },
                 drd =>
@@ -85,7 +85,7 @@ namespace DataAccessLayer
         {
             _dataBaseDAL.DoInTransaction(conn =>
             {
-                _dataBaseDAL.SetBaseItem(baseEntity, conn, null);
+                _dataBaseDAL.SaveBaseItem(baseEntity, conn, null);
                 _dataBaseDAL.SaveCollection(baseEntity.SampleEntityDetailsList,
                     sampleEntityDetail =>
                     {

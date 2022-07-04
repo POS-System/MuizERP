@@ -1,6 +1,7 @@
 ﻿using DataAccessLayer.DataReaders;
 using DataAccessLayer.Mapping.Interface;
 using DataAccessLayer.Parameters;
+using Entities.Base;
 using Entities.SampleEntityDetailsN;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
@@ -10,9 +11,9 @@ namespace DataAccessLayer
     internal sealed class SampleEntityDetailsDAL : IEntityDAL<SampleEntityDetails>
     {        
         private DataBaseDAL _dataBaseDAL;
-        private IMapper<SqlDataReaderWithSchema, object> _mapper;
+        private IMapper<SqlDataReaderWithSchema, BaseEntity> _mapper;
 
-        public SampleEntityDetailsDAL(DataBaseDAL dataBaseDAL, IMapper<SqlDataReaderWithSchema, object> mapper)
+        public SampleEntityDetailsDAL(DataBaseDAL dataBaseDAL, IMapper<SqlDataReaderWithSchema, BaseEntity> mapper)
         {
             _dataBaseDAL = dataBaseDAL;
             _mapper = mapper;
@@ -27,10 +28,10 @@ namespace DataAccessLayer
                 {
                     ParametersConfigurator.ConfigureSqlCommand(sqlCommand, parametersContainer);
                 },
-                read =>
+                drd =>
                 {
                     var item = new SampleEntityDetails();
-                    _mapper.Map(read, item);
+                    _mapper.Map(drd, item);
                     result.Add(item);
                 });
 
@@ -39,7 +40,7 @@ namespace DataAccessLayer
 
         public void SaveItem(SampleEntityDetails sampleEntityDetails, SqlConnection conn)
         {
-            _dataBaseDAL.SetBaseItem(sampleEntityDetails, conn, null);
+            _dataBaseDAL.SaveBaseItem(sampleEntityDetails, conn, null);
         }
     }
 }

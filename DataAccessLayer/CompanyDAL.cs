@@ -3,13 +3,8 @@ using DataAccessLayer.Mapping.Interface;
 using DataAccessLayer.Parameters;
 using Entities.Base;
 using Entities.Company;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
@@ -42,9 +37,9 @@ namespace DataAccessLayer
             return result;
         }
 
-        public void SaveItem(Company entity, SqlConnection conn = null)
+        public void SaveItem(Company company, SqlConnection conn = null)
         {
-            throw new NotImplementedException();
+            _dataBaseDAL.DoInTransaction(sqlConn => _dataBaseDAL.SaveBaseItem(company, sqlConn));
         }
     }
 }

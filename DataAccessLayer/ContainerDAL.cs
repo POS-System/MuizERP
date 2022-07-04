@@ -1,8 +1,8 @@
-﻿using DataAccessLayer.Mapping;
+﻿using DataAccessLayer.Interfaces;
+using DataAccessLayer.Mapping;
 using Entities.Company;
 using Entities.SampleEntity;
 using Entities.SampleEntityDetailsN;
-using Entities.User;
 
 namespace DataAccessLayer
 {
@@ -23,7 +23,7 @@ namespace DataAccessLayer
             get { return _sampleEntityDetailsDAL; }
         }
 
-        public IEntityDAL<User> UserDAL
+        public IUserDAL UserDAL
         {
             get { return _userDAL; }
         }

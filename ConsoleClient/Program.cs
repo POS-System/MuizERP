@@ -14,40 +14,50 @@ namespace ConsoleClient
             var connectionString = ConfigurationManager.ConnectionStrings["ConnectionERP"].ConnectionString;
             var containerDAL = new ContainerDAL(connectionString);
 
-            var companyDAL = containerDAL.CompanyDAL;
+            //var companyDAL = containerDAL.CompanyDAL;
 
-            var parametersContainer = new ParametersContainer();
-            parametersContainer.Add<Company>("ID", 3);
+            //var parametersContainer = new ParametersContainer();
+            //parametersContainer.Add<Company>("ID", 3);
 
-            var companies = companyDAL.GetItems(parametersContainer);
+            //var companies = companyDAL.GetItems(parametersContainer);
+
+            //var newCompany = new Company
+            //{
+            //    ParentID = 4,
+            //    Name = "New company 2",
+            //    INN = "111111111111",
+            //    OrderBy = 204,
+            //    ModifyUserID = 1
+            //};
+
+            //companyDAL.SaveItem(newCompany);
 
             var userDAL = containerDAL.UserDAL;
 
-            var newUser = new User
-            {
-                CompanyID = 2,
-                FirstName = "Test 1",
-                LastName = "Test 2",
-                SecondName = "Test 3",
-                BirthDay = new DateTime(2022, 06, 30),
-                Email = "new@email.ru",
-                GenderID = 0,
-                Login = "login",
-                Password = "password",
-                Phone = "+71236549854",
-                Active = true,
-                Color = "Color 1",
-                Number = 777,
-                RoleID = 1,
-                ThemeID = 1,
-                INN = "123456789878",
-                ModifyUserID = 1
-            };
+            //var newUser = new User
+            //{
+            //    CompanyID = 2,
+            //    FirstName = "Test 1",
+            //    LastName = "Test 2",
+            //    SecondName = "Test 3",
+            //    BirthDay = new DateTime(2022, 06, 30),
+            //    Email = "new@email.ru",
+            //    GenderID = 0,
+            //    Login = "login",
+            //    Password = "password",
+            //    Phone = "+71236549854",
+            //    Active = true,
+            //    Color = "Color 1",
+            //    Number = 777,
+            //    RoleID = 1,
+            //    ThemeID = 1,
+            //    INN = "123456789878",
+            //    ModifyUserID = 1
+            //};
 
-            userDAL.SaveItem(newUser);
+            //userDAL.SaveItem(newUser);
 
-            //var parametersContainer = new ParametersContainer();
-            //var users = userDAL.GetItems(parametersContainer);
+            var users = userDAL.GetItems(new ParametersContainer());
 
             //var sampleEntityDAL = containerDAL.SampleEntityDAL;
 

@@ -20,6 +20,11 @@ namespace Entities.Base.Attributes
         public int Timeout { get; set; }
 
         /// <summary>
+        /// Названия свойств, которые игнорируются при сохранении объекта
+        /// </summary>
+        public string[] IgnoreProperties { get; set; }
+
+        /// <summary>
         /// Свойство для отключения проверки на пустое название хранимой процедуры
         /// </summary>
         public bool UseEmptyCommandName { get; private set; }

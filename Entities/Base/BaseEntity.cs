@@ -1,6 +1,7 @@
 ﻿using Entities.Base.Attributes;
 using System;
 using System.ComponentModel;
+using System.Data;
 
 namespace Entities.Base
 {
@@ -10,8 +11,7 @@ namespace Entities.Base
 
         private Int32 _ID;
         private Int32 _companyID;
-        private Int32 _modifyUserID;        
-        
+        private Int32 _modifyUserID;
         private DateTime _createdDate;
         private DateTime _lastModifiedDate;
         private Int32 _createdByUserID;
@@ -22,7 +22,7 @@ namespace Entities.Base
         #region Properties
 
         [LoadParameter]
-        [SaveParameter]
+        [SaveParameter(Direction = ParameterDirection.InputOutput)]
         public int ID
         {
             get { return _ID; }
@@ -33,7 +33,7 @@ namespace Entities.Base
             }
         }
 
-        //[LoadParameter]
+        [LoadParameter(Required = false)]
         [SaveParameter]
         public int CompanyID
         {
@@ -67,17 +67,6 @@ namespace Entities.Base
             }
         }
 
-        [LoadParameter]       
-        public DateTime LastModifiedDate
-        {
-            get { return _lastModifiedDate; }
-            set
-            {
-                _lastModifiedDate = value;
-                OnPropertyChanged("LastModifiedDate");
-            }
-        }
-
         [LoadParameter]
         public int CreatedByUserID
         {
@@ -86,6 +75,17 @@ namespace Entities.Base
             {
                 _createdByUserID = value;
                 OnPropertyChanged("CreatedByUserID");
+            }
+        }
+
+        [LoadParameter]       
+        public DateTime LastModifiedDate
+        {
+            get { return _lastModifiedDate; }
+            set
+            {
+                _lastModifiedDate = value;
+                OnPropertyChanged("LastModifiedDate");
             }
         }
 
@@ -107,8 +107,5 @@ namespace Entities.Base
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        public BaseEntity()
-        { }
     }
 }

@@ -47,7 +47,9 @@
     <Compile Include="Base\Attributes\SaveCommandAttribute.cs" />
     <Compile Include="Base\Attributes\SaveParameterAttribute.cs" />
     <Compile Include="Base\BaseEntity.cs" />
+    <Compile Include="Base\BaseSortableEntity.cs" />
     <Compile Include="Base\Enums\EHierarhyDirection.cs" />
+    <Compile Include="Base\IBaseEntity.cs" />
     <Compile Include="Base\IFilter.cs" />
     <Compile Include="Company\Company.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\GeneratingStoredProcedureNotSupportedException.cs" />

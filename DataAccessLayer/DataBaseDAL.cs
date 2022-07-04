@@ -12,6 +12,7 @@ using IsolationLevel = System.Transactions.IsolationLevel;
 using Entities.Exceptions.LogicExceptions;
 using Entities.Base;
 using MuizEnums;
+using System.Linq;
 
 namespace DataAccessLayer
 {
@@ -258,7 +259,6 @@ namespace DataAccessLayer
         /// <param name="action">Действие выполняемое в контексте соединения БД</param>
         public void DoInConnectionSession(Action<SqlConnection> action)
         {
-
             if (Transaction.Current != null && _connectionInTransaction == null)
                 throw new InvalidOperationException("Попытка использования SqlConnection вне транзакции.");
 
@@ -306,7 +306,7 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="item"></param>
         /// <param name="sqlSetCmd"></param>
-        public void SetBaseItem(SqlCommand sqlSetCmd)
+        public void SaveBaseItem(SqlCommand sqlSetCmd)
         {
             sqlSetCmd.ExecuteNonQuery();
         }
@@ -317,10 +317,10 @@ namespace DataAccessLayer
         /// <param name="item"></param>
         /// <param name="connection"></param>
         /// <param name="prepare"></param>
-        public void SetBaseItem(SqlConnection connection, PrepareSetCommand prepare)
+        public void SaveBaseItem(SqlConnection connection, PrepareSetCommand prepare)
         {
             var sqlSetCmd = prepare(connection);
-            SetBaseItem(sqlSetCmd);
+            SaveBaseItem(sqlSetCmd);
         }
 
         /// <summary>
@@ -329,18 +329,18 @@ namespace DataAccessLayer
         /// <param name="item"></param>
         /// <param name="connection"></param>
         /// <param name="configureSetCommand"></param>
-        public void SetBaseItem(BaseEntity item, SqlConnection connection, ConfigureSetCommand configureSetCommand)
+        public void SaveBaseItem(BaseEntity item, SqlConnection connection, ConfigureSetCommand configureSetCommand = null)
         {
-            var sqlSetCmd = CreateSetStoredProcedure(item, connection);
+            var sqlSetCmd = CreateSaveStoredProcedure(item, connection);
 
             if (configureSetCommand != null)
                 configureSetCommand(sqlSetCmd);
 
-            SetBaseItem(sqlSetCmd);          
+            SaveBaseItem(sqlSetCmd);
 
             var parameterId = sqlSetCmd.Parameters["@p_ID"];
-            if (parameterId.Direction == ParameterDirection.InputOutput)            
-                item.ID = (int)parameterId.Value;                    
+            if (parameterId.Direction == ParameterDirection.InputOutput)
+                item.ID = (int)parameterId.Value;
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace DataAccessLayer
         /// <param name="sqlConn">Покдлючение к БД</param>
         /// <param name="item">Сохраняемый объект</param>
         /// <returns></returns>
-        public SqlCommand CreateSetStoredProcedure(object item, SqlConnection sqlConn)
+        public SqlCommand CreateSaveStoredProcedure(BaseEntity item, SqlConnection sqlConn)
         {
             var sqlCommand = sqlConn.CreateCommand();
             sqlCommand.CommandType = CommandType.StoredProcedure;
@@ -358,8 +358,8 @@ namespace DataAccessLayer
             var saveCommand = type.GetCustomAttribute<SaveCommandAttribute>();
 
             if (saveCommand == null)
-                throw new GeneratingStoredProcedureNotSupportedException(string.Format("Объект '{0}' не поддерживает генерацию команды сохранения." +
-                                        "Отсутствует [SaveCommandAttribute] аттрибут.", type));
+                throw new GeneratingStoredProcedureNotSupportedException(
+                    string.Format("Объект '{0}' не поддерживает генерацию команды сохранения. Отсутствует [SaveCommandAttribute] аттрибут.", type));
 
             sqlCommand.CommandText = saveCommand.Name;
             if (string.IsNullOrEmpty(sqlCommand.CommandText) && !saveCommand.UseEmptyCommandName)
@@ -368,13 +368,19 @@ namespace DataAccessLayer
             sqlCommand.CommandTimeout = saveCommand.Timeout;
 
             var props = type.GetProperties();
+            var ignoreProps = saveCommand.IgnoreProperties;
             foreach (var property in props)
             {
                 var parameter = property.GetCustomAttribute<SaveParameterAttribute>();
                 // если свойство не нуждается в сохранении, пропускаем его
                 if (parameter == null) continue;
 
-                // получаем название параметра
+                // Если свойство присутствует в списке игнорируемых -
+                // не добавляем его к параметрам хранимой процедуры
+                if (ignoreProps.Contains(property.Name))
+                    continue;
+
+                // Получаем название параметра
                 var parameterName = parameter.Name;
 
                 // Если не задано, используем название свойства с префиксом @p_
@@ -401,11 +407,10 @@ namespace DataAccessLayer
                 if (property.PropertyType == typeof(byte[]))
                     sqlParameter.SqlDbType = SqlDbType.Image;
 
-                if (parameter.Size > 0) sqlParameter.Size = parameter.Size;
-                sqlParameter.Direction = parameter.Direction;
+                if (parameter.Size > 0)
+                    sqlParameter.Size = parameter.Size;
 
-                if (sqlParameter.ParameterName == "@p_ID")
-                    sqlParameter.Direction = ParameterDirection.InputOutput;
+                sqlParameter.Direction = parameter.Direction;
 
                 // добавляем параметр
                 sqlCommand.Parameters.Add(sqlParameter);
@@ -428,22 +433,10 @@ namespace DataAccessLayer
                 itemSaveAction(item);
         }
 
-        public SqlConnection GetConnection()
-        {
-            //return new SqlConnection(@"packet size=4096; data source=SERV72\TAMUZ; persist security info=True; initial catalog=JDB_ERP_1; Integrated Security = SSPI");
-            if (_connectionInTransaction == null)
-            {
-                SqlConnection sqlConnection = new SqlConnection(@"packet size=4096; data source=SERV72\TAMUZ; persist security info=True; initial catalog=JDB_ERP_1; Integrated Security = SSPI;multipleactiveresultsets=True");
-                _connectionInTransaction = sqlConnection;
-            }
-            return _connectionInTransaction;
-        }
-
         private SqlConnection CreateSqlConnection()
         {
             //return new SqlConnection(@"packet size=4096; data source=SERV72\TAMUZ; persist security info=True; initial catalog=JDB_ERP_1; Integrated Security = SSPI;");
             return new SqlConnection(_connectionString);
         }
-
     }
 }
