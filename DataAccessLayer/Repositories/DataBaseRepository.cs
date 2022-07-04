@@ -7,26 +7,26 @@ using DataAccessLayer.DataReaders;
 using DataAccessLayer.Delegates;
 using Entities.Base.Attributes;
 using Entities.Exceptions.InnerApplicationExceptions;
-using Entities.Utils;
 using IsolationLevel = System.Transactions.IsolationLevel;
 using Entities.Exceptions.LogicExceptions;
 using Entities.Base;
 using MuizEnums;
 using System.Linq;
+using Entities.Base.Utils;
 
-namespace DataAccessLayer
+namespace DataAccessLayer.Repositories
 {
     /// <summary>
     /// Класс репозиторий для работы с БД
     /// </summary>
-    internal sealed class DataBaseDAL
+    internal sealed class DataBaseRepository
     {
         [ThreadStatic]
         private static SqlConnection _connectionInTransaction;
 
         private readonly string _connectionString;
 
-        public DataBaseDAL(string connectionString)
+        public DataBaseRepository(string connectionString)
         {
             _connectionString = connectionString;
         }
@@ -111,7 +111,7 @@ namespace DataAccessLayer
                 var hierarchyCommand = type.GetCustomAttribute<HierarhyCommnadAttribute>();
                 if (hierarchyCommand != null)
                 {
-                    var directionUp = hierarchyCommand.Direction == HierarhyDirection.Up;
+                    var directionUp = hierarchyCommand.Direction == EHierarchyDirection.Up;
                     sqlCmd.Parameters.AddWithValue("@p_directionUp", directionUp);
                 }
 

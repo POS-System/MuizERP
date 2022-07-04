@@ -1,7 +1,7 @@
 ﻿using Entities.Base;
 using System.Data.SqlClient;
 
-namespace DataAccessLayer.Interfaces.Base
+namespace DataAccessLayer.Repositories.Interfaces.Base
 {
     /// <summary>
     /// Интерфейс для сохранения объекта типа <see cref="T"/> в транзакции.

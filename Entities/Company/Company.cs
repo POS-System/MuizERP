@@ -5,7 +5,7 @@ using MuizEnums;
 namespace Entities.Company
 {
     [LoadCommand]
-    [HierarhyCommnad(HierarhyDirection.Up)]
+    [HierarhyCommnad(EHierarchyDirection.Up)]
     [SaveCommand(IgnoreProperties = new[] { "CompanyID" })]
     public class Company : BaseSortableEntity
     {

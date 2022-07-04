@@ -1,34 +1,35 @@
 ﻿using DataAccessLayer.DataReaders;
-using DataAccessLayer.Interfaces;
 using DataAccessLayer.Mapping.Interface;
 using DataAccessLayer.Parameters;
+using DataAccessLayer.Repositories.Interfaces;
 using Entities.Base;
+using Entities.Base.Parameters;
 using Entities.User;
 using System.Collections.ObjectModel;
 
-namespace DataAccessLayer
+namespace DataAccessLayer.Repositories
 {
-    internal class UserDAL : IUserDAL
+    internal class UserRepository : IUserRepository
     {
-        private DataBaseDAL _dataBaseDAL;
-        private IMapper<SqlDataReaderWithSchema, BaseEntity> _baseMapper;
+        private readonly DataBaseRepository _dataBaseRepository;
+        private readonly IMapper<SqlDataReaderWithSchema, BaseEntity> _baseMapper;
 
-        public UserDAL(DataBaseDAL dataBaseDAL, IMapper<SqlDataReaderWithSchema, BaseEntity> baseMapper)
+        public UserRepository(DataBaseRepository dataBaseRepository, IMapper<SqlDataReaderWithSchema, BaseEntity> baseMapper)
         {
-            _dataBaseDAL = dataBaseDAL;
+            _dataBaseRepository = dataBaseRepository;
             _baseMapper = baseMapper;
         }
 
         public void SaveItem(User user)
         {
-            _dataBaseDAL.DoInTransaction(conn => _dataBaseDAL.SaveBaseItem(user, conn));
+            _dataBaseRepository.DoInTransaction(conn => _dataBaseRepository.SaveBaseItem(user, conn));
         }
 
         public ObservableCollection<User> GetItems(IParametersContainer parametersContainer)
         {
             var result = new ObservableCollection<User>();
 
-            _dataBaseDAL.ReadCollectionWithSchema<User>(
+            _dataBaseRepository.ReadCollectionWithSchema<User>(
                 sqlCmd => ParametersConfigurator.ConfigureSqlCommand(sqlCmd, parametersContainer),
                 drd =>
                 {
@@ -39,13 +40,5 @@ namespace DataAccessLayer
 
             return result;
         }
-
-        //public void SaveItem(User user, SqlConnection conn = null)
-        //{
-        //    if (conn == null)
-        //        _dataBaseDAL.DoInTransaction(sqlConn => _dataBaseDAL.SetBaseItem(user, sqlConn, null));
-        //    else
-        //        _dataBaseDAL.SetBaseItem(user, conn, null);
-        //}
     }
 }

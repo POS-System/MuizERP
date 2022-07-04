@@ -1,8 +1,8 @@
-﻿using DataAccessLayer.Parameters;
-using Entities.Base;
+﻿using Entities.Base;
+using Entities.Base.Parameters;
 using System.Collections.ObjectModel;
 
-namespace DataAccessLayer.Interfaces.Base
+namespace DataAccessLayer.Repositories.Interfaces.Base
 {
     /// <summary>
     /// Интерфейс для получения коллекции объектов типа <see cref="T"/>.
@@ -13,8 +13,8 @@ namespace DataAccessLayer.Interfaces.Base
         /// <summary>
         /// Получение коллекции объектов.
         /// </summary>
-        /// <param name="parameters">Контейнер с параметрами хранимой процедуры.</param>
+        /// <param name="parametersContainer">Контейнер с параметрами хранимой процедуры.</param>
         /// <returns></returns>
-        ObservableCollection<T> GetItems(IParametersContainer parameters);
+        ObservableCollection<T> GetItems(IParametersContainer parametersContainer);
     }
 }

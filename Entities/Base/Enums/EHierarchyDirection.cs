@@ -1,6 +1,6 @@
 ﻿namespace MuizEnums
 {
-    public enum HierarhyDirection
+    public enum EHierarchyDirection
     {
         Up,
         Down

@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using Entities.Base.Parameters;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace DataAccessLayer.Parameters

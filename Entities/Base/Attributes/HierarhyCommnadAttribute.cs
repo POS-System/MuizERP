@@ -8,13 +8,13 @@ namespace Entities.Base.Attributes
     {
         #region Свойства
 
-        public HierarhyDirection Direction { get; private set; }
+        public EHierarchyDirection Direction { get; private set; }
 
         #endregion
 
         #region Конструктор
 
-        public HierarhyCommnadAttribute(HierarhyDirection direction)
+        public HierarhyCommnadAttribute(EHierarchyDirection direction)
         {
             Direction = direction;
         }

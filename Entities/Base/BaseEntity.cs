@@ -11,11 +11,10 @@ namespace Entities.Base
 
         private Int32 _ID;
         private Int32 _companyID;
-        private Int32 _modifyUserID;
         private DateTime _createdDate;
-        private DateTime _lastModifiedDate;
+        private DateTime _modifyDate;
         private Int32 _createdByUserID;
-        private Int32 _lastModifiedByUserID;
+        private Int32 _modifyByUserID;
 
         #endregion
 
@@ -44,17 +43,6 @@ namespace Entities.Base
                 OnPropertyChanged("CompanyID");
             }
         }
-        
-        [SaveParameter]
-        public int ModifyUserID
-        {
-            get { return _modifyUserID; }
-            set
-            {
-                _modifyUserID = value;
-                OnPropertyChanged("ModifyUserID");
-            }
-        }
 
         [LoadParameter]        
         public DateTime CreatedDate
@@ -79,24 +67,25 @@ namespace Entities.Base
         }
 
         [LoadParameter]       
-        public DateTime LastModifiedDate
+        public DateTime ModifyDate
         {
-            get { return _lastModifiedDate; }
+            get { return _modifyDate; }
             set
             {
-                _lastModifiedDate = value;
-                OnPropertyChanged("LastModifiedDate");
+                _modifyDate = value;
+                OnPropertyChanged("ModifyDate");
             }
         }
 
         [LoadParameter]
-        public int LastModifiedByUserID
+        [SaveParameter]
+        public int ModifyByUserID
         {
-            get { return _lastModifiedByUserID; }
+            get { return _modifyByUserID; }
             set
             {
-                _lastModifiedByUserID = value;
-                OnPropertyChanged("LastModifiedByUserID");
+                _modifyByUserID = value;
+                OnPropertyChanged("ModifyByUserID");
             }
         }
 

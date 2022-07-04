@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Entities.Utils
+namespace Entities.Base.Utils
 {
     public static class TypeExtendingMethods
     {

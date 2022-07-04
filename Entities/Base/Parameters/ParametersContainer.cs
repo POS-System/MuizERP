@@ -1,7 +1,6 @@
-﻿using Entities.Base;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace DataAccessLayer.Parameters
+namespace Entities.Base.Parameters
 {
     public class ParametersContainer : IParametersContainer
     {
@@ -27,23 +26,15 @@ namespace DataAccessLayer.Parameters
 
         }
 
-        public void AddRange(IFilter filter)
-        {
-            _parameters.Clear();
-            var type = filter.GetType();
-            var props = type.GetProperties();
-            foreach (var property in props)
-            {
-                var parameterName = property.Name;
-                var value = property.GetValue(filter, null);
-                Add(parameterName, value);
-            }
-        }
-
         public void Remove(string name)
         {
             if (_parameters.ContainsKey(name))
                 _parameters.Remove(name);
+        }
+
+        public void Clear()
+        {
+            _parameters.Clear();
         }
 
         public Dictionary<string, object> GetParameters()

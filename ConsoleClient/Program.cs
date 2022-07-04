@@ -1,7 +1,6 @@
 ﻿using DataAccessLayer;
 using DataAccessLayer.Parameters;
-using Entities.Company;
-using Entities.User;
+using Entities.Base.Parameters;
 using System;
 using System.Configuration;
 
@@ -12,14 +11,14 @@ namespace ConsoleClient
         static void Main(string[] args)
         {
             var connectionString = ConfigurationManager.ConnectionStrings["ConnectionERP"].ConnectionString;
-            var containerDAL = new ContainerDAL(connectionString);
+            var dalc = new DALContainer(connectionString);
 
-            //var companyDAL = containerDAL.CompanyDAL;
+            //var companyRepository = dalc.CompanyRepository;
 
             //var parametersContainer = new ParametersContainer();
             //parametersContainer.Add<Company>("ID", 3);
 
-            //var companies = companyDAL.GetItems(parametersContainer);
+            //var companies = companyRepository.GetItems(parametersContainer);
 
             //var newCompany = new Company
             //{
@@ -30,9 +29,9 @@ namespace ConsoleClient
             //    ModifyUserID = 1
             //};
 
-            //companyDAL.SaveItem(newCompany);
+            //companyRepository.SaveItem(newCompany);
 
-            var userDAL = containerDAL.UserDAL;
+            var userRepository = dalc.UserRepository;
 
             //var newUser = new User
             //{
@@ -55,14 +54,14 @@ namespace ConsoleClient
             //    ModifyUserID = 1
             //};
 
-            //userDAL.SaveItem(newUser);
+            //userRepository.SaveItem(newUser);
 
-            var users = userDAL.GetItems(new ParametersContainer());
+            var users = userRepository.GetItems(new ParametersContainer());
 
-            //var sampleEntityDAL = containerDAL.SampleEntityDAL;
+            //var sampleEntityRepository = dalc.SampleEntityRepository;
 
             // Тестовая загрузка
-            //var sampleEntities = sampleEntityDAL.GetItems();
+            //var sampleEntities = sampleEntityRepository.GetItems();
 
             //// Тестовая выгрузка
             //var newSampleEntity = new SampleEntity
@@ -93,7 +92,7 @@ namespace ConsoleClient
             //        }}
             //};
 
-            //sampleEntityDAL.SaveItem(newSampleEntity);
+            //sampleEntityRepository.SaveItem(newSampleEntity);
 
             Console.ReadKey();
         }

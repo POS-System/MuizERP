@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 
-namespace DataAccessLayer.Interfaces.Base
+namespace DataAccessLayer.Repositories.Interfaces
 {
     /// <summary>
     ///  Базовые методы для работы с БД

@@ -1,6 +1,6 @@
 ﻿using Entities.Base;
 
-namespace DataAccessLayer.Interfaces.Base
+namespace DataAccessLayer.Repositories.Interfaces.Base
 {
     /// <summary>
     /// Интерфейс для сохранения объекта типа <see cref="T"/>.

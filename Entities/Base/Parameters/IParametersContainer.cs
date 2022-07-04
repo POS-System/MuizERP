@@ -1,11 +1,6 @@
-﻿using Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace DataAccessLayer.Parameters
+namespace Entities.Base.Parameters
 {
     public interface IParametersContainer
     {
@@ -15,7 +10,7 @@ namespace DataAccessLayer.Parameters
 
         void Remove(string name);
 
-        void AddRange(IFilter filter);
+        void Clear();
 
         Dictionary<string, object> GetParameters();        
     }

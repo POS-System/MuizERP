@@ -1,23 +1,24 @@
 ﻿using DataAccessLayer.DataReaders;
 using DataAccessLayer.Mapping.Interface;
 using DataAccessLayer.Parameters;
+using DataAccessLayer.Repositories.Interfaces;
 using Entities.Base;
+using Entities.Base.Parameters;
 using Entities.Company;
 using System.Collections.ObjectModel;
-using System.Data.SqlClient;
 
-namespace DataAccessLayer
+namespace DataAccessLayer.Repositories
 {
-    internal class CompanyDAL : IEntityDAL<Company>
+    internal class CompanyRepository : ICompanyRepository
     {
-        private DataBaseDAL _dataBaseDAL;
-        private IMapper<SqlDataReaderWithSchema, BaseEntity> _baseMapper;
+        private readonly DataBaseRepository _dataBaseRepository;
+        private readonly IMapper<SqlDataReaderWithSchema, BaseEntity> _baseMapper;
 
-        public CompanyDAL(
-            DataBaseDAL dataBaseDAL,
+        public CompanyRepository(
+            DataBaseRepository dataBaseRepository,
             IMapper<SqlDataReaderWithSchema, BaseEntity> baseMapper)
         {
-            _dataBaseDAL = dataBaseDAL;
+            _dataBaseRepository = dataBaseRepository;
             _baseMapper = baseMapper;
         }
 
@@ -25,7 +26,7 @@ namespace DataAccessLayer
         {
             var result = new ObservableCollection<Company>();
 
-            _dataBaseDAL.ReadCollectionWithSchema<Company>(
+            _dataBaseRepository.ReadCollectionWithSchema<Company>(
                 sqlCmd => ParametersConfigurator.ConfigureSqlCommand(sqlCmd, parametersContainer),
                 drd =>
                 {
@@ -37,9 +38,9 @@ namespace DataAccessLayer
             return result;
         }
 
-        public void SaveItem(Company company, SqlConnection conn = null)
+        public void SaveItem(Company company)
         {
-            _dataBaseDAL.DoInTransaction(sqlConn => _dataBaseDAL.SaveBaseItem(company, sqlConn));
+            _dataBaseRepository.DoInTransaction(conn => _dataBaseRepository.SaveBaseItem(company, conn));
         }
     }
 }
