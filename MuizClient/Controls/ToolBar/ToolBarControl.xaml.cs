@@ -9,6 +9,12 @@ namespace MuizClient.Controls
     /// </summary>
     public partial class ToolBarControl : UserControl
     {
+        public ToolBarControl()
+        {
+            InitializeComponent();
+        }
+
+
         #region DP
 
         // EditButtonEnabled
@@ -43,26 +49,15 @@ namespace MuizClient.Controls
         public event Action AddButtonClick;
         public event Action EditButtonClick;
         public event Action RemoveButtonClick;
+        public event Action RefreshButtonClick;
 
-        public ToolBarControl()
-        {
-            InitializeComponent();
-        }
+        private void Add_Button_Click() => AddButtonClick?.Invoke();
 
-        private void Add_Button_Click()
-        {
-            AddButtonClick?.Invoke();
-        }
+        private void Edit_Button_Click() => EditButtonClick?.Invoke();
 
-        private void Edit_Button_Click()
-        {
-            EditButtonClick?.Invoke();
-        }
+        private void Remove_Button_Click() => RemoveButtonClick?.Invoke();
 
-        private void Remove_Button_Click()
-        {
-            RemoveButtonClick?.Invoke();
-        }
+        private void Refresh_Button_Click() => RefreshButtonClick?.Invoke();
 
         #endregion
     }

@@ -5,7 +5,7 @@ using System.Data;
 
 namespace Entities.Base
 {
-    public class BaseEntity : INotifyPropertyChanged
+    public class BaseEntity : IBaseEntity, INotifyPropertyChanged
     {
         #region Fields
 

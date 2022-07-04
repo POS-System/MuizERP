@@ -12,6 +12,8 @@ namespace Entities.Base.Parameters
 
         void Clear();
 
+        void Clear();
+
         Dictionary<string, object> GetParameters();        
     }
 }

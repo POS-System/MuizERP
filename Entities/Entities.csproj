@@ -47,11 +47,13 @@
     <Compile Include="Base\Attributes\SaveCommandAttribute.cs" />
     <Compile Include="Base\Attributes\SaveParameterAttribute.cs" />
     <Compile Include="Base\BaseEntity.cs" />
+    <Compile Include="Base\IBaseEntity.cs" />
     <Compile Include="Base\BaseSortableEntity.cs" />
     <Compile Include="Base\Enums\EHierarchyDirection.cs" />
     <Compile Include="Base\Parameters\IParametersContainer.cs" />
     <Compile Include="Base\Parameters\ParametersContainer.cs" />
     <Compile Include="Company\Company.cs" />
+    <Compile Include="Base\TitleAttribute.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\GeneratingStoredProcedureNotSupportedException.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\MappingException.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\SqlDataReaderExpectsOnlyOneRecordException.cs" />

@@ -6,7 +6,11 @@
         xmlns:local="clr-namespace:MuizClient" xmlns:controls="clr-namespace:MuizClient.Controls"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <controls:UserControl1></controls:UserControl1>
+    <Grid Height="auto">
+        <ScrollViewer>
+            <StackPanel>
+                <controls:GridControl x:Name="grid"></controls:GridControl>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

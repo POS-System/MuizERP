@@ -1,5 +1,17 @@
-﻿using System;
+﻿using DataAccessLayer;
+using DataAccessLayer.Parameters;
+using Entities.Base;
+using Entities.User;
+using MuizClient.Controls;
+using MuizClient.Models;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Configuration;
+using System.Linq;
+using System.Reflection;
 using System.Windows;
+using static MuizClient.Controls.GridControl;
 
 namespace MuizClient
 {
@@ -10,19 +22,70 @@ namespace MuizClient
     {
         public MainWindow()
         {
+            InitStyle();
             InitializeComponent();
             InitApp();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void InitStyle()
         {
-            MessageBox.Show("Кнопка нажата");
+            Style = (Style)FindResource(typeof(Window));
         }
 
-        private void InitApp()
+        public void InitApp()
         {
             ThemeChange(Themes.Light);
+
+            InitData();
         }
+
+        private void InitData()
+        {
+            var connectionString = ConfigurationManager.ConnectionStrings["ConnectionERP"].ConnectionString;
+            var containerDAL = new DALContainer(connectionString);
+
+            // test
+
+            //var properties = containerDAL.GetType().GetProperties()
+            //    .Where(x =>
+            //    {
+            //        var type = x.PropertyType;
+            //        if (type.IsGenericType)
+            //        {
+            //            var genericType = type.GetGenericTypeDefinition();
+            //            var result = genericType == typeof(IEntityDAL<>) || genericType.IsSubclassOf(typeof(IEntityDAL<>));
+            //            return result;
+            //        }
+
+            //        return false;
+            //    }
+            //    ).ToList();
+
+            //foreach (var property in properties)
+            //{
+            //    //var item = property.GetValue(containerDAL) is typeof(IEntityDAL<>);
+            //    var test = property.GetValue(containerDAL);
+            //    //var item2 = (test as IEntityDAL<IBaseEntity>).GetItems(new ParametersContainer());
+            //    //grid.InitGridData( as IEntityDAL<BaseEntity>);
+
+            //    //var item3 = item2;
+            //}
+
+            //var y = properties;
+
+            // test
+
+
+
+            var userDAL = containerDAL.UserDAL;
+            grid.InitGridData(userDAL);
+        }
+
+        //private IEntityDAL<T> GetDAL<T>(ContainerDAL containerDAL, PropertyInfo property)
+        //{
+        //    var result = property.GetValue(containerDAL) as IEntityDAL<T>;
+        //    return result;
+        //}
 
         private void ThemeChange(Themes theme)
         {

@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -67,6 +68,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Grid\GridFilter\GridFilterControls\IntFilterControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Grid\GridFilter\GridFilterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Grid\GridHeaderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\OtherControls\CheckList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ToolBar\ToolBarButtonControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -75,7 +92,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\UserControl1.xaml">
+    <Page Include="Controls\Grid\GridControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -90,14 +107,27 @@
     <Compile Include="Controls\AddEntityControl.xaml.cs">
       <DependentUpon>AddEntityControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Grid\GridFilter\GridFilterControls\BaseFilterControl.cs" />
+    <Compile Include="Controls\Grid\GridFilter\GridFilterControls\IntFilterControl.xaml.cs">
+      <DependentUpon>IntFilterControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Grid\GridFilter\GridFilterWindow.xaml.cs">
+      <DependentUpon>GridFilterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Grid\GridHeaderControl.xaml.cs">
+      <DependentUpon>GridHeaderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\OtherControls\CheckList.xaml.cs">
+      <DependentUpon>CheckList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ToolBar\ToolBarButtonControl.xaml.cs">
       <DependentUpon>ToolBarButtonControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ToolBar\ToolBarControl.xaml.cs">
       <DependentUpon>ToolBarControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
+    <Compile Include="Controls\Grid\GridControl.xaml.cs">
+      <DependentUpon>GridControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -105,6 +135,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\TitleAttribute.cs" />
     <Compile Include="Models\Phone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -123,6 +154,18 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Assets\Fonts\Roboto-Black.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-BlackItalic.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-Bold.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-BoldItalic.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-Italic.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-Light.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-LightItalic.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-Medium.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-MediumItalic.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-Regular.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-Thin.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-ThinItalic.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -137,5 +180,19 @@
   <ItemGroup>
     <Resource Include="Assets\Icons\view-dashboard-edit.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\database-refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{49F71201-7CD5-4398-B397-2D779B136DCC}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entities\Entities.csproj">
+      <Project>{31DF6DAE-79FB-4D9F-AC6E-237F80E552C5}</Project>
+      <Name>Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

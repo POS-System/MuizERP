@@ -80,20 +80,26 @@ namespace MuizClient.Controls
             set => textBlock.Text = value;
         }
 
+        /// <summary>
+        /// Задается выравнивание иконки,
+        /// кроме того заменяется отступ между иконкой и текстом (это надо учесть при изменении Margin у imgBlock)
+        /// </summary>
         public Aligns ImgAlign
         {
-            set => DockPanel.SetDock(imgBlock, (Dock) value);
+            set
+            {
+                var oldDock = DockPanel.GetDock(imgBlock);
+                var newDock = (Dock)value;
+
+                if (oldDock != newDock)
+                {
+                    DockPanel.SetDock(imgBlock, (Dock)value);
+
+                    imgBlock.Margin = new Thickness(imgBlock.Margin.Right, imgBlock.Margin.Top, imgBlock.Margin.Bottom, imgBlock.Margin.Left);
+                }
+            }
         }
 
         #endregion
-
-        //private void Button_Click_1(object sender, RoutedEventArgs e)
-        //{
-        //    var yo = DockPanel.GetDock(imgBlock);
-
-        //    ImgAlign = yo == Dock.Left
-        //        ? Aligns.Right
-        //        : Aligns.Left;
-        //}
     }
 }
