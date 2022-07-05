@@ -72,6 +72,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Grid\GridFilter\GridFilterControls\TextFilterControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Grid\GridFilter\GridFilterWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -111,12 +115,16 @@
     <Compile Include="Controls\Grid\GridFilter\GridFilterControls\IntFilterControl.xaml.cs">
       <DependentUpon>IntFilterControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Grid\GridFilter\GridFilterControls\TextFilterControl.xaml.cs">
+      <DependentUpon>TextFilterControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Grid\GridFilter\GridFilterWindow.xaml.cs">
       <DependentUpon>GridFilterWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Grid\GridHeaderControl.xaml.cs">
       <DependentUpon>GridHeaderControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Grid\GridColumnInfo.cs" />
     <Compile Include="Controls\OtherControls\CheckList.xaml.cs">
       <DependentUpon>CheckList.xaml</DependentUpon>
     </Compile>

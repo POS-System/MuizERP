@@ -11,6 +11,11 @@ namespace Entities.Base.Parameters
             _parameters = new Dictionary<string, object>();
         }
 
+        public ParametersContainer(Dictionary<string, object> parameters)
+        {
+            _parameters = parameters;
+        }
+
         public void Add(string name, object value)
         {
             if (_parameters.ContainsKey(name))

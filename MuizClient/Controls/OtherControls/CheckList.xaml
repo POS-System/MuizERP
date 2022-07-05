@@ -9,7 +9,7 @@
     <ItemsControl.ItemTemplate>
         <DataTemplate>
             <StackPanel Orientation="Horizontal">
-                <CheckBox></CheckBox>
+                <CheckBox IsChecked="{Binding Path=ColumnInfo.Filter.IsActive}"></CheckBox>
                 <ContentControl Content="{TemplateBinding Content}" />
             </StackPanel>
         </DataTemplate>

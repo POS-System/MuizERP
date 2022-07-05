@@ -16,16 +16,13 @@ using System.Windows.Shapes;
 namespace MuizClient.Controls.Grid.GridFilter.GridFilterControls
 {
     /// <summary>
-    /// Логика взаимодействия для IntFilterControl.xaml
+    /// Логика взаимодействия для TextFilterControl.xaml
     /// </summary>
-    public partial class IntFilterControl : BaseFilterControl<int, IntFilterControl>
+    public partial class TextFilterControl : BaseFilterControl<string, TextFilterControl>
     {
-        public IntFilterControl()
+        public TextFilterControl()
         {
             InitializeComponent();
-
-            slider.Minimum = 0; // int.MinValue;
-            slider.Maximum = 10000; // int.MaxValue;
         }
     }
 }

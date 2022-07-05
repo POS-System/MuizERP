@@ -1,24 +1,25 @@
 ﻿<local:BaseFilterControl x:Class="MuizClient.Controls.Grid.GridFilter.GridFilterControls.IntFilterControl"
-             x:TypeArguments="system:Int32"
+             x:TypeArguments="system:Int32, local:IntFilterControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MuizClient.Controls.Grid.GridFilter.GridFilterControls" xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:MuizClient.Controls.Grid.GridFilter.GridFilterControls" 
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              x:Name="control"
              d:DesignHeight="150" d:DesignWidth="400">
     <Grid>
         <StackPanel MinWidth="300">
-            <TextBlock Text="{Binding ElementName=control,Path=PropertyName}"/>
+            <TextBlock Text="{Binding PropertyName}"/>
 
             <DockPanel LastChildFill="True">
                 <TextBlock Text="{Binding ElementName=slider,Path=Minimum}" />
                 <TextBlock Text="{Binding ElementName=slider,Path=Maximum}" DockPanel.Dock="Right" TextAlignment="Right" />
-                <TextBox x:Name="test" Text="{Binding ElementName=control,Path=CurrentFilterValue}" TextAlignment="Center" MaxWidth="90" />
+                <TextBox Text="{Binding CurrentValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" TextAlignment="Center" MaxWidth="90" />
             </DockPanel>
 
-            <Slider x:Name="slider" Value="{Binding ElementName=control,Path=CurrentFilterValue}" IsSnapToTickEnabled="True" TickFrequency="1" />
+            <Slider x:Name="slider" Value="{Binding CurrentValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsSnapToTickEnabled="True" TickFrequency="1" />
         </StackPanel>
     </Grid>
 </local:BaseFilterControl>

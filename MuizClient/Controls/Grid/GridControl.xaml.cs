@@ -4,6 +4,7 @@ using DataAccessLayer.Repositories.Interfaces.Base;
 using Entities.Base;
 using Entities.Base.Parameters;
 using Entities.User;
+using MuizClient.Controls.Grid;
 using MuizClient.Controls.Grid.GridFilter;
 using MuizClient.Models;
 using System;
@@ -28,7 +29,7 @@ namespace MuizClient.Controls
         CollectionViewSource _collectionVS;
         ObservableCollection<IBaseEntity> _collection;
 
-        private readonly ParametersContainer _parametersContainer = new ParametersContainer();
+        private ParametersContainer _parametersContainer = new ParametersContainer();
         Action updateGridData;
         
         public delegate void DSaveGridData(BaseEntity baseEntity);
@@ -93,18 +94,32 @@ namespace MuizClient.Controls
             //phonesList.Add(phone);
         }
 
-        public void InitGridData<T>(IGetItems<T> iGetItems, ISave<T> iSave) where T : BaseEntity
+        public void InitGridData<T, V>(T repository) 
+            where T : IGetItems<V>, ISave<V> 
+            where V : BaseEntity
         {
-            _itemType = typeof(T);
+            _itemType = typeof(V);
 
-            if (grid?.Columns?.Count < 1) GenerateColumns<T>();
+            if (grid?.Columns?.Count < 1) GenerateColumns<V>();
 
-            updateGridData = () => SetGridData(iGetItems.GetItems(_parametersContainer));
-            
-            saveGridData = (item) => iSave.SaveItem(item as T); 
+            updateGridData = () => SetGridData(repository.GetItems(_parametersContainer));
+            saveGridData = (item) => repository.SaveItem(item as V);
 
             updateGridData();
         }
+
+        //public void InitGridData<T>(IGetItems<T> iGetItems, ISave<T> iSave) where T : BaseEntity
+        //{
+        //    _itemType = typeof(T);
+
+        //    if (grid?.Columns?.Count < 1) GenerateColumns<T>();
+
+        //    updateGridData = () => SetGridData(iGetItems.GetItems(_parametersContainer));
+            
+        //    saveGridData = (item) => iSave.SaveItem(item as T); 
+
+        //    updateGridData();
+        //}
 
         private void Edit_Button_Click()
         {
@@ -144,8 +159,7 @@ namespace MuizClient.Controls
         private void Filter_Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             var _gridFilterWindow = new GridFilterWindow();
-            //_gridFilterWindow.ItemType = _itemType;
-            _gridFilterWindow.InitFilter(_itemType);
+            _gridFilterWindow.InitFilters(_columns);
 
             if (_gridFilterWindow.ShowDialog() == true)
             {
@@ -155,16 +169,6 @@ namespace MuizClient.Controls
             {
                 ClearFilterGridData();
             }
-
-
-            //var view = CollectionViewSource.GetDefaultView(grid.ItemsSource);
-            //_collectionVS.Filter += new FilterEventHandler(CollectionViewSource_Filter);
-        }
-
-        private void ClearFilters_Button_Click_4(object sender, System.Windows.RoutedEventArgs e)
-        {
-            var view = CollectionViewSource.GetDefaultView(grid.ItemsSource);
-            view.Filter = null;
         }
 
         private void Refresh_Button_Click()
@@ -184,7 +188,11 @@ namespace MuizClient.Controls
 
         private void FilterGridData()
         {
-            _parametersContainer.Add("LastName", "Test 2");
+            foreach (var column in _columns)
+            {
+                _parametersContainer.SetGridColumn(column);
+            }
+
             updateGridData();
         }
 
@@ -202,13 +210,6 @@ namespace MuizClient.Controls
         /// <param name="collection">Данные для таблицы</param>
         public void SetGridData<T>(ObservableCollection<T> collection)
         {
-            //_collectionVS = new CollectionViewSource();
-            //_collectionVS.Source = collection;
-            ////collectionVS.Filter += new FilterEventHandler(CollectionViewSource_Filter);
-            //_collectionVS.IsLiveFilteringRequested = true;
-
-            //grid.IsSynchronizedWithCurrentItem = true;
-            //grid.ItemsSource = _collectionVS.View;
             _collection = new ObservableCollection<IBaseEntity>(collection.Cast<IBaseEntity>());
             grid.ItemsSource = _collection;
         }
@@ -238,9 +239,13 @@ namespace MuizClient.Controls
                     };
 
                     grid.Columns.Add(newColumn);
+
+                    _columns.Add(new GridColumnInfo(newColumn, property));
                 }
             }
         }
+
+        public List<GridColumnInfo> _columns = new List<GridColumnInfo>();
 
         #endregion
     }

@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer;
 using DataAccessLayer.Parameters;
+using DataAccessLayer.Repositories.Interfaces;
 using Entities.Base;
 using Entities.User;
 using MuizClient.Controls;
@@ -77,8 +78,11 @@ namespace MuizClient
 
 
 
-            var userDAL = containerDAL.UserRepository;
-            grid.InitGridData(userDAL);
+            //var userDAL = containerDAL.UserDAL;
+            var userRepository = containerDAL.UserRepository;
+
+            grid.InitGridData<IUserRepository, User>(userRepository);
+            //grid.InitGridData(userRepository, userRepository);
         }
 
         //private IEntityDAL<T> GetDAL<T>(ContainerDAL containerDAL, PropertyInfo property)

@@ -99,12 +99,8 @@
                 RemoveButtonEnabled="{Binding ElementName=control, Path=IsHasSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
             ></local:ToolBarControl>
 
-            
-            <!--<Button Content="Фильтровать" Click="Filter_Button_Click" />
-            <Button Content="Очистить фильтр" Click="ClearFilters_Button_Click_4" />-->
-
             <Button Content="Фильтры" Click="Filter_Button_Click" />
-            
+
             <DataGrid   x:Name="grid"
                         AutoGenerateColumns="False"
                         Height="auto"
@@ -112,7 +108,6 @@
                         
                         IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False"
             />
-            <!--HorizontalGridLinesBrush="DarkGray"-->
         </StackPanel>
     </Grid>
 </UserControl>
