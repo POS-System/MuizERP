@@ -1,6 +1,7 @@
 ﻿using Entities.Base;
 using Entities.Base.Attributes;
 using System;
+using System.Collections.ObjectModel;
 
 namespace Entities.User
 {
@@ -10,21 +11,23 @@ namespace Entities.User
     {
         #region Fields
 
-        int _number;
-		string _firstName;
-		string _lastName;
-		string _secondName;
-		string _inn;
-		byte _roleID;
-		string _phone;
-		string _email;
-		bool _active;
-		string _login;
-		string _password;
-		DateTime _birthDay;
-		byte _genderID;
-		byte _themeID;
-		string _color;
+        private int _number;
+		private string _firstName;
+		private string _lastName;
+		private string _secondName;
+		private string _inn;
+		private byte _roleID;
+		private string _phone;
+		private string _email;
+		private bool _active;
+		private string _login;
+		private string _password;
+		private DateTime _birthDay;
+		private byte _genderID;
+		private byte _themeID;
+		private string _color;
+
+        private ObservableCollection<UserRole> _userRoles;
 
         #endregion
 
@@ -208,6 +211,25 @@ namespace Entities.User
                 _color = value;
                 OnPropertyChanged("Color");
             }
+        }
+
+        public ObservableCollection<UserRole> UserRoles
+        {
+            get { return _userRoles; }
+            set
+            {
+                _userRoles = value;
+                OnPropertyChanged("Roles");
+            }
+        }
+
+        #endregion
+
+        #region Constructor
+
+        public User()
+        {
+            _userRoles = new ObservableCollection<UserRole>();
         }
 
         #endregion

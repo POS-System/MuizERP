@@ -1,7 +1,10 @@
 ﻿using DataAccessLayer;
-using DataAccessLayer.Parameters;
+using Entities;
 using Entities.Base.Parameters;
+using Entities.Exceptions.InnerApplicationExceptions;
+using Entities.User;
 using System;
+using System.Collections.ObjectModel;
 using System.Configuration;
 
 namespace ConsoleClient
@@ -36,27 +39,38 @@ namespace ConsoleClient
             //var newUser = new User
             //{
             //    CompanyID = 2,
-            //    FirstName = "Test 1",
-            //    LastName = "Test 2",
-            //    SecondName = "Test 3",
-            //    BirthDay = new DateTime(2022, 06, 30),
-            //    Email = "new@email.ru",
+            //    FirstName = "Тестовое имя 1",
+            //    LastName = "Тестовая фамилия 1",
+            //    SecondName = "Тестовое отчество 1",
+            //    BirthDay = new DateTime(2022, 07, 05),
+            //    Email = "test1@email.ru",
             //    GenderID = 0,
-            //    Login = "login",
-            //    Password = "password",
-            //    Phone = "+71236549854",
+            //    Login = "login 1",
+            //    Password = "password ",
+            //    Phone = "+79876541232",
             //    Active = true,
             //    Color = "Color 1",
             //    Number = 777,
             //    RoleID = 1,
             //    ThemeID = 1,
             //    INN = "123456789878",
-            //    ModifyUserID = 1
+            //    ModifyByUserID = 1,
+            //    UserRoles = new ObservableCollection<UserRole>
+            //    {
+            //        new UserRole { Role = new Role { ID = 1 } },
+            //        new UserRole { Role = new Role { ID = 2 } }
+            //    }
             //};
 
             //userRepository.SaveItem(newUser);
+            try
+            {
+                var users = userRepository.GetItems(new ParametersContainer());
+            }
+            catch (SqlServerInsertRecordException ex)
+            {
 
-            var users = userRepository.GetItems(new ParametersContainer());
+            }
 
             //var sampleEntityRepository = dalc.SampleEntityRepository;
 

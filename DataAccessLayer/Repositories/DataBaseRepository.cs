@@ -24,11 +24,16 @@ namespace DataAccessLayer.Repositories
         [ThreadStatic]
         private static SqlConnection _connectionInTransaction;
 
+        private readonly IConverter<SqlException, Exception> _sqlExcepionConverter;
+
         private readonly string _connectionString;
 
-        public DataBaseRepository(string connectionString)
+        public DataBaseRepository(
+            string connectionString,
+            IConverter<SqlException, Exception> sqlExcepionConverter)
         {
             _connectionString = connectionString;
+            _sqlExcepionConverter = sqlExcepionConverter;
         }
 
         /// <summary>
@@ -272,14 +277,28 @@ namespace DataAccessLayer.Repositories
         {
             using (var connection = CreateSqlConnection())
             {
-                connection.Open();
-                action(connection);
+                try
+                {
+                    connection.Open();
+                    action(connection);
+                }
+                catch (SqlException sqlException)
+                {
+                    throw _sqlExcepionConverter.Convert(sqlException);
+                }
             }
         }
 
         private void DoInConnectionSessionInsideTransaction(Action<SqlConnection> action)
         {
-            action(_connectionInTransaction);
+            try
+            {
+                action(_connectionInTransaction);
+            }
+            catch (SqlException sqlException)
+            {
+                throw _sqlExcepionConverter.Convert(sqlException);
+            }
         }
 
         private void DoInConnectionSessionWithTran(Action<SqlConnection> action)

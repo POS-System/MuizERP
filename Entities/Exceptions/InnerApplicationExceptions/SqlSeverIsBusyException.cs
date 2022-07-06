@@ -3,7 +3,6 @@ using System.Runtime.Serialization;
 
 namespace Entities.Exceptions.InnerApplicationExceptions
 {
-    [Serializable]
     public class SqlSeverIsBusyException : Exception
     {
         public SqlSeverIsBusyException(SerializationInfo info, StreamingContext context) : base(info, context)

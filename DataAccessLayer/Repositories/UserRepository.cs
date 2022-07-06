@@ -2,6 +2,7 @@
 using DataAccessLayer.Mapping.Interface;
 using DataAccessLayer.Parameters;
 using DataAccessLayer.Repositories.Interfaces;
+using Entities;
 using Entities.Base;
 using Entities.Base.Parameters;
 using Entities.User;
@@ -12,17 +13,17 @@ namespace DataAccessLayer.Repositories
     internal class UserRepository : IUserRepository
     {
         private readonly DataBaseRepository _dataBaseRepository;
+        private readonly IRoleRepository _roleRepository;
         private readonly IMapper<SqlDataReaderWithSchema, BaseEntity> _baseMapper;
 
-        public UserRepository(DataBaseRepository dataBaseRepository, IMapper<SqlDataReaderWithSchema, BaseEntity> baseMapper)
+        public UserRepository(
+            DataBaseRepository dataBaseRepository,
+            IRoleRepository roleRepository,
+            IMapper<SqlDataReaderWithSchema, BaseEntity> baseMapper)
         {
             _dataBaseRepository = dataBaseRepository;
+            _roleRepository = roleRepository;
             _baseMapper = baseMapper;
-        }
-
-        public void SaveItem(User user)
-        {
-            _dataBaseRepository.DoInTransaction(conn => _dataBaseRepository.SaveBaseItem(user, conn));
         }
 
         public ObservableCollection<User> GetItems(IParametersContainer parametersContainer)
@@ -35,10 +36,30 @@ namespace DataAccessLayer.Repositories
                 {
                     var item = new User();
                     _baseMapper.Map(drd, item);
+
+                    var roleParameters = new ParametersContainer();
+                    roleParameters.Add<User>(nameof(item.ID), item.ID);
+                    item.UserRoles = _roleRepository.GetUserRoles(roleParameters);
+
                     result.Add(item);
                 });
 
             return result;
+        }
+
+        public void SaveItem(User user)
+        {
+            _dataBaseRepository.DoInTransaction(
+                conn =>
+                {
+                    _dataBaseRepository.SaveBaseItem(user, conn);
+
+                    _dataBaseRepository.SaveCollection(
+                        user.UserRoles, userRole => {
+                            userRole.UserID = user.ID;
+                            _roleRepository.SaveUserRole(userRole, conn);
+                        });
+                });
         }
     }
 }

@@ -2,9 +2,9 @@
 using DataAccessLayer.Mapping.Interface;
 using DataAccessLayer.Parameters;
 using DataAccessLayer.Repositories.Interfaces;
+using Entities;
 using Entities.Base;
 using Entities.Base.Parameters;
-using Entities.SampleEntityDetailsN;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 

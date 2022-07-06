@@ -1,5 +1,5 @@
 ﻿using DataAccessLayer.Repositories.Interfaces.Base;
-using Entities.SampleEntityDetailsN;
+using Entities;
 
 namespace DataAccessLayer.Repositories.Interfaces
 {

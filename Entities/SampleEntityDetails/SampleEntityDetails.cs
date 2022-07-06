@@ -2,7 +2,7 @@
 using Entities.Base.Attributes;
 using System;
 
-namespace Entities.SampleEntityDetailsN
+namespace Entities
 {   
     [SaveCommand]
     [LoadCommand]

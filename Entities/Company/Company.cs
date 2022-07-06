@@ -2,7 +2,7 @@
 using Entities.Base.Attributes;
 using MuizEnums;
 
-namespace Entities.Company
+namespace Entities
 {
     [LoadCommand]
     [HierarhyCommnad(EHierarchyDirection.Up)]

@@ -1,6 +1,7 @@
 ﻿using DataAccessLayer.Mapping;
 using DataAccessLayer.Repositories;
 using DataAccessLayer.Repositories.Interfaces;
+using DataAccessLayer.Utils;
 
 namespace DataAccessLayer
 {
@@ -9,6 +10,7 @@ namespace DataAccessLayer
         private ISampleEntityRepository _sampleEntityRepository;
         private ISampleEntityDetailsRepository _sampleEntityDetailsRepository;
         private IUserRepository _userRepository;
+        private IRoleRepository _roleRepository;
         private ICompanyRepository _companyRepository;
 
         public ISampleEntityRepository SampleEntityRepository
@@ -31,14 +33,23 @@ namespace DataAccessLayer
             get { return _companyRepository; }
         }
 
+        public IRoleRepository RoleRepository
+        {
+            get { return _roleRepository; }
+        }
+
         public DALContainer(string connectionString)
         {
-            var dataBaseRepository = new DataBaseRepository(connectionString);
+            var sqlExceptionConverter = new SqlExceptionToLogicExceptionConverter();
+
+            var dataBaseRepository = new DataBaseRepository(connectionString, sqlExceptionConverter);
             var baseMapper = new BaseMapper();
+            var userRoleMapper = new UserRoleMapper(baseMapper);
 
             _sampleEntityDetailsRepository = new SampleEntityDetailsRepository(dataBaseRepository, baseMapper);
             _sampleEntityRepository = new SampleEntityRepository(dataBaseRepository, _sampleEntityDetailsRepository, baseMapper);
-            _userRepository = new UserRepository(dataBaseRepository, baseMapper);
+            _roleRepository = new RoleRepository(dataBaseRepository, baseMapper, userRoleMapper);
+            _userRepository = new UserRepository(dataBaseRepository, _roleRepository, baseMapper);
             _companyRepository = new CompanyRepository(dataBaseRepository, baseMapper);
         }
     }

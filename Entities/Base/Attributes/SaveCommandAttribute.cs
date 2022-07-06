@@ -44,6 +44,7 @@ namespace Entities.Base.Attributes
             Name = name;
             UseEmptyCommandName = useEmptyCommandName;
             Timeout = 60;
+            IgnoreProperties = new string[] { };
         }
 
     }

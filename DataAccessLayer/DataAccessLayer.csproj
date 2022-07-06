@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapping\UserRoleMapper.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
     <Compile Include="DALContainer.cs" />
     <Compile Include="Repositories\DataBaseRepository.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="Repositories\Interfaces\Base\IGetItems.cs" />
     <Compile Include="Repositories\Interfaces\Base\ISave.cs" />
     <Compile Include="Repositories\Interfaces\Base\ISaveInTransaction.cs" />
+    <Compile Include="Repositories\Interfaces\IRoleRepository.cs" />
     <Compile Include="Repositories\Interfaces\ISampleEntityDetailsRepository.cs" />
     <Compile Include="Repositories\Interfaces\ISampleEntityRepository.cs" />
     <Compile Include="Repositories\Interfaces\IUserRepository.cs" />
@@ -59,9 +61,11 @@
     <Compile Include="Mapping\Interface\IMapper.cs" />
     <Compile Include="Parameters\ParametersConfigurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\SampleEntityRepository.cs" />
     <Compile Include="Repositories\SampleEntityDetailsRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Utils\SqlExceptionToLogicExceptionConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entities\Entities.csproj">

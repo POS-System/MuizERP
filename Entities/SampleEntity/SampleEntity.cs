@@ -1,9 +1,8 @@
 ﻿using Entities.Base;
 using Entities.Base.Attributes;
-using Entities.SampleEntityDetailsN;
 using System.Collections.ObjectModel;
 
-namespace Entities.SampleEntity
+namespace Entities
 {
     [LoadCommand]
     [SaveCommand("xp_SaveSampleEntity")]
