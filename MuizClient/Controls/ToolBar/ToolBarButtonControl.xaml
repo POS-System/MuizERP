@@ -5,24 +5,33 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MuizClient.Controls"
              mc:Ignorable="d" 
-             Name="control"
-             d:DesignHeight="450" d:DesignWidth="800">
+             Name="control">
     <Grid>
         <StackPanel Orientation="Horizontal">
             <Button 
                 x:Name="button" Style="{DynamicResource ToolBarButtonStyle}"
                 HorizontalAlignment="Left"
-                Click="Button_Click" 
+                Click="Button_Click"
                 Visibility="{Binding ElementName=control, Path=VisibilityButton, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                 IsEnabled="{Binding ElementName=control, Path=IsEnabledRule, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
             >
                 <DockPanel Name="dockPanel" LastChildFill="True">
                     <Image x:Name="imgBlock" 
                            Source="{Binding ElementName=control, Path=ImgSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                           MaxHeight="24" MaxWidth="24" />
+                           Margin="0,0,4,0"
+                           MaxHeight="{DynamicResource ButtonIconSize}" MaxWidth="{DynamicResource ButtonIconSize}" />
+                    
+                    <TextBlock x:Name="textBlock" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </DockPanel>
+                
+                
+                <!--<DockPanel Name="dockPanel" LastChildFill="True">
+                    <Image x:Name="imgBlock" 
+                           Source="{Binding ElementName=control, Path=ImgSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                           MaxHeight="{DynamicResource ButtonIconSize}" MaxWidth="{DynamicResource ButtonIconSize}" Margin="6,0" />
                     <TextBlock x:Name="textBlock" 
                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </DockPanel>
+                </DockPanel>-->
             </Button>
         </StackPanel>
     </Grid>

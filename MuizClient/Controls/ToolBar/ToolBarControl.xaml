@@ -8,30 +8,34 @@
              Name="control"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ToolBar Height="32">
-            <!--Template="{StaticResource btTemplate}"-->
-            <!--<Button Content="Добавить" Click="Add_Button_Click" />-->
-            <!--<Button Content="Изменить" Click="Edit_Button_Click" />
-            <Button Content="Удалить" Click="Remove_Button_Click" />-->
-            <local:ToolBarButtonControl 
-                Text="Добавить" 
-                ButtonClick="Add_Button_Click"
-                ImgAlign="Right"
-                ImgSource="pack://application:,,,/Assets/Icons/view-grid-plus.png"
-            />
-            <local:ToolBarButtonControl 
-                Text="Изменить" 
-                ButtonClick="Edit_Button_Click"
-                IsEnabledRule="{Binding ElementName=control, Path=EditButtonEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                ImgAlign="Left"
-                ImgSource="pack://application:,,,/Assets/Icons/view-dashboard-edit.png"
-            />
-            <local:ToolBarButtonControl 
-                Text="Удалить" 
-                ButtonClick="Remove_Button_Click" 
-                IsEnabledRule="{Binding ElementName=control, Path=RemoveButtonEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                ImgSource="pack://application:,,,/Assets/Icons/view-grid-plus.png"
-            />
-        </ToolBar>
+        <Border Padding="6" MinHeight="48" MaxHeight="48">
+            <!--<ToolBar Height="48">-->
+            <StackPanel Orientation="Horizontal">
+                <local:ToolBarButtonControl 
+                    Text="Refresh" 
+                    ButtonClick="Refresh_Button_Click" 
+                    ImgSource="pack://application:,,,/Assets/Icons/database-refresh.png"
+                />
+                <local:ToolBarButtonControl 
+                    Text="Добавить" 
+                    ButtonClick="Add_Button_Click"
+                    ImgAlign="Right"
+                    ImgSource="pack://application:,,,/Assets/Icons/view-grid-plus.png"
+                />
+                <local:ToolBarButtonControl 
+                    Text="Изменить" 
+                    ButtonClick="Edit_Button_Click"
+                    IsEnabledRule="{Binding ElementName=control, Path=EditButtonEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    ImgAlign="Left"
+                    ImgSource="pack://application:,,,/Assets/Icons/view-dashboard-edit.png"
+                />
+                <local:ToolBarButtonControl 
+                    Text="Удалить" 
+                    ButtonClick="Remove_Button_Click" 
+                    IsEnabledRule="{Binding ElementName=control, Path=RemoveButtonEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    ImgSource="pack://application:,,,/Assets/Icons/view-grid-plus.png"
+                />
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

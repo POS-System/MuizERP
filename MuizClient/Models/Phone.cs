@@ -9,6 +9,7 @@ namespace MuizClient.Models
         private string company;
         private int price;
 
+        [Title("Заголовок")]
         public string Title
         {
             get { return title; }

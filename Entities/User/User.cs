@@ -1,5 +1,6 @@
 ﻿using Entities.Base;
 using Entities.Base.Attributes;
+using MuizClient.Models;
 using System;
 using System.Collections.ObjectModel;
 
@@ -45,6 +46,7 @@ namespace Entities.User
             }
         }
 
+        [Title("Тест!!!!")]
         [LoadParameter]
         [SaveParameter]
         public string FirstName
