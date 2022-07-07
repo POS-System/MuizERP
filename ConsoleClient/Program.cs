@@ -1,10 +1,8 @@
 ﻿using DataAccessLayer;
-using Entities;
 using Entities.Base.Parameters;
 using Entities.Exceptions.InnerApplicationExceptions;
 using Entities.User;
 using System;
-using System.Collections.ObjectModel;
 using System.Configuration;
 
 namespace ConsoleClient
@@ -36,33 +34,33 @@ namespace ConsoleClient
 
             var userRepository = dalc.UserRepository;
 
-            //var newUser = new User
-            //{
-            //    CompanyID = 2,
-            //    FirstName = "Тестовое имя 1",
-            //    LastName = "Тестовая фамилия 1",
-            //    SecondName = "Тестовое отчество 1",
-            //    BirthDay = new DateTime(2022, 07, 05),
-            //    Email = "test1@email.ru",
-            //    GenderID = 0,
-            //    Login = "login 1",
-            //    Password = "password ",
-            //    Phone = "+79876541232",
-            //    Active = true,
-            //    Color = "Color 1",
-            //    Number = 777,
-            //    RoleID = 1,
-            //    ThemeID = 1,
-            //    INN = "123456789878",
-            //    ModifyByUserID = 1,
-            //    UserRoles = new ObservableCollection<UserRole>
-            //    {
-            //        new UserRole { Role = new Role { ID = 1 } },
-            //        new UserRole { Role = new Role { ID = 2 } }
-            //    }
-            //};
+            var newUser = new User
+            {
+                CompanyID = 2,
+                FirstName = "Тестовое имя 2",
+                LastName = "Тестовая фамилия 2",
+                SecondName = "Тестовое отчество 2",
+                BirthDay = new DateTime(2022, 07, 06),
+                Email = "test2@email.ru",
+                GenderID = 0,
+                Login = "login 2",
+                Password = "password ",
+                Phone = "+78984562154",
+                Active = true,
+                Color = "Color 2",
+                Number = 777,
+                RoleID = 1,
+                ThemeID = 1,
+                INN = "987456321232",
+                ModifyByUserID = 1//,
+                //UserRoles = new ObservableCollection<UserRole>
+                //{
+                //    new UserRole { Role = new Role { ID = 1 } },
+                //    new UserRole { Role = new Role { ID = 2 } }
+                //}
+            };
 
-            //userRepository.SaveItem(newUser);
+            userRepository.SaveItem(newUser);
             try
             {
                 var users = userRepository.GetItems(new ParametersContainer());

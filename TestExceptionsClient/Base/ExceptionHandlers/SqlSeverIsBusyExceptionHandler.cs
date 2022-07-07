@@ -1,22 +1,22 @@
+using Entities.Base.Utils;
 using Entities.Exceptions.InnerApplicationExceptions;
 using System;
 
-
-namespace Entities.ExceptionsHandlers
+namespace TestExceptionsClient.Base.ExceptionHandlers
 {
     public sealed class SqlSeverIsBusyExceptionHandler : IExceptionHandler
     {
         private readonly IExceptionHandlingExecuter _handlingExecuter;
         private readonly ICustomLogger _logger;
-        private readonly IWin32Window _handlingOwner;
+        private readonly IntPtr _handlingOwner;
 
-        public SqlSeverIsBusyExceptionHandler(IWin32Window handlingOwner, ICustomLogger logger, IExceptionHandler exceptionHandler = null)
+        public SqlSeverIsBusyExceptionHandler(IntPtr handlingOwner, ICustomLogger logger, IExceptionHandler exceptionHandler = null)
             : this(handlingOwner, logger, new ExceptionHandlingExecuter(exceptionHandler))
         {
         }
 
         internal SqlSeverIsBusyExceptionHandler(
-            IWin32Window handlingOwner,
+            IntPtr handlingOwner,
             ICustomLogger logger,
             IExceptionHandlingExecuter handlingExecuter)
         {
@@ -35,9 +35,9 @@ namespace Entities.ExceptionsHandlers
                 exception =>
                 {
                     _logger.Error(exception);
-                    MessageDialog.ShowWarning(_handlingOwner,
-                        "В настоящее время сервер занят и не может выполнить операцию.\n" +
-                        "Попробуйте выполнить операцию позже или обратитесь в службу поддержки.");
+                    //MessageDialog.ShowWarning(_handlingOwner,
+                    //    "В настоящее время сервер занят и не может выполнить операцию.\n" +
+                    //    "Попробуйте выполнить операцию позже или обратитесь в службу поддержки.");
                 });
         }
     }

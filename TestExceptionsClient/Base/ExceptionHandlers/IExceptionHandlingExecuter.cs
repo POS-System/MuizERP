@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Entities.ExceptionsHandlers
+namespace TestExceptionsClient.Base.ExceptionHandlers
 {
     public interface IExceptionHandlingExecuter
     {

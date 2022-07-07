@@ -11,9 +11,9 @@ namespace Entities.Base
 
         private Int32 _ID;
         private Int32 _companyID;
-        private DateTime _createdDate;
+        private DateTime _createDate;
         private DateTime _modifyDate;
-        private Int32 _createdByUserID;
+        private Int32 _createByUserID;
         private Int32 _modifyByUserID;
 
         #endregion
@@ -45,24 +45,24 @@ namespace Entities.Base
         }
 
         [LoadParameter]        
-        public DateTime CreatedDate
+        public DateTime CreateDate
         {
-            get { return _createdDate; }
+            get { return _createDate; }
             set
             {
-                _createdDate = value;
-                OnPropertyChanged("CreatedDate");
+                _createDate = value;
+                OnPropertyChanged("CreateDate");
             }
         }
 
         [LoadParameter]
-        public int CreatedByUserID
+        public int CreateByUserID
         {
-            get { return _createdByUserID; }
+            get { return _createByUserID; }
             set
             {
-                _createdByUserID = value;
-                OnPropertyChanged("CreatedByUserID");
+                _createByUserID = value;
+                OnPropertyChanged("CreateByUserID");
             }
         }
 

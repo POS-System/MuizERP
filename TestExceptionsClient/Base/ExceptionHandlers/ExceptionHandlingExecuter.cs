@@ -1,7 +1,6 @@
 using System;
-using BetaPress.BDCUtils.Common.Validation;
 
-namespace Entities.ExceptionsHandlers
+namespace TestExceptionsClient.Base.ExceptionHandlers
 {
     public sealed class ExceptionHandlingExecuter : IExceptionHandlingExecuter
     {
@@ -15,8 +14,8 @@ namespace Entities.ExceptionsHandlers
 
         public void ExecuteWithHandling<T>(Action action, Action<T> exceptionHandlingAction) where T : Exception
         {
-            ArgumentValidator.ValidateThatArgumentNotNull(action, "action");
-            ArgumentValidator.ValidateThatArgumentNotNull(exceptionHandlingAction, "exceptionHandlingAction");
+            //ArgumentValidator.ValidateThatArgumentNotNull(action, "action");
+            //ArgumentValidator.ValidateThatArgumentNotNull(exceptionHandlingAction, "exceptionHandlingAction");
 
             try
             {

@@ -1,26 +1,23 @@
 ﻿using System;
-using System.Windows.Forms;
-using BetaOfficeClient.Common.Classes;
-using BetaOfficeServerObject.Exceptions.LogicExceptions;
-using BetaPress.BDCUtils.Common.Validation;
+using Entities.Exceptions.LogicExceptions;
 
-namespace Entities.ExceptionsHandlers
+namespace TestExceptionsClient.Base.ExceptionHandlers
 {
     public sealed class LogicExceptionHandler : IExceptionHandler
     {
         private readonly IExceptionHandlingExecuter _handlingExecuter;
-        private readonly IWin32Window _handlingOwner;
+        private readonly IntPtr _handlingOwner;
 
-        public LogicExceptionHandler(IWin32Window handlingOwner, IExceptionHandler exceptionHandler = null)
+        public LogicExceptionHandler(IntPtr handlingOwner, IExceptionHandler exceptionHandler = null)
             : this(handlingOwner, new ExceptionHandlingExecuter(exceptionHandler))
         {
         }
 
         internal LogicExceptionHandler(
-            IWin32Window handlingOwner, 
+            IntPtr handlingOwner, 
             IExceptionHandlingExecuter handlingExecuter)
         {
-            ArgumentValidator.ValidateThatArgumentNotNull(handlingExecuter, "handlingExecuter");
+            //ArgumentValidator.ValidateThatArgumentNotNull(handlingExecuter, "handlingExecuter");
 
             _handlingExecuter = handlingExecuter;
             _handlingOwner = handlingOwner;
@@ -30,7 +27,10 @@ namespace Entities.ExceptionsHandlers
         {
             _handlingExecuter.ExecuteWithHandling<LogicException>(
                 action,
-                exception => MessageDialog.ShowWarning(_handlingOwner, exception.Message));
+                exception =>
+                {
+                    //MessageDialog.ShowWarning(_handlingOwner, exception.Message);
+                });
         }
     }
 }

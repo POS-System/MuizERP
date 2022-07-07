@@ -1,29 +1,27 @@
-﻿using System;
-using System.Windows.Forms;
-using BetaOfficeClient.Common.Classes;
-using BetaPress.BDCUtils.Common.Logging;
-using BetaPress.BDCUtils.Common.Validation;
+﻿using Entities.Base.Utils;
+using System;
 
-namespace Entities.ExceptionsHandlers
+
+namespace TestExceptionsClient.Base.ExceptionHandlers
 {
     public sealed class ExceptionHandler : IExceptionHandler
     {
         private readonly IExceptionHandlingExecuter _handlingExecuter;
         private readonly ICustomLogger _logger;
-        private readonly IWin32Window _handlingOwner;
+        private readonly IntPtr _handlingOwner;
 
-        public ExceptionHandler(IWin32Window handlingOwner, ICustomLogger logger, IExceptionHandler exceptionHandler = null)
+        public ExceptionHandler(IntPtr handlingOwner, ICustomLogger logger, IExceptionHandler exceptionHandler = null)
             : this(handlingOwner, logger, new ExceptionHandlingExecuter(exceptionHandler))
         {
         }
 
         internal ExceptionHandler(
-            IWin32Window handlingOwner,
+            IntPtr handlingOwner,
             ICustomLogger logger,
             IExceptionHandlingExecuter handlingExecuter)
         {
-            ArgumentValidator.ValidateThatArgumentNotNull(handlingExecuter, "handlingExecuter");
-            ArgumentValidator.ValidateThatArgumentNotNull(logger, "logger");
+            //ArgumentValidator.ValidateThatArgumentNotNull(handlingExecuter, "handlingExecuter");
+            //ArgumentValidator.ValidateThatArgumentNotNull(logger, "logger");
 
             _handlingExecuter = handlingExecuter;
             _handlingOwner = handlingOwner;
@@ -37,7 +35,7 @@ namespace Entities.ExceptionsHandlers
                 exception =>
                 {
                     _logger.Error(exception);
-                    MessageDialog.ShowWarning(_handlingOwner, "Системная ошибка. Обратитесь в службу поддержки.");
+                    //MessageDialog.ShowWarning(_handlingOwner, "Системная ошибка. Обратитесь в службу поддержки.");
                 });
         }
     }

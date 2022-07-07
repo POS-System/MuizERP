@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Windows.Forms;
-using BetaPress.BDCUtils.Common.Factories;
-using BetaPress.BDCUtils.Common.Logging;
+using Entities.Base.Utils;
 
-namespace Entities.ExceptionsHandlers
+namespace TestExceptionsClient.Base.ExceptionHandlers
 {
-    public sealed class LogicExceptionHandlerFactory : 
-        IKeyedFactory<IExceptionHandler, Tuple<IWin32Window, ICustomLogger>>
+    public sealed class ExceptionHandlerFactory : 
+        IKeyedFactory<IExceptionHandler, Tuple<IntPtr, ICustomLogger>>
     {
-        public IExceptionHandler Create(Tuple<IWin32Window, ICustomLogger> param)
+        public IExceptionHandler Create(Tuple<IntPtr, ICustomLogger> param)
         {
             return new ExceptionHandler(
                     param.Item1,

@@ -53,6 +53,9 @@
     <Compile Include="Base\Parameters\IParametersContainer.cs" />
     <Compile Include="Base\Parameters\ParametersContainer.cs" />
     <Compile Include="Base\Utils\IConverter.cs" />
+    <Compile Include="Base\Utils\ICustomLogger.cs" />
+    <Compile Include="Base\Utils\IKeyedFactory.cs" />
+    <Compile Include="Base\Utils\LoggerWrapper.cs" />
     <Compile Include="Company\Company.cs" />
     <Compile Include="Base\TitleAttribute.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\GeneratingStoredProcedureNotSupportedException.cs" />
@@ -72,8 +75,6 @@
     <Compile Include="Base\Utils\TypeExtendingMethods.cs" />
     <Compile Include="User\UserRole.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ExceptionHandlers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

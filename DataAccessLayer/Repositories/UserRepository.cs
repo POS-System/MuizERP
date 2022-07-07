@@ -54,11 +54,11 @@ namespace DataAccessLayer.Repositories
                 {
                     _dataBaseRepository.SaveBaseItem(user, conn);
 
-                    _dataBaseRepository.SaveCollection(
-                        user.UserRoles, userRole => {
-                            userRole.UserID = user.ID;
-                            _roleRepository.SaveUserRole(userRole, conn);
-                        });
+                    //_dataBaseRepository.SaveCollection(
+                    //    user.UserRoles, userRole => {
+                    //        userRole.UserID = user.ID;
+                    //        _roleRepository.SaveUserRole(userRole, conn);
+                    //    });
                 });
         }
     }
