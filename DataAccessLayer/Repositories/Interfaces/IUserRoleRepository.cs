@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace DataAccessLayer.Repositories.Interfaces
 {
-    public interface IRoleRepository : ISave<Role>, IGetItems<Role>
+    public interface IUserRoleRepository : ISaveInTransaction<UserRole>, IGetItems<UserRole>
     {        
     }
 }

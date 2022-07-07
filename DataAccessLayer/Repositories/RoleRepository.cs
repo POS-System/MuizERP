@@ -14,18 +14,17 @@ namespace DataAccessLayer.Repositories
     internal class RoleRepository : IRoleRepository
     {
         private readonly DataBaseRepository _dataBaseRepository;
-        private readonly IMapper<SqlDataReaderWithSchema, BaseEntity> _baseMapper;
-        private readonly IMapper<SqlDataReaderWithSchema, UserRole> _userRoleMapper;
+        private readonly IRoleUserRepository _roleUserRepository;
+        private readonly IMapper<SqlDataReaderWithSchema, BaseEntity> _baseMapper;        
 
         public RoleRepository(
             DataBaseRepository dataBaseRepository,
-            IMapper<SqlDataReaderWithSchema, BaseEntity> baseMapper,
-            IMapper<SqlDataReaderWithSchema, UserRole> userRoleMapper)
+            IRoleUserRepository roleUserRepository,
+            IMapper<SqlDataReaderWithSchema, BaseEntity> baseMapper)
         {
             _dataBaseRepository = dataBaseRepository;
-
-            _baseMapper = baseMapper;
-            _userRoleMapper = userRoleMapper;
+            _roleUserRepository = roleUserRepository;
+            _baseMapper = baseMapper;            
         }
 
         public ObservableCollection<Role> GetItems(IParametersContainer parametersContainer)
@@ -38,6 +37,11 @@ namespace DataAccessLayer.Repositories
                 {
                     var item = new Role();
                     _baseMapper.Map(drd, item);
+
+                    var parameters = new ParametersContainer();
+                    parameters.Add<Role>(nameof(item.ID), item.ID);
+                    item.RoleUsers = _roleUserRepository.GetItems(parameters);
+
                     result.Add(item);
                 });
 
@@ -46,28 +50,17 @@ namespace DataAccessLayer.Repositories
 
         public void SaveItem(Role item)
         {
-            throw new NotImplementedException();
-        }
-
-        public ObservableCollection<UserRole> GetUserRoles(IParametersContainer parametersContainer)
-        {
-            var result = new ObservableCollection<UserRole>();
-
-            _dataBaseRepository.ReadCollectionWithSchema<UserRole>(
-                sqlCmd => ParametersConfigurator.ConfigureSqlCommand(sqlCmd, parametersContainer),
-                drd =>
+            _dataBaseRepository.DoInTransaction(
+                conn =>
                 {
-                    var item = new UserRole();
-                    _userRoleMapper.Map(drd, item);
-                    result.Add(item);
+                    _dataBaseRepository.SaveBaseItem(item, conn);
+
+                    _dataBaseRepository.SaveCollection(
+                        item.RoleUsers, detail => {
+                            detail.RoleID = item.ID;
+                            _roleUserRepository.SaveItem(detail, conn);
+                        });
                 });
-
-            return result;
-        }
-
-        public void SaveUserRole(UserRole userRole, SqlConnection conn)
-        {
-            _dataBaseRepository.SaveBaseItem(userRole, conn);
         }
     }
 }

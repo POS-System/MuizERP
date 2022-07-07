@@ -4,7 +4,7 @@ using MuizClient.Models;
 using System;
 using System.Collections.ObjectModel;
 
-namespace Entities.User
+namespace Entities
 {
     [LoadCommand]
     [SaveCommand]

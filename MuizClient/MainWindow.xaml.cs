@@ -1,8 +1,8 @@
 ﻿using DataAccessLayer;
 using DataAccessLayer.Parameters;
 using DataAccessLayer.Repositories.Interfaces;
+using Entities;
 using Entities.Base;
-using Entities.User;
 using MuizClient.Controls;
 using MuizClient.Models;
 using System;

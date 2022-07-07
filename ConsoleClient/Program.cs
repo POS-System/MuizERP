@@ -1,8 +1,9 @@
 ﻿using DataAccessLayer;
 using Entities.Base.Parameters;
 using Entities.Exceptions.InnerApplicationExceptions;
-using Entities.User;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 
 namespace ConsoleClient
@@ -13,6 +14,8 @@ namespace ConsoleClient
         {
             var connectionString = ConfigurationManager.ConnectionStrings["ConnectionERP"].ConnectionString;
             var dalc = new DALContainer(connectionString);
+
+
 
             //var companyRepository = dalc.CompanyRepository;
 
@@ -33,37 +36,69 @@ namespace ConsoleClient
             //companyRepository.SaveItem(newCompany);
 
             var userRepository = dalc.UserRepository;
+            var roleRepository = dalc.RoleRepository;
+            var userRoleRepository = dalc.UserRoleRepository;
+            var roleUserRepository = dalc.RoleUserRepository;
 
-            var newUser = new User
+            /*var roleParameters = new ParametersContainer();
+            roleParameters.Add("CompanyID", 2);*/
+            //ObservableCollection<Role> roleList = roleRepository.GetItems(new ParametersContainer());
+            ObservableCollection<User> userList = userRepository.GetItems(new ParametersContainer());
+
+            /*var newUser = new User
             {
                 CompanyID = 2,
-                FirstName = "Тестовое имя 2",
-                LastName = "Тестовая фамилия 2",
-                SecondName = "Тестовое отчество 2",
-                BirthDay = new DateTime(2022, 07, 06),
-                Email = "test2@email.ru",
+                FirstName = "Sasha",
+                LastName = "Тестовая фамилия 1",
+                SecondName = "Тестовое отчество 1",
+                BirthDay = new DateTime(2022, 07, 05),
+                Email = "test1@email.ru",
                 GenderID = 0,
-                Login = "login 2",
+                Login = "login 1",
                 Password = "password ",
-                Phone = "+78984562154",
+                Phone = "+79876541232",
                 Active = true,
-                Color = "Color 2",
+                Color = "Color 1",
                 Number = 777,
                 RoleID = 1,
                 ThemeID = 1,
-                INN = "987456321232",
-                ModifyByUserID = 1//,
-                //UserRoles = new ObservableCollection<UserRole>
-                //{
-                //    new UserRole { Role = new Role { ID = 1 } },
-                //    new UserRole { Role = new Role { ID = 2 } }
-                //}
+                INN = "123456789878",
+                ModifyByUserID = 1
             };
 
+            foreach (Role role in roleList)
+            {
+                UserRole userRole = new UserRole();
+                userRole.Role.ID = role.ID;
+                userRole.IsChecked = false;
+                newUser.UserRoles.Add(userRole);
+            }*
+            
             userRepository.SaveItem(newUser);
+            */
+
+            var newRole = new Role
+            {
+                CompanyID = 2,
+                Name = "Программист",
+                ModifyByUserID = 1
+            };
+
+            foreach (User user in userList)
+            {
+                RoleUser roleUser = new RoleUser();
+                roleUser.User.ID = user.ID;
+                roleUser.IsChecked = false;
+                newRole.RoleUsers.Add(roleUser);
+            }
+
+            roleRepository.SaveItem(newRole);
+
+            //userRepository.SaveItem(newUser);
             try
             {
                 var users = userRepository.GetItems(new ParametersContainer());
+                var roles = roleRepository.GetItems(new ParametersContainer());
             }
             catch (SqlServerInsertRecordException ex)
             {

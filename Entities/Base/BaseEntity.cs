@@ -1,4 +1,5 @@
 ﻿using Entities.Base.Attributes;
+using MuizEnums;
 using System;
 using System.ComponentModel;
 using System.Data;
@@ -9,12 +10,14 @@ namespace Entities.Base
     {
         #region Fields
 
-        private Int32 _ID;
-        private Int32 _companyID;
-        private DateTime _createDate;
-        private DateTime _modifyDate;
-        private Int32 _createByUserID;
-        private Int32 _modifyByUserID;
+        protected Int32 _ID;
+        private EState state;
+        protected Int32 _companyID;
+        protected DateTime _createDate;
+        protected DateTime _modifyDate;
+        protected Int32 _createByUserID;
+        protected Int32 _modifyByUserID;
+        protected byte[] _timeStamp;
 
         #endregion
 
@@ -22,7 +25,7 @@ namespace Entities.Base
 
         [LoadParameter]
         [SaveParameter(Direction = ParameterDirection.InputOutput)]
-        public int ID
+        public virtual int ID
         {
             get { return _ID; }
             set
@@ -31,10 +34,23 @@ namespace Entities.Base
                 OnPropertyChanged("ID");
             }
         }
+        protected EState State
+        {
+            get
+            {
+                return state;
+            }
 
-        [LoadParameter(Required = false)]
+            set
+            {
+                state = value;
+                OnPropertyChanged("State");
+            }
+        }
+
+        [LoadParameter()]
         [SaveParameter]
-        public int CompanyID
+        public virtual int CompanyID
         {
             get { return _companyID; }
             set
@@ -45,7 +61,7 @@ namespace Entities.Base
         }
 
         [LoadParameter]        
-        public DateTime CreateDate
+        public DateTime CreatedDate
         {
             get { return _createDate; }
             set
@@ -56,7 +72,7 @@ namespace Entities.Base
         }
 
         [LoadParameter]
-        public int CreateByUserID
+        public int CreatedByUserID
         {
             get { return _createByUserID; }
             set
@@ -67,7 +83,7 @@ namespace Entities.Base
         }
 
         [LoadParameter]       
-        public DateTime ModifyDate
+        public virtual DateTime ModifyDate
         {
             get { return _modifyDate; }
             set
@@ -79,7 +95,7 @@ namespace Entities.Base
 
         [LoadParameter]
         [SaveParameter]
-        public int ModifyByUserID
+        public virtual int ModifyByUserID
         {
             get { return _modifyByUserID; }
             set
@@ -89,12 +105,29 @@ namespace Entities.Base
             }
         }
 
+        [LoadParameter]
+        [SaveParameter(Nullable = true)]
+        public virtual byte[] TimeStamp
+        {
+            get
+            {
+                return _timeStamp;
+            }
+
+            set
+            {
+                _timeStamp = value;
+                OnPropertyChanged("TimeStamp");
+            }
+        }        
+
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            State = EState.Update;
         }
     }
 }
