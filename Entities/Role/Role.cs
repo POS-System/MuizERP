@@ -1,19 +1,22 @@
 ﻿using Entities.Base;
 using Entities.Base.Attributes;
+using System.Collections.ObjectModel;
 
 namespace Entities
 {
+    [SaveCommand]
     [LoadCommand]
     public class Role : BaseEntity
     {
         #region Fields
 
         private string _name;
+        private ObservableCollection<RoleUser> _roleUsers;
 
         #endregion
 
         #region Properties
-
+        [SaveParameter]
         [LoadParameter]
         public string Name
         {
@@ -25,6 +28,23 @@ namespace Entities
             }
         }
 
+        public ObservableCollection<RoleUser> RoleUsers
+        {
+            get
+            {
+                return _roleUsers;
+            }
+
+            set
+            {
+                _roleUsers = value;
+                OnPropertyChanged("RoleUsers");
+            }
+        }
+        public Role()
+        {
+            _roleUsers = new ObservableCollection<RoleUser>();
+        }
         #endregion
     }
 }

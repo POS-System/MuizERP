@@ -11,6 +11,8 @@ namespace DataAccessLayer
         private ISampleEntityDetailsRepository _sampleEntityDetailsRepository;
         private IUserRepository _userRepository;
         private IRoleRepository _roleRepository;
+        private IUserRoleRepository _userRoleRepository;
+        private IRoleUserRepository _roleUserRepository;
         private ICompanyRepository _companyRepository;
 
         public ISampleEntityRepository SampleEntityRepository
@@ -38,19 +40,34 @@ namespace DataAccessLayer
             get { return _roleRepository; }
         }
 
+        public IUserRoleRepository UserRoleRepository
+        {
+            get { return _userRoleRepository; }
+        }
+
+        public IRoleUserRepository RoleUserRepository
+        {
+            get { return _roleUserRepository; }
+        }
+
         public DALContainer(string connectionString)
         {
             var sqlExceptionConverter = new SqlExceptionToLogicExceptionConverter();
 
             var dataBaseRepository = new DataBaseRepository(connectionString, sqlExceptionConverter);
             var baseMapper = new BaseMapper();
-            var userRoleMapper = new UserRoleMapper(baseMapper);
+            var userRoleMapper = new UserRoleMapper(baseMapper, baseMapper);
+            var roleUserMapper = new RoleUserMapper(baseMapper, baseMapper);
 
             _sampleEntityDetailsRepository = new SampleEntityDetailsRepository(dataBaseRepository, baseMapper);
             _sampleEntityRepository = new SampleEntityRepository(dataBaseRepository, _sampleEntityDetailsRepository, baseMapper);
-            _roleRepository = new RoleRepository(dataBaseRepository, baseMapper, userRoleMapper);
-            _userRepository = new UserRepository(dataBaseRepository, _roleRepository, baseMapper);
-            _companyRepository = new CompanyRepository(dataBaseRepository, baseMapper);
+            _companyRepository = new CompanyRepository(dataBaseRepository, baseMapper);     
+            
+            _userRoleRepository = new UserRoleRepository(dataBaseRepository, userRoleMapper);
+            _roleUserRepository = new RoleUserRepository(dataBaseRepository, roleUserMapper);
+
+            _roleRepository = new RoleRepository(dataBaseRepository, _roleUserRepository, baseMapper);
+            _userRepository = new UserRepository(dataBaseRepository, _userRoleRepository, baseMapper);
         }
     }
 }

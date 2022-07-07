@@ -19,6 +19,18 @@ namespace Entities
 
         #region Properties
 
+        [LoadParameter(Required = false)]
+        [SaveParameter]
+        public override int CompanyID
+        {
+            get { return _companyID; }
+            set
+            {
+                _companyID = value;
+                OnPropertyChanged("CompanyID");
+            }
+        }
+
         [LoadParameter(Nullable = true)]
         [SaveParameter]
         public int? ParentID
