@@ -1,0 +1,92 @@
+﻿<UserControl x:Class="MuizClient.Controls.OtherControls.DoubleThumbSlider"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MuizClient.Controls.OtherControls"
+             mc:Ignorable="d" 
+             x:Name="control"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="simpleSlider" TargetType="{x:Type Slider}">
+            <Border SnapsToDevicePixels="true"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+            >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Rectangle x:Name="PART_SelectionRange"/>
+
+                    <StackPanel>
+                        <Track x:Name="PART_Track" Grid.Row="1">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="Slider.DecreaseLarge">
+                                    <TextBlock Foreground="black" Text="{TemplateBinding Value}" />
+                                </RepeatButton>
+                            </Track.DecreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb x:Name="Thumb">
+                                    <Thumb.Template>
+                                        <ControlTemplate TargetType="Thumb">
+                                            <StackPanel>
+                                                <Rectangle  Fill="Red"
+                                                            Stroke="Black"
+                                                            StrokeThickness="1"
+                                                            Width="10"
+                                                            Height="18"
+                                                            SnapsToDevicePixels="True"
+                                                />
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Thumb.Template>
+                                </Thumb>
+                            </Track.Thumb>
+                            <!--<TextBlock Text="yo" Foreground="black" />-->
+                        </Track>
+
+                        <!--<TextBlock Text="yo" Foreground="black" />-->
+
+                        <!--<TextBlock Text="{TemplateBinding Value}"/>-->
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid VerticalAlignment="Top">
+            <Border BorderThickness="0,1,0,0"
+                    BorderBrush="Black"
+                    VerticalAlignment="Center"
+                    Height="1"
+                    Margin="5,0,5,0"
+            />
+
+            <StackPanel>
+                <Slider x:Name="LowerSlider"
+                        Minimum="{Binding ElementName=control, Path=Minimum}"
+                        Maximum="{Binding ElementName=control, Path=Maximum}"
+                        Value="{Binding ElementName=control, Path=LowerValue}"
+                        Template="{StaticResource simpleSlider}"
+                        Margin="0,0,10,0"/>
+                <!--<TextBlock Text="{Binding ElementName=control, Path=LowerValue}"/>-->
+            </StackPanel>
+            
+            <StackPanel>
+                <Slider x:Name="UpperSlider"
+                    Minimum="{Binding ElementName=control, Path=Minimum}"
+                    Maximum="{Binding ElementName=control, Path=Maximum}"
+                    Value="{Binding ElementName=control, Path=UpperValue}"
+                    Template="{StaticResource simpleSlider}"
+                    Margin="10,0,0,0"/>
+                <!--<TextBlock Text="{Binding ElementName=control, Path=UpperValue}"/>-->
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

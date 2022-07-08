@@ -22,6 +22,13 @@
         </Border>
     </ControlTemplate>-->
 
+    <DropShadowEffect x:Key="DefaultShadow" Color="black" Direction="270" ShadowDepth="2" BlurRadius="4" Opacity="1" />
+    
+    <Style x:Key="BorderDefaultShadow" TargetType="{x:Type Border}">
+        <Setter Property="Effect" Value="{StaticResource DefaultShadow}" />
+    </Style>
+
+
 
     <Style x:Key="ToolBarButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent"/>

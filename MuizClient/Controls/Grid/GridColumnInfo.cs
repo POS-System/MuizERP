@@ -1,5 +1,9 @@
 ﻿using Entities.Base.Parameters;
+using MuizClient.Helpers.FilterValue;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 
 namespace MuizClient.Controls.Grid
@@ -11,7 +15,7 @@ namespace MuizClient.Controls.Grid
         public GridColumnFilter Filter { get; set; }
         //public object FilterValue { get; set; }
 
-        public GridColumnInfo(DataGridColumn gridColumn, PropertyInfo propInfo, object filterValue = null)
+        public GridColumnInfo(DataGridColumn gridColumn, PropertyInfo propInfo, IFilterValue filterValue = null)
         {
             GridColumn = gridColumn;
             PropInfo = propInfo;
@@ -23,25 +27,45 @@ namespace MuizClient.Controls.Grid
         }
     }
 
-    public class GridColumnFilter
+    public class GridColumnFilter : INotifyPropertyChanged
     {
-        public object Value { get; set; }
-        public bool IsActive { get; set; }
+        private bool isActive;
 
-        public object GetValue() => IsActive ? Value : null;
+        public IFilterValue Value { get; set; }
+        //public object Value { get; set; }
+        public bool IsActive 
+        {
+            get => isActive;
+            set
+            {
+                isActive = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Dictionary<string, object> GetValue(string propName) => IsActive ? Value.GetPropertyFilterValues(propName) : null;
+
+
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
     }
 
     public static class ParametersContainerExtension
     {
-        public static void SetGridColumn(this ParametersContainer paramContainer, GridColumnInfo gridRow)
+        public static void AddGridColumnFilter(this ParametersContainer paramContainer, GridColumnInfo gridRow)
         {
             var propName = gridRow.PropInfo.Name;
-            var filterValue = gridRow.Filter.GetValue();
+            var filterValue = gridRow.Filter.GetValue(propName);
 
             if (filterValue != null)
-                paramContainer.Add(gridRow.PropInfo.Name, filterValue);
-            else
-                paramContainer.Remove(propName);
+                paramContainer.AddRange(filterValue);
         }
     }
 }

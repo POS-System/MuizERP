@@ -23,10 +23,11 @@ namespace MuizClient.Controls.Grid.GridFilter
     /// </summary>
     public partial class GridFilterWindow : Window
     {
-        Type _itemType;
+        //Type _itemType;
         ObservableCollection<IBaseFilterControl> filterControls;
 
         public Dictionary<PropertyInfo, IBaseFilterControl> FilterControlsDict { get; set; }
+        //public Action AnyFilterChanged;
 
         public GridFilterWindow()
         {
@@ -70,24 +71,27 @@ namespace MuizClient.Controls.Grid.GridFilter
 
         #region Other
 
-        public void InitFilters(IEnumerable<GridColumnInfo> columnInfos)
+        public void InitFilters(IEnumerable<GridColumnInfo> columnInfos, Action anyFilterChanged = null)
         {
             foreach(var columnInfo in columnInfos)
             {
                 IBaseFilterControl control = null;
                 var property = columnInfo.PropInfo;
 
-
-                if (property.PropertyType == typeof(int))
+                if (property.PropertyType == typeof(string))
+                    control = new StringFilterControl();
+                else if (property.PropertyType == typeof(int))
                     control = new IntFilterControl();
-                else if (property.PropertyType == typeof(string))
-                    control = new TextFilterControl();
-
+                else if (property.PropertyType == typeof(double))
+                    control = new DoubleFilterControl();
+                else if (property.PropertyType == typeof(bool))
+                    control = new BooleanFilterControl();
 
                 if (control != null)
                 {
                     control.Init(columnInfo);
                     control.PropertyName = property.Name;
+                    control.AnyFilterChanged += anyFilterChanged;
 
                     filterControls.Add(control);
                     FilterControlsDict[property] = control;
@@ -96,59 +100,6 @@ namespace MuizClient.Controls.Grid.GridFilter
                 itemsControl.ItemsSource = filterControls;
             }
         }
-
-
-        public Dictionary<BaseFilterControl<object, IBaseFilterControl>, bool> filters;
-
-        //public void InitFilters(Type itemType)
-        //{
-        //    _itemType = itemType;
-
-        //    var properties = _itemType.GetType().GetProperties();//.Where(x => x.);
-        //    foreach (var property in properties)
-        //    {
-        //        if (property.PropertyType == typeof(int))
-        //        {
-        //            var item = new IntFilterControl();
-        //            item.Init(property.Name);
-        //            //item.CurrentFilterValue = 50;
-        //            item.PropertyName = property.Name;
-
-        //            filterControls.Add(item);
-
-        //            FilterControlsDict[property] = item;
-
-        //            //itemsControl.Items.Add(item);
-        //        }
-
-        //        itemsControl.ItemsSource = filterControls;
-
-        //        //var lastName = property
-        //        //    .GetCustomAttributes(false)
-        //        //    .Select(p => p as TitleAttribute)
-        //        //    .LastOrDefault(x => x != null);
-
-        //        //var newColumn = new DataGridTextColumn()
-        //        //{
-        //        //    Header = lastName != null ? lastName.Title : property.Name,
-        //        //    Binding = new Binding(property.Name)
-        //        //};
-
-        //        //grid.Columns.Add(newColumn);
-        //    }
-        //}
-
-        //public ParametersContainer GetParametersContainer()
-        //{
-        //    var values = FilterControlsDict.Values.Select(x => x.GetValue()).ToList();
-
-        //    var parameters = FilterControlsDict
-        //        .Where(x => (int)x.Value.GetValue() != 0)
-        //        .ToDictionary(x => x.Key.Name, x => x.Value.GetValue());
-        //    var result = new ParametersContainer(parameters);
-
-        //    return result;
-        //}
 
         #endregion
     }

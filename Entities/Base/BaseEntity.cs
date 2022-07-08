@@ -61,7 +61,7 @@ namespace Entities.Base
         }
 
         [LoadParameter]        
-        public DateTime CreatedDate
+        public DateTime CreateDate
         {
             get { return _createDate; }
             set
@@ -72,7 +72,7 @@ namespace Entities.Base
         }
 
         [LoadParameter]
-        public int CreatedByUserID
+        public int CreateByUserID
         {
             get { return _createByUserID; }
             set
