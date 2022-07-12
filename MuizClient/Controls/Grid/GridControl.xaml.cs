@@ -3,6 +3,7 @@ using DataAccessLayer.Parameters;
 using DataAccessLayer.Repositories.Interfaces.Base;
 using Entities;
 using Entities.Base;
+using Entities.Base.Attributes;
 using Entities.Base.Parameters;
 using MuizClient.Controls.Grid;
 using MuizClient.Controls.Grid.GridFilter;

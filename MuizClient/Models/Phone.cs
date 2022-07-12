@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Entities.Base.Attributes;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace MuizClient.Models

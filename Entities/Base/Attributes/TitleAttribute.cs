@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MuizClient.Models
+namespace Entities.Base.Attributes
 {
     public class TitleAttribute : Attribute
     {
