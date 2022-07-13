@@ -1,31 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using MuizClient.Helpers.FilterValue;
 
 namespace MuizClient.Controls.Grid.GridFilter.GridFilterControls
 {
     /// <summary>
     /// Логика взаимодействия для IntFilterControl.xaml
     /// </summary>
-    public partial class IntFilterControl : BaseFilterControl<int, IntFilterControl>
+    public partial class IntFilterControl : BaseFilterControl<IntFilterValue, IntFilterControl>
     {
         public IntFilterControl()
         {
-            InitializeComponent();
+            CurrentValue.FromValue = MinValue;
+            CurrentValue.ToValue = MaxValue;
 
-            slider.Minimum = 0; // int.MinValue;
-            slider.Maximum = 10000; // int.MaxValue;
+            InitializeComponent();
         }
+
+
+        public int MinValue { get; } = 0;
+        public int MaxValue { get; } = 1000000;
+
+
+        //public static readonly DependencyProperty LowerValueProperty =
+        //    DependencyProperty.Register(nameof(Lower), typeof(IntFilterValue), typeof(IntFilterControl));
+        //public static readonly DependencyProperty UpperValueProperty =
+        //    DependencyProperty.Register(nameof(Upper), typeof(IntFilterValue), typeof(IntFilterControl));
+
+
+        //public IntFilterValue Lower
+        //{
+        //    get => (IntFilterValue)GetValue(LowerValueProperty);
+        //    set 
+        //    { 
+        //        SetValue(LowerValueProperty, value); 
+        //        OnPropertyChanged(); 
+        //    }
+        //}
+
+        //public IntFilterValue Upper
+        //{
+        //    get => (IntFilterValue)GetValue(UpperValueProperty);
+        //    set 
+        //    { 
+        //        SetValue(UpperValueProperty, value); 
+        //        OnPropertyChanged(); 
+        //    }
+        //}
     }
 }

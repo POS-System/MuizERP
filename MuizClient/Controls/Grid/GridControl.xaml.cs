@@ -160,11 +160,12 @@ namespace MuizClient.Controls
         private void Filter_Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             var _gridFilterWindow = new GridFilterWindow();
-            _gridFilterWindow.InitFilters(_columns);
+            //_gridFilterWindow.AnyFilterChanged = () => FilterGridData();
+            _gridFilterWindow.InitFilters(_columns, () => FilterGridData());
 
             if (_gridFilterWindow.ShowDialog() == true)
             {
-                FilterGridData();
+                //FilterGridData();
             }
             else
             {
@@ -189,9 +190,11 @@ namespace MuizClient.Controls
 
         private void FilterGridData()
         {
+            _parametersContainer = new ParametersContainer();
+
             foreach (var column in _columns)
             {
-                _parametersContainer.SetGridColumn(column);
+                _parametersContainer.AddGridColumnFilter(column);
             }
 
             updateGridData();

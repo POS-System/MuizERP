@@ -5,13 +5,23 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MuizClient.Controls.OtherControls"
              mc:Ignorable="d" 
+             x:Name="control"
              d:DesignHeight="450" d:DesignWidth="800">
     <ItemsControl.ItemTemplate>
         <DataTemplate>
-            <StackPanel Orientation="Horizontal">
-                <CheckBox IsChecked="{Binding Path=ColumnInfo.Filter.IsActive}"></CheckBox>
-                <ContentControl Content="{TemplateBinding Content}" />
-            </StackPanel>
+            <Grid Margin="0,5">
+                <Border BorderThickness="0 0 0 1" BorderBrush="LightGray" >
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" Direction="270" ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
+                    </Border.Effect>
+                </Border>
+
+                <StackPanel Orientation="Horizontal" Margin="0 8">
+                    <CheckBox IsChecked="{Binding Path=IsActive, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    <ContentControl Content="{TemplateBinding Content}" />
+                </StackPanel>
+            </Grid>
+            
         </DataTemplate>
     </ItemsControl.ItemTemplate>
 </ItemsControl>

@@ -8,17 +8,17 @@
         mc:Ignorable="d"
         Title="GridFilterWindow" Height="450" Width="800">
     <Grid>
-        <ScrollViewer>
-            <StackPanel>
+        <DockPanel VerticalAlignment="Stretch" LastChildFill="True">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Background="#FFE4E3E3">
+                <Button Content="Применить" Click="Accept_Button_Click" />
+                <Button Content="Отменить"/>
+                <Button Content="Очистить фильтры" Click="Clear_Button_Click" />
+            </StackPanel>
+
+            <ScrollViewer>
                 <othercontrols:CheckList x:Name="itemsControl">
                 </othercontrols:CheckList>
-
-                <StackPanel Orientation="Horizontal">
-                    <Button Content="Применить" Click="Accept_Button_Click" />
-                    <Button Content="Отменить"/>
-                    <Button Content="Очистить фильтры" Click="Clear_Button_Click" />
-                </StackPanel>
-            </StackPanel>
-        </ScrollViewer>
+            </ScrollViewer>
+        </DockPanel>
     </Grid>
 </Window>

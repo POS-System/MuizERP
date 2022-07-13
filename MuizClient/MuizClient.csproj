@@ -68,11 +68,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Grid\GridFilter\GridFilterControls\BooleanFilterControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Grid\GridFilter\GridFilterControls\DoubleFilterControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Grid\GridFilter\GridFilterControls\IntFilterControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Grid\GridFilter\GridFilterControls\TextFilterControl.xaml">
+    <Page Include="Controls\Grid\GridFilter\GridFilterControls\StringFilterControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -85,6 +93,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\OtherControls\CheckList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\OtherControls\DoubleThumbSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\OtherControls\Inputs\IntBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -112,11 +128,17 @@
       <DependentUpon>AddEntityControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Grid\GridFilter\GridFilterControls\BaseFilterControl.cs" />
+    <Compile Include="Controls\Grid\GridFilter\GridFilterControls\BooleanFilterControl.xaml.cs">
+      <DependentUpon>BooleanFilterControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Grid\GridFilter\GridFilterControls\DoubleFilterControl.xaml.cs">
+      <DependentUpon>DoubleFilterControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Grid\GridFilter\GridFilterControls\IntFilterControl.xaml.cs">
       <DependentUpon>IntFilterControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Grid\GridFilter\GridFilterControls\TextFilterControl.xaml.cs">
-      <DependentUpon>TextFilterControl.xaml</DependentUpon>
+    <Compile Include="Controls\Grid\GridFilter\GridFilterControls\StringFilterControl.xaml.cs">
+      <DependentUpon>StringFilterControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Grid\GridFilter\GridFilterWindow.xaml.cs">
       <DependentUpon>GridFilterWindow.xaml</DependentUpon>
@@ -128,6 +150,12 @@
     <Compile Include="Controls\OtherControls\CheckList.xaml.cs">
       <DependentUpon>CheckList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\OtherControls\DoubleThumbSlider.xaml.cs">
+      <DependentUpon>DoubleThumbSlider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\OtherControls\Inputs\IntBox.xaml.cs">
+      <DependentUpon>IntBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ToolBar\ToolBarButtonControl.xaml.cs">
       <DependentUpon>ToolBarButtonControl.xaml</DependentUpon>
     </Compile>
@@ -137,6 +165,11 @@
     <Compile Include="Controls\Grid\GridControl.xaml.cs">
       <DependentUpon>GridControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FilterValue\DoubleFilterValue.cs" />
+    <Compile Include="Helpers\FilterValue\IFilterValue.cs" />
+    <Compile Include="Helpers\FilterValue\IntFilterValue.cs" />
+    <Compile Include="Helpers\FilterValue\BooleanFilterValue.cs" />
+    <Compile Include="Helpers\FilterValue\StringFilterValue.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -162,6 +195,18 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Assets\Fonts\Roboto-Black.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-BlackItalic.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-Bold.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-BoldItalic.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-Italic.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-Light.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-LightItalic.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-Medium.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-MediumItalic.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-Regular.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-Thin.ttf" />
+    <Resource Include="Assets\Fonts\Roboto-ThinItalic.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -189,8 +234,6 @@
       <Name>Entities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\Fonts\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
