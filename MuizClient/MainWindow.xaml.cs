@@ -4,7 +4,6 @@ using DataAccessLayer.Repositories.Interfaces;
 using Entities;
 using Entities.Base;
 using MuizClient.Controls;
-using MuizClient.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

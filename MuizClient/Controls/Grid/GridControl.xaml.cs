@@ -7,7 +7,6 @@ using Entities.Base.Attributes;
 using Entities.Base.Parameters;
 using MuizClient.Controls.Grid;
 using MuizClient.Controls.Grid.GridFilter;
-using MuizClient.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
