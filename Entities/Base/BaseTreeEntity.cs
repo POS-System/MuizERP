@@ -7,6 +7,7 @@ namespace Entities.Base
         #region Fields
 
         private int? _parentID;
+        private EntityCollection<BaseTreeEntity> _childs;
 
         #endregion
 
@@ -25,6 +26,28 @@ namespace Entities.Base
                     OnPropertyChanged();
                 }
             }
+        }
+
+        public EntityCollection<BaseTreeEntity> Childs
+        {
+            get { return _childs; }
+            set
+            {
+                if (_childs != value)
+                {
+                    _childs = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        #endregion
+
+        #region Constructor
+
+        public BaseTreeEntity()
+        {
+            _childs = new EntityCollection<BaseTreeEntity>();
         }
 
         #endregion

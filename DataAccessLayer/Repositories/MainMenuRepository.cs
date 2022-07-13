@@ -5,8 +5,7 @@ using DataAccessLayer.Utils;
 using Entities;
 using Entities.Base;
 using Entities.Base.Parameters;
-using System.Collections.Generic;
-using System.Linq;
+using Entities.Base.Utils;
 
 namespace DataAccessLayer.Repositories
 {
@@ -37,39 +36,10 @@ namespace DataAccessLayer.Repositories
                     result.Add(item);
                 });
 
-            // TODO: Создать TreeBuilder в бизнес логике или клиенте
-            var tree = BuildTree(result.ToList());
-            tree.ResetState();
+            // TODO: Строить дерево в бизнес логике или на клиенте
+            var tree = EntityTreeBuilder.Build(result);
 
             return tree;
         }                
-
-        private EntityCollection<MenuItem> BuildTree(IEnumerable<MenuItem> items)
-        {
-            var result = new EntityCollection<MenuItem>();
-
-            var roots = GetChilds(null, items);
-            foreach(var root in roots)
-            {
-                AddChilds(root, items);
-                result.Add(root);
-            }
-
-            return result;
-        }
-
-        private IEnumerable<MenuItem> GetChilds(int? ParentID, IEnumerable<MenuItem> items)
-        {
-            return items.Where(i => i.ParentID == ParentID);
-        }
-
-        private void AddChilds(MenuItem item, IEnumerable<MenuItem> items)
-        {
-            var childs = GetChilds(item.ID, items);
-            item.Childs.AddRange(childs);
-
-            foreach (var child in childs)
-                AddChilds(child, items);
-        }
     }
 }

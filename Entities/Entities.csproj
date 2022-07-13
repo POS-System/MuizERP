@@ -59,6 +59,7 @@
     <Compile Include="Base\Parameters\IParametersContainer.cs" />
     <Compile Include="Base\Parameters\ParametersContainer.cs" />
     <Compile Include="Base\Attributes\Interface\IAttributeSetter.cs" />
+    <Compile Include="Base\Utils\EntityTreeBuilder.cs" />
     <Compile Include="Base\Utils\Interface\IConverter.cs" />
     <Compile Include="Base\Utils\Interface\ICustomLogger.cs" />
     <Compile Include="Base\Utils\Interface\IKeyedFactory.cs" />
