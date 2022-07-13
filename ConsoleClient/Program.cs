@@ -1,10 +1,14 @@
 ﻿using DataAccessLayer;
+using Entities;
+using Entities.Base;
 using Entities.Base.Parameters;
 using Entities.Exceptions.InnerApplicationExceptions;
+using MuizEnums;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
+using System.Linq;
 
 namespace ConsoleClient
 {
@@ -13,9 +17,39 @@ namespace ConsoleClient
         static void Main(string[] args)
         {
             var connectionString = ConfigurationManager.ConnectionStrings["ConnectionERP"].ConnectionString;
-            var dalc = new DALContainer(connectionString);
+            //var dalc = new DALContainer(connectionString);
+
+            var user = new User() { };
+            user.UserRoles.Add(new UserRole() { State = EState.Insert });
+            //user.ResetState();
+            user.FixValues();
+            
+            user.UserRoles[0].Role.Name = "123";
+            user.UserRoles[0].Role.Name = null;
+
+            var isChanged = user.IsChanged;
+
+            //var isModified = user.IsModified;
+
+            //var newCompany = new Company
+            //{
+            //    ParentID = 4,
+            //    Name = "New company 2",
+            //    INN = "111111111111",
+            //    OrderBy = 204,
+            //    ModifyByUserID = 1
+            //};
+
+            //newCompany.FixValues();
+            //newCompany.Name = "wqeqeqwe";
+            //newCompany.Name = "New company 2";
+
+            //var isChanged = newCompany.IsChanged;
 
 
+            //var userRole = new UserRole() { Role = new Role() };
+
+            //var isModified = userRole.IsModified;
 
             //var companyRepository = dalc.CompanyRepository;
 
@@ -35,15 +69,15 @@ namespace ConsoleClient
 
             //companyRepository.SaveItem(newCompany);
 
-            var userRepository = dalc.UserRepository;
-            var roleRepository = dalc.RoleRepository;
-            var userRoleRepository = dalc.UserRoleRepository;
-            var roleUserRepository = dalc.RoleUserRepository;
+            //var userRepository = dalc.UserRepository;
+            //var roleRepository = dalc.RoleRepository;
+            //var userRoleRepository = dalc.UserRoleRepository;
+            //var roleUserRepository = dalc.RoleUserRepository;
 
             /*var roleParameters = new ParametersContainer();
             roleParameters.Add("CompanyID", 2);*/
             //ObservableCollection<Role> roleList = roleRepository.GetItems(new ParametersContainer());
-            ObservableCollection<User> userList = userRepository.GetItems(new ParametersContainer());
+            //ObservableCollection<User> userList = userRepository.GetItems(new ParametersContainer());
 
             /*var newUser = new User
             {
@@ -76,7 +110,7 @@ namespace ConsoleClient
             
             userRepository.SaveItem(newUser);
             */
-
+            /*
             var newRole = new Role
             {
                 CompanyID = 2,
@@ -93,17 +127,17 @@ namespace ConsoleClient
             }
 
             roleRepository.SaveItem(newRole);
-
+            */
             //userRepository.SaveItem(newUser);
-            try
-            {
-                var users = userRepository.GetItems(new ParametersContainer());
-                var roles = roleRepository.GetItems(new ParametersContainer());
-            }
-            catch (SqlServerInsertRecordException ex)
-            {
+            //try
+            //{
+            //    var users = userRepository.GetItems(new ParametersContainer());
+            //    var roles = roleRepository.GetItems(new ParametersContainer());
+            //}
+            //catch (SqlServerInsertRecordException ex)
+            //{
 
-            }
+            //}
 
             //var sampleEntityRepository = dalc.SampleEntityRepository;
 

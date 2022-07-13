@@ -5,6 +5,6 @@
         None,
         Insert,
         Update,
-        Remove
+        Delete
     }
 }
