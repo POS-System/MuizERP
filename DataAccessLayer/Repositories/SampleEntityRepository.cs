@@ -25,9 +25,9 @@ namespace DataAccessLayer.Repositories
             _baseMapper = baseMapper;
         }
 
-        public ObservableCollection<SampleEntity> GetItems(IParametersContainer parametersContainer)
+        public EntityCollection<SampleEntity> GetItems(IParametersContainer parametersContainer)
         {
-            var result = new ObservableCollection<SampleEntity>();
+            var result = new EntityCollection<SampleEntity>();
 
             _dataBaseRepository.ReadCollectionWithSchema<SampleEntity>(
                 sqlCmd => ParametersConfigurator.ConfigureSqlCommand(sqlCmd, parametersContainer),

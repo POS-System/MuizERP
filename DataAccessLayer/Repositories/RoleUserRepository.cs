@@ -24,9 +24,9 @@ namespace DataAccessLayer.Repositories
             _roleUserMapper = roleUserMapper;            
         }
 
-        public ObservableCollection<RoleUser> GetItems(IParametersContainer parametersContainer)
+        public EntityCollection<RoleUser> GetItems(IParametersContainer parametersContainer)
         {
-            var result = new ObservableCollection<RoleUser>();
+            var result = new EntityCollection<RoleUser>();
 
             _dataBaseRepository.ReadCollectionWithSchema<RoleUser>(
                 sqlCmd => ParametersConfigurator.ConfigureSqlCommand(sqlCmd, parametersContainer),

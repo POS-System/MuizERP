@@ -15,6 +15,6 @@ namespace DataAccessLayer.Repositories.Interfaces.Base
         /// </summary>
         /// <param name="parametersContainer">Контейнер с параметрами хранимой процедуры.</param>
         /// <returns></returns>
-        ObservableCollection<T> GetItems(IParametersContainer parametersContainer);
+        EntityCollection<T> GetItems(IParametersContainer parametersContainer);
     }
 }
