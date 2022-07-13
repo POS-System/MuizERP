@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Entities.Base
 {
-    interface IEntityCollection
+    public interface IEntityCollection
     {
-        bool IsChanged { get; }
+        bool IsModified { get; }
         void FixValues();
         void ResetState();
+    }
+
+    public interface IEntityCollection<T> : IEntityCollection, IEnumerable<T>
+        where T : BaseEntity
+    {
+
     }
 }

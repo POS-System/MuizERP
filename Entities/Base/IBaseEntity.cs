@@ -13,7 +13,7 @@ namespace Entities.Base
         int CreateByUserID { get; set; }
         int ModifyByUserID { get; set; }
         byte[] TimeStamp { get; set; }
-        bool IsChanged { get; }
+        bool IsModified { get; }
         void FixValues();
         void ResetState();
     }

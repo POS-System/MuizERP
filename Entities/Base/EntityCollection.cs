@@ -9,7 +9,7 @@ namespace Entities.Base
     /// Коллекция для объектов, наследованных от <see cref="BaseEntity"/>.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class EntityCollection<T> : ObservableCollection<T>, IEntityCollection
+    public class EntityCollection<T> : ObservableCollection<T>, IEntityCollection<T>
         where T : BaseEntity
     {
         public EntityCollection() : base()
@@ -20,6 +20,10 @@ namespace Entities.Base
         {
         }
 
+        /// <summary>
+        /// Добавляет в коллекцию несколько объектов.
+        /// </summary>
+        /// <param name="items"></param>
         public void AddRange(IEnumerable<T> items)
         {
             foreach (var item in items)
@@ -67,27 +71,33 @@ namespace Entities.Base
         }
 
         /// <summary>
-        /// Признак изменения коллекции.
+        /// Старый признак изменения коллекции.
         /// </summary>
-        public bool IsModified
+        public bool IsChangedOld
         {
-            get { return this.Any(i => i.IsModified); }
+            get { return this.Any(i => i.IsChangedOld); }
         }
 
         /// <summary>
         /// Новый признак изменения коллекции.
         /// </summary>
-        public bool IsChanged
+        public bool IsModified
         {
-            get {  return this.Any(i => i.IsChanged || i.State == EState.Insert || i.State == EState.Delete); }
+            get {  return this.Any(i => i.IsModified || i.State == EState.Insert || i.State == EState.Delete); }
         }
 
+        /// <summary>
+        /// Фиксирует текущие значения элементов коллекции.
+        /// </summary>
         public void FixValues()
         {
             foreach (var item in this)
                 item.FixValues();
         }
 
+        /// <summary>
+        /// Устанавливает состояние объектов коллекции в None.
+        /// </summary>
         public void ResetState()
         {
             foreach (var item in this)

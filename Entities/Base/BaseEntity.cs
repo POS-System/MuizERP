@@ -156,9 +156,9 @@ namespace Entities.Base
         }
 
         /// <summary>
-        /// Признак изменения объекта.
+        /// Старый признак изменения объекта.
         /// </summary>
-        public bool IsModified
+        public bool IsChangedOld
         {
             get
             {
@@ -174,7 +174,7 @@ namespace Entities.Base
                     if (CheckIsEntity(type))
                     {
                         // У объекта BaseEntity получаем значение свойства isModified
-                        var isModified = ((BaseEntity)property.GetValue(this)).IsModified;
+                        var isModified = ((BaseEntity)property.GetValue(this)).IsChangedOld;
 
                         if (isModified) return isModified;
                     }
@@ -211,9 +211,9 @@ namespace Entities.Base
         }
 
         /// <summary>
-        /// Новый признак изменения объекта.
+        /// Признак изменения объекта.
         /// </summary>
-        public bool IsChanged
+        public bool IsModified
         {
             get
             {
@@ -235,7 +235,7 @@ namespace Entities.Base
                     var entity = currentValue as IBaseEntity;
                     if (entity != null)
                     {
-                        if (entity.IsChanged) return entity.IsChanged;
+                        if (entity.IsModified) return entity.IsModified;
                         else continue;
                     }
 
@@ -243,7 +243,7 @@ namespace Entities.Base
                     var collection = currentValue as IEntityCollection;
                     if (collection != null)
                     {
-                        if (collection.IsChanged) return collection.IsChanged;
+                        if (collection.IsModified) return collection.IsModified;
                         else continue;
                     }
 
