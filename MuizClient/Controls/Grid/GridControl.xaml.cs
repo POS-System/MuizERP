@@ -2,7 +2,7 @@
 using Entities;
 using Entities.Base;
 using Entities.Base.Attributes;
-using Entities.Base.Parameters;
+using Entities.Base.Utils;
 using MuizClient.Controls.Grid;
 using MuizClient.Controls.Grid.GridFilter;
 using System;

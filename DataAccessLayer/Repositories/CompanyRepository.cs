@@ -4,7 +4,7 @@ using DataAccessLayer.Repositories.Interfaces;
 using DataAccessLayer.Utils;
 using Entities;
 using Entities.Base;
-using Entities.Base.Parameters;
+using Entities.Base.Utils.Interface;
 
 namespace DataAccessLayer.Repositories
 {

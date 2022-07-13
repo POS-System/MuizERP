@@ -1,5 +1,4 @@
-﻿using Entities.Base.Parameters;
-using MuizClient.Controls.Grid.GridFilter.GridFilterControls;
+﻿using MuizClient.Controls.Grid.GridFilter.GridFilterControls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

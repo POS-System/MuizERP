@@ -1,6 +1,5 @@
 ﻿using Entities.Base;
-using Entities.Base.Parameters;
-using System.Collections.ObjectModel;
+using Entities.Base.Utils.Interface;
 
 namespace DataAccessLayer.Repositories.Interfaces.Base
 {

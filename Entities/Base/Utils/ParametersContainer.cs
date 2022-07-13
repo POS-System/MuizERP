@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Entities.Base.Utils.Interface;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace Entities.Base.Parameters
+namespace Entities.Base.Utils
 {
     public class ParametersContainer : IParametersContainer
     {

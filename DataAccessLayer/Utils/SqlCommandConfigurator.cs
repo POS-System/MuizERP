@@ -1,4 +1,4 @@
-﻿using Entities.Base.Parameters;
+﻿using Entities.Base.Utils.Interface;
 using System.Data;
 using System.Data.SqlClient;
 

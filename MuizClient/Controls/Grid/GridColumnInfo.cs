@@ -1,4 +1,4 @@
-﻿using Entities.Base.Parameters;
+﻿using Entities.Base.Utils;
 using MuizClient.Helpers.FilterValue;
 using System.Collections.Generic;
 using System.ComponentModel;

@@ -1,7 +1,7 @@
 ﻿using DataAccessLayer;
 using Entities;
 using Entities.Base;
-using Entities.Base.Parameters;
+using Entities.Base.Utils;
 using Entities.Exceptions.InnerApplicationExceptions;
 using MuizEnums;
 using System;

@@ -56,8 +56,8 @@
     <Compile Include="Base\BaseSortableEntity.cs" />
     <Compile Include="Base\Enums\EHierarchyDirection.cs" />
     <Compile Include="Base\IEntityCollection.cs" />
-    <Compile Include="Base\Parameters\IParametersContainer.cs" />
-    <Compile Include="Base\Parameters\ParametersContainer.cs" />
+    <Compile Include="Base\Utils\Interface\IParametersContainer.cs" />
+    <Compile Include="Base\Utils\ParametersContainer.cs" />
     <Compile Include="Base\Attributes\Interface\IAttributeSetter.cs" />
     <Compile Include="Base\Utils\EntityTreeBuilder.cs" />
     <Compile Include="Base\Utils\Interface\IConverter.cs" />
