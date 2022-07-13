@@ -11,7 +11,7 @@ namespace Entities
         #region Fields
 
         private string _name;
-        private ObservableCollection<RoleUser> _roleUsers;
+        private EntityCollection<RoleUser> _roleUsers;
 
         #endregion
 
@@ -28,7 +28,7 @@ namespace Entities
             }
         }
 
-        public ObservableCollection<RoleUser> RoleUsers
+        public EntityCollection<RoleUser> RoleUsers
         {
             get
             {
@@ -43,7 +43,7 @@ namespace Entities
         }
         public Role()
         {
-            _roleUsers = new ObservableCollection<RoleUser>();
+            _roleUsers = new EntityCollection<RoleUser>();
         }
         #endregion
     }

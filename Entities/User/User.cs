@@ -1,6 +1,5 @@
 ﻿using Entities.Base;
 using Entities.Base.Attributes;
-using MuizClient.Models;
 using System;
 using System.Collections.ObjectModel;
 
@@ -28,7 +27,7 @@ namespace Entities
 		private byte _themeID;
 		private string _color;
 
-        private ObservableCollection<UserRole> _userRoles;
+        private EntityCollection<UserRole> _userRoles;
 
         #endregion
 
@@ -215,7 +214,7 @@ namespace Entities
             }
         }
 
-        public ObservableCollection<UserRole> UserRoles
+        public EntityCollection<UserRole> UserRoles
         {
             get { return _userRoles; }
             set
@@ -231,7 +230,7 @@ namespace Entities
 
         public User()
         {
-            _userRoles = new ObservableCollection<UserRole>();
+            _userRoles = new EntityCollection<UserRole>();
         }
 
         #endregion

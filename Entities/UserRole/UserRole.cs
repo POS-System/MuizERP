@@ -1,6 +1,5 @@
 ﻿using Entities.Base;
 using Entities.Base.Attributes;
-using System;
 
 namespace Entities
 {
@@ -76,7 +75,7 @@ namespace Entities
 
         public UserRole()
         {
-            _role = new Role();            
+            _role = new Role();          
         }
         #endregion
     }

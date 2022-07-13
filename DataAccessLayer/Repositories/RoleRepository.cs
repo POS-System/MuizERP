@@ -40,7 +40,7 @@ namespace DataAccessLayer.Repositories
 
                     var parameters = new ParametersContainer();
                     parameters.Add<Role>(nameof(item.ID), item.ID);
-                    item.RoleUsers = _roleUserRepository.GetItems(parameters);
+                    item.RoleUsers = new EntityCollection<RoleUser>( _roleUserRepository.GetItems(parameters));
 
                     result.Add(item);
                 });

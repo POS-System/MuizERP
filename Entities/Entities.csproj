@@ -39,28 +39,35 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\Attributes\AttributeNameSetter.cs" />
     <Compile Include="Base\Attributes\HierarhyCommnadAttribute.cs" />
     <Compile Include="Base\Attributes\LoadCommandAttribute.cs" />
     <Compile Include="Base\Attributes\LoadParameterAttribute.cs" />
     <Compile Include="Base\Attributes\SaveCommandAttribute.cs" />
     <Compile Include="Base\Attributes\SaveParameterAttribute.cs" />
     <Compile Include="Base\BaseEntity.cs" />
+    <Compile Include="Base\EntityCollection.cs" />
     <Compile Include="Base\Enums\EState.cs" />
     <Compile Include="Base\IBaseEntity.cs" />
     <Compile Include="Base\BaseSortableEntity.cs" />
     <Compile Include="Base\Enums\EHierarchyDirection.cs" />
+    <Compile Include="Base\IEntityCollection.cs" />
     <Compile Include="Base\Parameters\IParametersContainer.cs" />
     <Compile Include="Base\Parameters\ParametersContainer.cs" />
+    <Compile Include="Base\Attributes\IAttributeSetter.cs" />
     <Compile Include="Base\Utils\IConverter.cs" />
     <Compile Include="Base\Utils\ICustomLogger.cs" />
     <Compile Include="Base\Utils\IKeyedFactory.cs" />
     <Compile Include="Base\Utils\LoggerWrapper.cs" />
     <Compile Include="Company\Company.cs" />
-    <Compile Include="Base\TitleAttribute.cs" />
+    <Compile Include="Base\Attributes\TitleAttribute.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\GeneratingStoredProcedureNotSupportedException.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\MappingException.cs" />
+    <Compile Include="Exceptions\InnerApplicationExceptions\ReflectionAttributeNotFoundException.cs" />
+    <Compile Include="Exceptions\InnerApplicationExceptions\ReflectionPropertyNotFoundException.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\SqlDataReaderExpectsOnlyOneRecordException.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\SqlDataReaderExpectsRecordException.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\SqlServerDeleteRecordException.cs" />
