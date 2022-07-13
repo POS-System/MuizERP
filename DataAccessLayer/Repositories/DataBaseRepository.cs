@@ -13,6 +13,8 @@ using Entities.Base;
 using MuizEnums;
 using System.Linq;
 using Entities.Base.Utils;
+using Entities.Base.Utils.Interface;
+using System.Reflection;
 
 namespace DataAccessLayer.Repositories
 {
@@ -409,6 +411,10 @@ namespace DataAccessLayer.Repositories
                 // настраиваем параметр
                 var value = property.GetValue(item, null);
 
+                // Если объект удаляется - делаем его идентификатор отрицательным
+                if (CheckValueIsIdentifier(property, item) && item.State == EState.Delete)
+                    value = Math.Abs((int)value) * (-1);
+
                 if (CheckValueIsNull(value, parameter))
                 {
                     if (parameter.Nullable)
@@ -444,6 +450,12 @@ namespace DataAccessLayer.Repositories
                    (value != null && value.Equals(parameter.NullValue)) ||
                    (value is DateTime && DateTime.MinValue == (DateTime)value) ||
                    (value is Decimal && parameter.NullValue != null && value.Equals(Convert.ToDecimal(parameter.NullValue)));
+        }
+
+        private static bool CheckValueIsIdentifier(PropertyInfo property, BaseEntity item)
+        {
+            return property.Name == nameof(item.ID) &&
+                property.PropertyType == typeof(int);
         }
 
         public void SaveCollection<T>(IEnumerable<T> collection, Action<T> itemSaveAction)
