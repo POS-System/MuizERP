@@ -24,37 +24,40 @@ namespace DataAccessLayer.Repositories
             _baseMapper = baseMapper;
         }
 
-        public EntityCollection<SampleEntity> GetItems(IParametersContainer parametersContainer)
+        public EntityCollection<SampleEntity> GetItems(IParametersContainer parameters)
         {
             var result = new EntityCollection<SampleEntity>();
 
             _dataBaseRepository.ReadCollectionWithSchema<SampleEntity>(
-                sqlCmd => ParametersConfigurator.ConfigureSqlCommand(sqlCmd, parametersContainer),
+                cmd => SqlCommandConfigurator.Configure(cmd, parameters),
                 drd =>
                 {
                     var item = new SampleEntity();
                     _baseMapper.Map(drd, item);
 
                     // Собираем параметры  для удобной передачи в методы
-                    var detailsParameters = new ParametersContainer();
-                    detailsParameters.Add<SampleEntity>(nameof(item.ID), item.ID);
-                    item.SampleEntityDetailsList = _sampleEntitiesDetailsRepository.GetItems(detailsParameters);
+                    var detailsParams = new ParametersContainer();
+                    detailsParams.Add<SampleEntity>(nameof(item.ID), item.ID);
+
+                    item.SampleEntityDetailsList = _sampleEntitiesDetailsRepository.GetItems(detailsParams);
+                    
                     result.Add(item);
                 });
 
             return result;
         }
 
-        public void SaveItem(SampleEntity sampleEntity)
+        public void SaveItem(SampleEntity item)
         {
             _dataBaseRepository.DoInTransaction(conn =>
             {
-                _dataBaseRepository.SaveBaseItem(sampleEntity, conn, null);
-                _dataBaseRepository.SaveCollection(sampleEntity.SampleEntityDetailsList,
-                    sampleEntityDetail =>
+                _dataBaseRepository.SaveBaseItem(item, conn, null);
+                _dataBaseRepository.SaveCollection(
+                    item.SampleEntityDetailsList,
+                    entityDetail =>
                     {
-                        sampleEntityDetail.SampleEntityID = sampleEntity.ID;
-                        _sampleEntitiesDetailsRepository.SaveItem(sampleEntityDetail, conn);
+                        entityDetail.SampleEntityID = item.ID;
+                        _sampleEntitiesDetailsRepository.SaveItem(entityDetail, conn);
                     });
             });            
         }  

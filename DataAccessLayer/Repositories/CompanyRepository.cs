@@ -21,25 +21,26 @@ namespace DataAccessLayer.Repositories
             _baseMapper = baseMapper;
         }
 
-        public EntityCollection<Company> GetItems(IParametersContainer parametersContainer)
+        public EntityCollection<Company> GetItems(IParametersContainer parameters)
         {
             var result = new EntityCollection<Company>();
 
             _dataBaseRepository.ReadCollectionWithSchema<Company>(
-                sqlCmd => ParametersConfigurator.ConfigureSqlCommand(sqlCmd, parametersContainer),
+                cmd => SqlCommandConfigurator.Configure(cmd, parameters),
                 drd =>
                 {
                     var item = new Company();
                     _baseMapper.Map(drd, item);
+
                     result.Add(item);
                 });
 
             return result;
         }
 
-        public void SaveItem(Company company)
+        public void SaveItem(Company item)
         {
-            _dataBaseRepository.DoInTransaction(conn => _dataBaseRepository.SaveBaseItem(company, conn));
+            _dataBaseRepository.DoInTransaction(conn => _dataBaseRepository.SaveBaseItem(item, conn));
         }
     }
 }

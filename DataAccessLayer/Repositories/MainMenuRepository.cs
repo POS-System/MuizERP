@@ -23,12 +23,12 @@ namespace DataAccessLayer.Repositories
             _menuItemMapper = menuItemMapper;
         }
 
-        public EntityCollection<MenuItem> GetItems(IParametersContainer parametersContainer)
+        public EntityCollection<MenuItem> GetItems(IParametersContainer parameters)
         {
             var result = new EntityCollection<MenuItem>();
 
             _dataBaseRepository.ReadCollectionWithSchema<MenuItem>(
-                cmd => ParametersConfigurator.ConfigureSqlCommand(cmd, parametersContainer),
+                cmd => SqlCommandConfigurator.Configure(cmd, parameters),
                 drd =>
                 {
                     var item = new MenuItem();

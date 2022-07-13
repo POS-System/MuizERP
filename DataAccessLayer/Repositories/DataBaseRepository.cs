@@ -352,6 +352,8 @@ namespace DataAccessLayer.Repositories
         /// <param name="configureSetCommand"></param>
         public void SaveBaseItem(BaseEntity item, SqlConnection connection, ConfigureSetCommand configureSetCommand = null)
         {
+            if (!item.IsModified) return;
+
             var sqlSetCmd = CreateSaveStoredProcedure(item, connection);
 
             if (configureSetCommand != null)
@@ -458,8 +460,11 @@ namespace DataAccessLayer.Repositories
                 property.PropertyType == typeof(int);
         }
 
-        public void SaveCollection<T>(IEnumerable<T> collection, Action<T> itemSaveAction)
+        public void SaveCollection<T>(IEntityCollection<T> collection, Action<T> itemSaveAction)
+            where T : BaseEntity
         {
+            if (!collection.IsModified) return;
+
             foreach (var item in collection)
                 itemSaveAction(item);
         }

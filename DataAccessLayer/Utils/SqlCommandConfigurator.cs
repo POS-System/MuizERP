@@ -4,9 +4,9 @@ using System.Data.SqlClient;
 
 namespace DataAccessLayer.Utils
 {
-    static class ParametersConfigurator
+    internal static class SqlCommandConfigurator
     {
-        public static void ConfigureSqlCommand(SqlCommand sqlCmd, IParametersContainer parametersContainer)
+        public static void Configure(SqlCommand sqlCmd, IParametersContainer parametersContainer)
         {
             var parameters = parametersContainer.GetParameters();
 

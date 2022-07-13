@@ -27,20 +27,21 @@ namespace DataAccessLayer.Repositories
             var result = new EntityCollection<RoleUser>();
 
             _dataBaseRepository.ReadCollectionWithSchema<RoleUser>(
-                sqlCmd => ParametersConfigurator.ConfigureSqlCommand(sqlCmd, parametersContainer),
+                cmd => SqlCommandConfigurator.Configure(cmd, parametersContainer),
                 drd =>
                 {
                     var item = new RoleUser();
                     _roleUserMapper.Map(drd, item);
+
                     result.Add(item);
                 });
 
             return result;
         }
 
-        public void SaveItem(RoleUser roleUser, SqlConnection conn)
+        public void SaveItem(RoleUser item, SqlConnection conn)
         {
-            _dataBaseRepository.SaveBaseItem(roleUser, conn);            
+            _dataBaseRepository.SaveBaseItem(item, conn);            
         }
     }
 }

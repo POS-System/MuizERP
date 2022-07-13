@@ -22,25 +22,26 @@ namespace DataAccessLayer.Repositories
             _userRoleMapper = userRoleMapper;            
         }
 
-        public EntityCollection<UserRole> GetItems(IParametersContainer parametersContainer)
+        public EntityCollection<UserRole> GetItems(IParametersContainer parameters)
         {
             var result = new EntityCollection<UserRole>();
 
             _dataBaseRepository.ReadCollectionWithSchema<UserRole>(
-                sqlCmd => ParametersConfigurator.ConfigureSqlCommand(sqlCmd, parametersContainer),
+                cmd => SqlCommandConfigurator.Configure(cmd, parameters),
                 drd =>
                 {
                     var item = new UserRole();
                     _userRoleMapper.Map(drd, item);
+
                     result.Add(item);
                 });
 
             return result;
         }
 
-        public void SaveItem(UserRole userRole, SqlConnection conn)
+        public void SaveItem(UserRole item, SqlConnection conn)
         {
-            _dataBaseRepository.SaveBaseItem(userRole, conn);            
+            _dataBaseRepository.SaveBaseItem(item, conn);            
         }
     }
 }

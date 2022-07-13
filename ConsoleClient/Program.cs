@@ -25,9 +25,10 @@ namespace ConsoleClient
             var mainMenu = mainMenuRepository.GetItems(parameters);
 
             var user = new User();
+
             /*
             var user = new User() { };
-            user.UserRoles.Add(new UserRole() { State = EState.Insert });
+            user.UserRoles.Add(new UserRole());
             //user.ResetState();
             user.FixValues();
             
@@ -35,8 +36,8 @@ namespace ConsoleClient
             user.UserRoles[0].Role.Name = null;
 
             var isChanged = user.IsChanged;
-
             */
+            
             //var isModified = user.IsModified;
 
             //var newCompany = new Company

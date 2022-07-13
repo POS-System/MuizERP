@@ -24,20 +24,21 @@ namespace DataAccessLayer.Repositories
             _baseMapper = baseMapper;
         }
 
-        public EntityCollection<User> GetItems(IParametersContainer parametersContainer)
+        public EntityCollection<User> GetItems(IParametersContainer parameters)
         {
             var result = new EntityCollection<User>();
 
             _dataBaseRepository.ReadCollectionWithSchema<User>(
-                sqlCmd => ParametersConfigurator.ConfigureSqlCommand(sqlCmd, parametersContainer),
+                cmd => SqlCommandConfigurator.Configure(cmd, parameters),
                 drd =>
                 {
                     var item = new User();
                     _baseMapper.Map(drd, item);
 
-                    var parameters = new ParametersContainer();
-                    parameters.Add<User>(nameof(item.ID), item.ID);
-                    item.UserRoles = _userRoleRepository.GetItems(parameters);
+                    var userRoleParams = new ParametersContainer();
+                    userRoleParams.Add<User>(nameof(item.ID), item.ID);
+
+                    item.UserRoles = _userRoleRepository.GetItems(userRoleParams);
 
                     result.Add(item);
                 });
@@ -53,7 +54,9 @@ namespace DataAccessLayer.Repositories
                     _dataBaseRepository.SaveBaseItem(item, conn);
 
                     _dataBaseRepository.SaveCollection(
-                        item.UserRoles, userRole => {
+                        item.UserRoles,
+                        userRole =>
+                        {
                             userRole.UserID = item.ID;
                             _userRoleRepository.SaveItem(userRole, conn);
                         });

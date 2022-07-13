@@ -1,6 +1,5 @@
 ﻿using Entities.Base;
 using Entities.Base.Attributes;
-using System.Collections.ObjectModel;
 
 namespace Entities
 {
@@ -12,7 +11,7 @@ namespace Entities
         
         private int _value;
         private string _description;        
-        private ObservableCollection<SampleEntityDetails> _sampleEntityDetailsList;
+        private EntityCollection<SampleEntityDetails> _sampleEntityDetailsList;
 
         #endregion
 
@@ -42,7 +41,7 @@ namespace Entities
             }
         }        
 
-        public ObservableCollection<SampleEntityDetails> SampleEntityDetailsList
+        public EntityCollection<SampleEntityDetails> SampleEntityDetailsList
         {
             get { return _sampleEntityDetailsList; }
             set
@@ -58,7 +57,7 @@ namespace Entities
 
         public SampleEntity()
         {
-            _sampleEntityDetailsList = new ObservableCollection<SampleEntityDetails>();
+            _sampleEntityDetailsList = new EntityCollection<SampleEntityDetails>();
         }
 
         #endregion

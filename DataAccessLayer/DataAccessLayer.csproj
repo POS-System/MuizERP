@@ -64,7 +64,7 @@
     <Compile Include="Repositories\Interfaces\IUserRepository.cs" />
     <Compile Include="Mapping\BaseMapper.cs" />
     <Compile Include="Mapping\Interface\IMapper.cs" />
-    <Compile Include="Utils\ParametersConfigurator.cs" />
+    <Compile Include="Utils\SqlCommandConfigurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Interfaces\IUserRoleRepository.cs" />
     <Compile Include="Repositories\MainMenuRepository.cs" />
