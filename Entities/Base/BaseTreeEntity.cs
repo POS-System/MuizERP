@@ -2,11 +2,11 @@
 
 namespace Entities.Base
 {
-    public class BaseSortableEntity : BaseEntity
+    public class BaseTreeEntity : BaseSortableEntity
     {
         #region Fields
 
-        private int _orderBy;
+        private int? _parentID;
 
         #endregion
 
@@ -14,14 +14,14 @@ namespace Entities.Base
 
         [LoadParameter]
         [SaveParameter]
-        public int OrderBy
+        public int? ParentID
         {
-            get { return _orderBy; }
+            get { return _parentID; }
             set
             {
-                if (_orderBy != value)
+                if (_parentID != value)
                 {
-                    _orderBy = value;
+                    _parentID = value;
                     OnPropertyChanged();
                 }
             }

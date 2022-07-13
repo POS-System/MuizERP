@@ -20,6 +20,12 @@ namespace Entities.Base
         {
         }
 
+        public void AddRange(IEnumerable<T> items)
+        {
+            foreach (var item in items)
+                Add(item);
+        }
+
         /// <summary>
         /// Удаляет объект.
         /// </summary>

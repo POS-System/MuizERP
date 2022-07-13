@@ -37,9 +37,10 @@ namespace Entities.Base
             set
             {
                 if (_ID != value)
+                {
                     _ID = value;
-
-                OnPropertyChanged();
+                    OnPropertyChanged();
+                }
             }
         }
                 
@@ -75,9 +76,10 @@ namespace Entities.Base
             set
             {
                 if (_companyID != value)
+                {
                     _companyID = value;
-
-                OnPropertyChanged();
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -88,9 +90,10 @@ namespace Entities.Base
             set
             {
                 if (_createDate != value)
+                {
                     _createDate = value;
-
-                OnPropertyChanged();
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -101,9 +104,10 @@ namespace Entities.Base
             set
             {
                 if (_createByUserID != value)
+                {
                     _createByUserID = value;
-
-                OnPropertyChanged();
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -114,9 +118,10 @@ namespace Entities.Base
             set
             {
                 if (_modifyDate != value)
+                {
                     _modifyDate = value;
-
-                OnPropertyChanged();
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -128,9 +133,10 @@ namespace Entities.Base
             set
             {
                 if (_modifyByUserID != value)
+                {
                     _modifyByUserID = value;
-
-                OnPropertyChanged();
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -142,9 +148,10 @@ namespace Entities.Base
             set
             {
                 if (_timeStamp != value)
+                {
                     _timeStamp = value;
-
-                OnPropertyChanged();
+                    OnPropertyChanged();
+                }
             }
         }
 

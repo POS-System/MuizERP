@@ -17,8 +17,15 @@ namespace ConsoleClient
         static void Main(string[] args)
         {
             var connectionString = ConfigurationManager.ConnectionStrings["ConnectionERP"].ConnectionString;
-            //var dalc = new DALContainer(connectionString);
+            var dalc = new DALContainer(connectionString);
 
+            var mainMenuRepository = dalc.MainMenuRepository;
+
+            var parameters = new ParametersContainer();
+            var mainMenu = mainMenuRepository.GetItems(parameters);
+
+            var user = new User();
+            /*
             var user = new User() { };
             user.UserRoles.Add(new UserRole() { State = EState.Insert });
             //user.ResetState();
@@ -29,6 +36,7 @@ namespace ConsoleClient
 
             var isChanged = user.IsChanged;
 
+            */
             //var isModified = user.IsModified;
 
             //var newCompany = new Company
