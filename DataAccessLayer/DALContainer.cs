@@ -2,6 +2,8 @@
 using DataAccessLayer.Repositories;
 using DataAccessLayer.Repositories.Interfaces;
 using DataAccessLayer.Utils;
+using Entities;
+using Entities.Base.Attributes;
 
 namespace DataAccessLayer
 {
@@ -55,9 +57,18 @@ namespace DataAccessLayer
             var sqlExceptionConverter = new SqlExceptionToLogicExceptionConverter();
 
             var dataBaseRepository = new DataBaseRepository(connectionString, sqlExceptionConverter);
+
+            var nameSetter = new AttributeNameSetter<LoadParameterAttribute, RoleUser>();
+
             var baseMapper = new BaseMapper();
-            var userRoleMapper = new UserRoleMapper(baseMapper, baseMapper);
-            var roleUserMapper = new RoleUserMapper(baseMapper, baseMapper);
+            var userRoleMapper = new UserRoleMapper(
+                baseMapper,
+                baseMapper,
+                new AttributeNameSetter<LoadParameterAttribute, UserRole>());
+            var roleUserMapper = new RoleUserMapper(
+                baseMapper,
+                baseMapper,
+                new AttributeNameSetter<LoadParameterAttribute, RoleUser>());
 
             _sampleEntityDetailsRepository = new SampleEntityDetailsRepository(dataBaseRepository, baseMapper);
             _sampleEntityRepository = new SampleEntityRepository(dataBaseRepository, _sampleEntityDetailsRepository, baseMapper);

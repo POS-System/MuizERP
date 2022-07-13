@@ -2,8 +2,6 @@
 using DataAccessLayer.Mapping.Interface;
 using Entities;
 using Entities.Base.Attributes;
-using Entities.Base.Utils;
-using System;
 
 namespace DataAccessLayer.Mapping
 {
@@ -12,22 +10,23 @@ namespace DataAccessLayer.Mapping
         private readonly IMapper<SqlDataReaderWithSchema, UserRole> _baseMapper;
         private readonly IMapper<SqlDataReaderWithSchema, Role> _roleMapper;
 
+        private readonly IAttributeSetter<LoadParameterAttribute, UserRole> _loadAttributeNameSetter;
+
         public UserRoleMapper(
             IMapper<SqlDataReaderWithSchema, UserRole> baseMapper,
-            IMapper<SqlDataReaderWithSchema, Role> roleMapper)
+            IMapper<SqlDataReaderWithSchema, Role> roleMapper,
+            IAttributeSetter<LoadParameterAttribute, UserRole> loadAttributeNameSetter)
         {
             _baseMapper = baseMapper;
             _roleMapper = roleMapper;
+
+            _loadAttributeNameSetter = loadAttributeNameSetter;
         }
 
         public void Map(SqlDataReaderWithSchema drd, UserRole item)
         {
-            var type = typeof(UserRole);
-            var loadParameter = type.GetProperty(nameof(item.TimeStamp)).GetCustomAttribute<LoadParameterAttribute>();
-            if (loadParameter != null)
-            {
-                loadParameter.Name = $"{type.Name}{nameof(item.TimeStamp)}";
-            }
+            var propertyName = nameof(item.TimeStamp);
+            _loadAttributeNameSetter.Set(propertyName, $"{nameof(UserRole)}{propertyName}");
 
             _baseMapper.Map(drd, item);            
             _roleMapper.Map(drd, item.Role);
