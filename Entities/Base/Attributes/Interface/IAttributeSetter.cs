@@ -1,5 +1,5 @@
 ﻿
-namespace Entities.Base.Attributes
+namespace Entities.Base.Attributes.Interface
 {
     /// <summary>
     /// Интерфейс для установки параметра (свойства) аттрибута <see cref="TAttribute"/>,

@@ -2,61 +2,19 @@
 using DataAccessLayer.Repositories;
 using DataAccessLayer.Repositories.Interfaces;
 using DataAccessLayer.Utils;
-using Entities;
-using Entities.Base.Attributes;
 
 namespace DataAccessLayer
 {
     public class DALContainer
     {
-        private ISampleEntityRepository _sampleEntityRepository;
-        private ISampleEntityDetailsRepository _sampleEntityDetailsRepository;
-        private IUserRepository _userRepository;
-        private IRoleRepository _roleRepository;
-        private IUserRoleRepository _userRoleRepository;
-        private IRoleUserRepository _roleUserRepository;
-        private ICompanyRepository _companyRepository;
-        private IMainMenuRepository _mainMenuRepository;
-
-        public ISampleEntityRepository SampleEntityRepository
-        {
-            get { return _sampleEntityRepository; }
-        }
-
-        public ISampleEntityDetailsRepository SampleEntityDetailsRepository
-        {
-            get { return _sampleEntityDetailsRepository; }
-        }
-
-        public IUserRepository UserRepository
-        {
-            get { return _userRepository; }
-        }
-
-        public ICompanyRepository CompanyRepository
-        {
-            get { return _companyRepository; }
-        }
-
-        public IRoleRepository RoleRepository
-        {
-            get { return _roleRepository; }
-        }
-
-        public IUserRoleRepository UserRoleRepository
-        {
-            get { return _userRoleRepository; }
-        }
-
-        public IRoleUserRepository RoleUserRepository
-        {
-            get { return _roleUserRepository; }
-        }
-
-        public IMainMenuRepository MainMenuRepository
-        {
-            get { return _mainMenuRepository; }
-        }
+        public ISampleEntityRepository SampleEntityRepository { get; private set; }
+        public ISampleEntityDetailsRepository SampleEntityDetailsRepository { get; private set; }
+        public IUserRepository UserRepository { get; private set; }
+        public ICompanyRepository CompanyRepository { get; private set; }
+        public IRoleRepository RoleRepository { get; private set; }
+        public IUserRoleRepository UserRoleRepository { get; private set; }
+        public IRoleUserRepository RoleUserRepository { get; private set; }
+        public IMainMenuRepository MainMenuRepository { get; private set; }
 
         public DALContainer(string connectionString)
         {
@@ -64,28 +22,19 @@ namespace DataAccessLayer
 
             var dataBaseRepository = new DataBaseRepository(connectionString, sqlExceptionConverter);
 
-            var baseMapper = new BaseMapper();
-            var userRoleMapper = new UserRoleMapper(
-                baseMapper,
-                baseMapper,
-                new AttributeNameSetter<LoadParameterAttribute, UserRole>());
-            var roleUserMapper = new RoleUserMapper(
-                baseMapper,
-                baseMapper,
-                new AttributeNameSetter<LoadParameterAttribute, RoleUser>());
-            var menuItemMapper = new MenuItemMapper(baseMapper);
+            var mappers = new MapperContainer();
 
-            _sampleEntityDetailsRepository = new SampleEntityDetailsRepository(dataBaseRepository, baseMapper);
-            _sampleEntityRepository = new SampleEntityRepository(dataBaseRepository, _sampleEntityDetailsRepository, baseMapper);
-            _companyRepository = new CompanyRepository(dataBaseRepository, baseMapper);     
+            SampleEntityDetailsRepository = new SampleEntityDetailsRepository(dataBaseRepository, mappers.Base);
+            SampleEntityRepository = new SampleEntityRepository(dataBaseRepository, SampleEntityDetailsRepository, mappers.Base);
+            CompanyRepository = new CompanyRepository(dataBaseRepository, mappers.Base);     
             
-            _userRoleRepository = new UserRoleRepository(dataBaseRepository, userRoleMapper);
-            _roleUserRepository = new RoleUserRepository(dataBaseRepository, roleUserMapper);
+            UserRoleRepository = new UserRoleRepository(dataBaseRepository, mappers.UserRole);
+            RoleUserRepository = new RoleUserRepository(dataBaseRepository, mappers.RoleUser);
 
-            _roleRepository = new RoleRepository(dataBaseRepository, _roleUserRepository, baseMapper);
-            _userRepository = new UserRepository(dataBaseRepository, _userRoleRepository, baseMapper);
+            RoleRepository = new RoleRepository(dataBaseRepository, RoleUserRepository, mappers.Base);
+            UserRepository = new UserRepository(dataBaseRepository, UserRoleRepository, mappers.Base);
 
-            _mainMenuRepository = new MainMenuRepository(dataBaseRepository, menuItemMapper);
+            MainMenuRepository = new MainMenuRepository(dataBaseRepository, mappers.MenuItem);
         }
     }
 }

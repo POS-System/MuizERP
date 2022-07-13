@@ -1,4 +1,5 @@
 using Entities.Base.Utils;
+using Entities.Base.Utils.Interface;
 using Entities.Exceptions.InnerApplicationExceptions;
 using System;
 

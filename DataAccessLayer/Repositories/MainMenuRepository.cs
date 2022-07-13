@@ -1,7 +1,7 @@
 ﻿using DataAccessLayer.DataReaders;
 using DataAccessLayer.Mapping.Interface;
-using DataAccessLayer.Parameters;
 using DataAccessLayer.Repositories.Interfaces;
+using DataAccessLayer.Utils;
 using Entities;
 using Entities.Base;
 using Entities.Base.Parameters;

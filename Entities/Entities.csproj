@@ -58,10 +58,10 @@
     <Compile Include="Base\IEntityCollection.cs" />
     <Compile Include="Base\Parameters\IParametersContainer.cs" />
     <Compile Include="Base\Parameters\ParametersContainer.cs" />
-    <Compile Include="Base\Attributes\IAttributeSetter.cs" />
-    <Compile Include="Base\Utils\IConverter.cs" />
-    <Compile Include="Base\Utils\ICustomLogger.cs" />
-    <Compile Include="Base\Utils\IKeyedFactory.cs" />
+    <Compile Include="Base\Attributes\Interface\IAttributeSetter.cs" />
+    <Compile Include="Base\Utils\Interface\IConverter.cs" />
+    <Compile Include="Base\Utils\Interface\ICustomLogger.cs" />
+    <Compile Include="Base\Utils\Interface\IKeyedFactory.cs" />
     <Compile Include="Base\Utils\LoggerWrapper.cs" />
     <Compile Include="Company\Company.cs" />
     <Compile Include="Base\Attributes\TitleAttribute.cs" />

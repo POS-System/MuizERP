@@ -1,12 +1,10 @@
 ﻿using DataAccessLayer.DataReaders;
 using DataAccessLayer.Mapping.Interface;
-using DataAccessLayer.Parameters;
 using DataAccessLayer.Repositories.Interfaces;
+using DataAccessLayer.Utils;
 using Entities;
 using Entities.Base;
 using Entities.Base.Parameters;
-using System;
-using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 
 namespace DataAccessLayer.Repositories

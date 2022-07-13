@@ -1,4 +1,5 @@
-﻿using Entities.Base.Utils;
+﻿using Entities.Base.Attributes.Interface;
+using Entities.Base.Utils;
 using System;
 
 namespace Entities.Base.Attributes

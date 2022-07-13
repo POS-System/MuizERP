@@ -1,4 +1,4 @@
-﻿namespace Entities.Base.Utils
+﻿namespace Entities.Base.Utils.Interface
 {
     public interface IConverter<in TFrom, out TTo>
     {

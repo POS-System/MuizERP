@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace DataAccessLayer.Parameters
+namespace DataAccessLayer.Utils
 {
     static class ParametersConfigurator
     {

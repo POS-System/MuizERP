@@ -2,6 +2,7 @@
 using DataAccessLayer.Mapping.Interface;
 using Entities;
 using Entities.Base.Attributes;
+using Entities.Base.Attributes.Interface;
 
 namespace DataAccessLayer.Mapping
 {
