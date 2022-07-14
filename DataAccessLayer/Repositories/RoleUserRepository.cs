@@ -22,12 +22,12 @@ namespace DataAccessLayer.Repositories
             _roleUserMapper = roleUserMapper;            
         }
 
-        public EntityCollection<RoleUser> GetItems(IParametersContainer parametersContainer)
+        public EntityCollection<RoleUser> GetItems(IParametersContainer parameters)
         {
             var result = new EntityCollection<RoleUser>();
 
             _dataBaseRepository.ReadCollectionWithSchema<RoleUser>(
-                cmd => SqlCommandConfigurator.Configure(cmd, parametersContainer),
+                cmd => cmd.ConfigureParameters(parameters),
                 drd =>
                 {
                     var item = new RoleUser();

@@ -4,20 +4,18 @@ using System.Data.SqlClient;
 
 namespace DataAccessLayer.Utils
 {
-    internal static class SqlCommandConfigurator
+    internal static class SqlCommandExtensionMethods
     {
-        public static void Configure(SqlCommand sqlCmd, IParametersContainer parametersContainer)
+        public static void ConfigureParameters(this SqlCommand cmd, IParametersContainer parameters)
         {
-            var parameters = parametersContainer.GetParameters();
-
-            foreach (var parameter in parameters)
+            foreach (var parameter in parameters.GetParameters())
             {
                 var sqlParameter = new SqlParameter($"@p_{parameter.Key}", parameter.Value);
 
                 if (sqlParameter.ParameterName == "@p_ID")
                     sqlParameter.Direction = ParameterDirection.InputOutput;
 
-                sqlCmd.Parameters.Add(sqlParameter);
+                cmd.Parameters.Add(sqlParameter);
             }
         }
     }

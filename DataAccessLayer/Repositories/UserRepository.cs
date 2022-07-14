@@ -30,7 +30,7 @@ namespace DataAccessLayer.Repositories
             var result = new EntityCollection<User>();
 
             _dataBaseRepository.ReadCollectionWithSchema<User>(
-                cmd => SqlCommandConfigurator.Configure(cmd, parameters),
+                cmd => cmd.ConfigureParameters(parameters),
                 drd =>
                 {
                     var item = new User();

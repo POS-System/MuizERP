@@ -30,7 +30,7 @@ namespace DataAccessLayer.Repositories
             var result = new EntityCollection<Role>();
 
             _dataBaseRepository.ReadCollectionWithSchema<Role>(
-                cmd => SqlCommandConfigurator.Configure(cmd, parameters),
+                cmd => cmd.ConfigureParameters(parameters),
                 drd =>
                 {
                     var item = new Role();

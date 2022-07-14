@@ -30,7 +30,7 @@ namespace DataAccessLayer.Repositories
             var result = new EntityCollection<SampleEntity>();
 
             _dataBaseRepository.ReadCollectionWithSchema<SampleEntity>(
-                cmd => SqlCommandConfigurator.Configure(cmd, parameters),
+                cmd => cmd.ConfigureParameters(parameters),
                 drd =>
                 {
                     var item = new SampleEntity();

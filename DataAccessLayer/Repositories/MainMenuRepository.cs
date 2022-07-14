@@ -27,7 +27,7 @@ namespace DataAccessLayer.Repositories
             var result = new EntityCollection<MenuItem>();
 
             _dataBaseRepository.ReadCollectionWithSchema<MenuItem>(
-                cmd => SqlCommandConfigurator.Configure(cmd, parameters),
+                cmd => cmd.ConfigureParameters(parameters),
                 drd =>
                 {
                     var item = new MenuItem();

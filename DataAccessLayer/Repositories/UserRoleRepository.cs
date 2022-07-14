@@ -27,7 +27,7 @@ namespace DataAccessLayer.Repositories
             var result = new EntityCollection<UserRole>();
 
             _dataBaseRepository.ReadCollectionWithSchema<UserRole>(
-                cmd => SqlCommandConfigurator.Configure(cmd, parameters),
+                cmd => cmd.ConfigureParameters(parameters),
                 drd =>
                 {
                     var item = new UserRole();
