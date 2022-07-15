@@ -21,7 +21,7 @@ namespace DataAccessLayer.Repositories
     /// <summary>
     /// Класс репозиторий для работы с БД
     /// </summary>
-    internal sealed class DataBaseRepository
+    internal sealed class DataRepository
     {
         [ThreadStatic]
         private static SqlConnection _connectionInTransaction;
@@ -30,7 +30,7 @@ namespace DataAccessLayer.Repositories
 
         private readonly string _connectionString;
 
-        public DataBaseRepository(
+        public DataRepository(
             string connectionString,
             IConverter<SqlException, Exception> sqlExcepionConverter)
         {

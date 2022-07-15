@@ -1,6 +1,5 @@
 ﻿using Entities.Base;
 using Entities.Base.Attributes;
-using System.Collections.ObjectModel;
 
 namespace Entities
 {
@@ -41,10 +40,15 @@ namespace Entities
                 OnPropertyChanged("RoleUsers");
             }
         }
+
+        #endregion
+
+        #region Constructor
         public Role()
         {
             _roleUsers = new EntityCollection<RoleUser>();
         }
+
         #endregion
     }
 }

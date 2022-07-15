@@ -1,5 +1,4 @@
-﻿using DataAccessLayer.DataReaders;
-using DataAccessLayer.Mapping.Interface;
+﻿using DataAccessLayer.Mapping.Interface;
 using DataAccessLayer.Repositories.Interfaces;
 using DataAccessLayer.Utils;
 using Entities;
@@ -11,25 +10,28 @@ namespace DataAccessLayer.Repositories
 {
     internal sealed class SampleEntityDetailsRepository : ISampleEntityDetailsRepository
     {        
-        private readonly DataBaseRepository _dataBaseRepository;
-        private readonly IMapper<SqlDataReaderWithSchema, BaseEntity> _baseMapper;
+        private readonly DataRepository _dataRepository;
+        private readonly IDataMapper _dataMapper;
 
-        public SampleEntityDetailsRepository(DataBaseRepository dataBaseRepository, IMapper<SqlDataReaderWithSchema, BaseEntity> baseMapper)
+        public SampleEntityDetailsRepository(
+            DataRepository dataRepository,
+            IDataMapper dataMapper)
         {
-            _dataBaseRepository = dataBaseRepository;
-            _baseMapper = baseMapper;
+            _dataRepository = dataRepository;
+
+            _dataMapper = dataMapper;
         }
 
         public EntityCollection<SampleEntityDetails> GetItems(IParametersContainer parameters)
         {
             var result = new EntityCollection<SampleEntityDetails>();
 
-            _dataBaseRepository.ReadCollectionWithSchema<SampleEntityDetails>(
+            _dataRepository.ReadCollectionWithSchema<SampleEntityDetails>(
                 cmd => cmd.ConfigureParameters(parameters),
                 drd =>
                 {
                     var item = new SampleEntityDetails();
-                    _baseMapper.Map(drd, item);
+                    _dataMapper.Map(drd, item);
 
                     result.Add(item);
                 });
@@ -39,7 +41,7 @@ namespace DataAccessLayer.Repositories
 
         public void SaveItem(SampleEntityDetails item, SqlConnection conn)
         {
-            _dataBaseRepository.SaveBaseItem(item, conn);
+            _dataRepository.SaveBaseItem(item, conn);
         }
     }
 }

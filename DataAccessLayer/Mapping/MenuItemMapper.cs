@@ -7,12 +7,12 @@ namespace DataAccessLayer.Mapping
 {
     internal sealed class MenuItemMapper : IMapper<SqlDataReaderWithSchema, MenuItem>
     {
-        private readonly IMapper<SqlDataReaderWithSchema, MenuItem> _baseMapper;
+        private readonly IDataMapper _dataMapper;
 
         public MenuItemMapper(
-            IMapper<SqlDataReaderWithSchema, MenuItem> baseMapper)
+            IDataMapper dataMapper)
         {
-            _baseMapper = baseMapper;
+            _dataMapper = dataMapper;
         }
 
         public void Map(SqlDataReaderWithSchema drd, MenuItem item)
@@ -21,7 +21,7 @@ namespace DataAccessLayer.Mapping
             if (typeName != null)
                 item.EntityType = Type.GetType($"Entities.{typeName}, Entities");
 
-            _baseMapper.Map(drd, item);
+            _dataMapper.Map(drd, item);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Entities.Base;
 using Entities.Base.Attributes;
 using System;
-using System.Collections.ObjectModel;
 
 namespace Entities
 {
@@ -16,7 +15,6 @@ namespace Entities
 		private string _lastName;
 		private string _secondName;
 		private string _inn;
-		private byte _roleID;
 		private string _phone;
 		private string _email;
 		private bool _active;
@@ -91,18 +89,6 @@ namespace Entities
             {
                 _inn = value;
                 OnPropertyChanged("INN");
-            }
-        }
-
-        [LoadParameter]
-        [SaveParameter]
-        public byte RoleID
-        {
-            get { return _roleID; }
-            set
-            {
-                _roleID = value;
-                OnPropertyChanged("RoleID");
             }
         }
 

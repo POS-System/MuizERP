@@ -42,7 +42,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\Attributes\AttributeNameSetter.cs" />
     <Compile Include="Base\Attributes\HierarhyCommnadAttribute.cs" />
     <Compile Include="Base\Attributes\LoadCommandAttribute.cs" />
     <Compile Include="Base\Attributes\LoadParameterAttribute.cs" />
@@ -58,7 +57,6 @@
     <Compile Include="Base\IEntityCollection.cs" />
     <Compile Include="Base\Utils\Interface\IParametersContainer.cs" />
     <Compile Include="Base\Utils\ParametersContainer.cs" />
-    <Compile Include="Base\Attributes\Interface\IAttributeSetter.cs" />
     <Compile Include="Base\Utils\EntityTreeBuilder.cs" />
     <Compile Include="Base\Utils\Interface\IConverter.cs" />
     <Compile Include="Base\Utils\Interface\ICustomLogger.cs" />
@@ -83,6 +81,7 @@
     <Compile Include="Role\Role.cs" />
     <Compile Include="SampleEntity\SampleEntity.cs" />
     <Compile Include="SampleEntityDetails\SampleEntityDetails.cs" />
+    <Compile Include="UserSettings\UserSettings.cs" />
     <Compile Include="User\User.cs" />
     <Compile Include="Base\Utils\TypeExtendingMethods.cs" />
     <Compile Include="UserRole\UserRole.cs" />

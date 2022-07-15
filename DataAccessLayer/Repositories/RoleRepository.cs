@@ -11,35 +11,36 @@ namespace DataAccessLayer.Repositories
 {
     internal class RoleRepository : IRoleRepository
     {
-        private readonly DataBaseRepository _dataBaseRepository;
+        private readonly DataRepository _dataRepository;
         private readonly IRoleUserRepository _roleUserRepository;
-        private readonly IMapper<SqlDataReaderWithSchema, BaseEntity> _baseMapper;
+        private readonly IDataMapper _dataMapper;
 
         public RoleRepository(
-            DataBaseRepository dataBaseRepository,
+            DataRepository dataRepository,
             IRoleUserRepository roleUserRepository,
-            IMapper<SqlDataReaderWithSchema, BaseEntity> baseMapper)
+            IDataMapper dataMapper)
         {
-            _dataBaseRepository = dataBaseRepository;
+            _dataRepository = dataRepository;
             _roleUserRepository = roleUserRepository;
-            _baseMapper = baseMapper;
+
+            _dataMapper = dataMapper;
         }
 
         public EntityCollection<Role> GetItems(IParametersContainer parameters)
         {
             var result = new EntityCollection<Role>();
 
-            _dataBaseRepository.ReadCollectionWithSchema<Role>(
+            _dataRepository.ReadCollectionWithSchema<Role>(
                 cmd => cmd.ConfigureParameters(parameters),
                 drd =>
                 {
                     var item = new Role();
-                    _baseMapper.Map(drd, item);
+                    _dataMapper.Map(drd, item);
 
                     var roleUserParams = new ParametersContainer();
                     roleUserParams.Add<Role>(nameof(item.ID), item.ID);
 
-                    item.RoleUsers = new EntityCollection<RoleUser>(_roleUserRepository.GetItems(roleUserParams));
+                    item.RoleUsers = _roleUserRepository.GetItems(roleUserParams);
 
                     result.Add(item);
                 });
@@ -49,12 +50,12 @@ namespace DataAccessLayer.Repositories
 
         public void SaveItem(Role item)
         {
-            _dataBaseRepository.DoInTransaction(
+            _dataRepository.DoInTransaction(
                 conn =>
                 {
-                    _dataBaseRepository.SaveBaseItem(item, conn);
+                    _dataRepository.SaveBaseItem(item, conn);
 
-                    _dataBaseRepository.SaveCollection(
+                    _dataRepository.SaveCollection(
                         item.RoleUsers,
                         roleUser =>
                         {

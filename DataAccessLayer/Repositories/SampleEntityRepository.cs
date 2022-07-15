@@ -1,5 +1,4 @@
-﻿using DataAccessLayer.DataReaders;
-using DataAccessLayer.Mapping.Interface;
+﻿using DataAccessLayer.Mapping.Interface;
 using DataAccessLayer.Repositories.Interfaces;
 using DataAccessLayer.Utils;
 using Entities;
@@ -11,18 +10,19 @@ namespace DataAccessLayer.Repositories
 {
     internal class SampleEntityRepository : ISampleEntityRepository
     {
-        private readonly DataBaseRepository _dataBaseRepository;
+        private readonly DataRepository _dataBaseRepository;
         private readonly ISampleEntityDetailsRepository _sampleEntitiesDetailsRepository;
-        private readonly IMapper<SqlDataReaderWithSchema, BaseEntity> _baseMapper;
+        private readonly IDataMapper _dataMapper;
 
         public SampleEntityRepository(
-            DataBaseRepository dataBaseRepository,
+            DataRepository dataBaseRepository,
             ISampleEntityDetailsRepository sampleEntitiesDetailsRepository,
-            IMapper<SqlDataReaderWithSchema, BaseEntity> baseMapper)
+            IDataMapper dataMapper)
         {
             _dataBaseRepository = dataBaseRepository;
             _sampleEntitiesDetailsRepository = sampleEntitiesDetailsRepository;
-            _baseMapper = baseMapper;
+            
+            _dataMapper = dataMapper;
         }
 
         public EntityCollection<SampleEntity> GetItems(IParametersContainer parameters)
@@ -34,7 +34,7 @@ namespace DataAccessLayer.Repositories
                 drd =>
                 {
                     var item = new SampleEntity();
-                    _baseMapper.Map(drd, item);
+                    _dataMapper.Map(drd, item);
 
                     // Собираем параметры  для удобной передачи в методы
                     var detailsParams = new ParametersContainer();

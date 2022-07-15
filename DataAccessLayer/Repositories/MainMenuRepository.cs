@@ -11,14 +11,15 @@ namespace DataAccessLayer.Repositories
 {
     internal class MainMenuRepository : IMainMenuRepository
     {
-        private readonly DataBaseRepository _dataBaseRepository;
+        private readonly DataRepository _dataRepository;
         private readonly IMapper<SqlDataReaderWithSchema, MenuItem> _menuItemMapper;
 
         public MainMenuRepository(
-            DataBaseRepository dataBaseRepository,
+            DataRepository dataRepository,
             IMapper<SqlDataReaderWithSchema, MenuItem> menuItemMapper)
         {
-            _dataBaseRepository = dataBaseRepository;
+            _dataRepository = dataRepository;
+
             _menuItemMapper = menuItemMapper;
         }
 
@@ -26,7 +27,7 @@ namespace DataAccessLayer.Repositories
         {
             var result = new EntityCollection<MenuItem>();
 
-            _dataBaseRepository.ReadCollectionWithSchema<MenuItem>(
+            _dataRepository.ReadCollectionWithSchema<MenuItem>(
                 cmd => cmd.ConfigureParameters(parameters),
                 drd =>
                 {

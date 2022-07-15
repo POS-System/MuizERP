@@ -1,29 +1,29 @@
 ﻿using DataAccessLayer.DataReaders;
 using DataAccessLayer.Mapping.Interface;
 using Entities;
-using Entities.Base;
-using Entities.Base.Attributes;
+using Entities.UserSettings;
 
 namespace DataAccessLayer.Mapping
 {
     internal sealed class MapperContainer
     {
-        public IMapper<SqlDataReaderWithSchema, BaseEntity> Base { get; private set; }
+        public IDataMapper Data { get; private set; }
         public IMapper<SqlDataReaderWithSchema, UserRole> UserRole { get; private set; }
         public IMapper<SqlDataReaderWithSchema, RoleUser> RoleUser { get; private set; }
         public IMapper<SqlDataReaderWithSchema, MenuItem> MenuItem { get; private set; }
+        public IMapper<SqlDataReaderWithSchema, UserSettings> UserSettings { get; private set; }
 
         public MapperContainer()
         {
-            Base = new BaseMapper();
+            Data = new DataMapper();
 
-            UserRole = new UserRoleMapper(Base, Base, new AttributeNameSetter<LoadParameterAttribute, UserRole>());
+            UserRole = new UserRoleMapper(Data);
 
-            RoleUser = new RoleUserMapper(Base, Base, new AttributeNameSetter<LoadParameterAttribute, RoleUser>());
+            RoleUser = new RoleUserMapper(Data);
 
-            MenuItem = new MenuItemMapper(Base);
+            MenuItem = new MenuItemMapper(Data);
+
+            UserSettings = new UserSettingsMapper(Data);
         }
-
-
     }
 }

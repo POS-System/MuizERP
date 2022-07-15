@@ -1,36 +1,31 @@
 ﻿using DataAccessLayer.DataReaders;
 using DataAccessLayer.Mapping.Interface;
 using Entities;
-using Entities.Base.Attributes;
-using Entities.Base.Attributes.Interface;
 
 namespace DataAccessLayer.Mapping
 {
     internal sealed class UserRoleMapper : IMapper<SqlDataReaderWithSchema, UserRole>
     {
-        private readonly IMapper<SqlDataReaderWithSchema, UserRole> _baseMapper;
-        private readonly IMapper<SqlDataReaderWithSchema, Role> _roleMapper;
-
-        private readonly IAttributeSetter<LoadParameterAttribute, UserRole> _loadAttributeNameSetter;
+        private readonly IDataMapper _dataMapper;
 
         public UserRoleMapper(
-            IMapper<SqlDataReaderWithSchema, UserRole> baseMapper,
-            IMapper<SqlDataReaderWithSchema, Role> roleMapper,
-            IAttributeSetter<LoadParameterAttribute, UserRole> loadAttributeNameSetter)
+            IDataMapper dataMapper)
         {
-            _baseMapper = baseMapper;
-            _roleMapper = roleMapper;
-
-            _loadAttributeNameSetter = loadAttributeNameSetter;
+            _dataMapper = dataMapper;
         }
 
         public void Map(SqlDataReaderWithSchema drd, UserRole item)
         {
-            var propertyName = nameof(item.TimeStamp);
-            _loadAttributeNameSetter.Set(propertyName, $"{nameof(UserRole)}{propertyName}");
+            var type = item.GetType();
 
-            _baseMapper.Map(drd, item);            
-            _roleMapper.Map(drd, item.Role);
+            _dataMapper.Map(drd, item,
+                name =>
+                {
+                    if (name == nameof(item.TimeStamp))
+                        name = type.Name + name;
+                });
+
+            _dataMapper.Map(drd, item.Role);
         }
     }
 }

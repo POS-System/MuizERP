@@ -42,13 +42,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapping\Interface\IDataMapper.cs" />
     <Compile Include="Mapping\MapperContainer.cs" />
     <Compile Include="Mapping\MenuItemMapper.cs" />
     <Compile Include="Mapping\RoleUserMapper.cs" />
     <Compile Include="Mapping\UserRoleMapper.cs" />
+    <Compile Include="Mapping\UserSettingsMapper.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
     <Compile Include="DALContainer.cs" />
-    <Compile Include="Repositories\DataBaseRepository.cs" />
+    <Compile Include="Repositories\DataRepository.cs" />
     <Compile Include="DataReaders\DataReaderWithSchema.cs" />
     <Compile Include="Delegates\Delegates.cs" />
     <Compile Include="Repositories\Interfaces\ICompanyRepository.cs" />
@@ -62,10 +64,11 @@
     <Compile Include="Repositories\Interfaces\ISampleEntityDetailsRepository.cs" />
     <Compile Include="Repositories\Interfaces\ISampleEntityRepository.cs" />
     <Compile Include="Repositories\Interfaces\IUserRepository.cs" />
-    <Compile Include="Mapping\BaseMapper.cs" />
+    <Compile Include="Mapping\DataMapper.cs" />
     <Compile Include="Mapping\Interface\IMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Interfaces\IUserRoleRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IUserSettingsRepository.cs" />
     <Compile Include="Repositories\MainMenuRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\SampleEntityRepository.cs" />
@@ -73,6 +76,7 @@
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\RoleUserRepository.cs" />
     <Compile Include="Repositories\UserRoleRepository.cs" />
+    <Compile Include="Repositories\UserSettingsRepository.cs" />
     <Compile Include="Utils\SqlCommandExtensionMethods.cs" />
     <Compile Include="Utils\SqlExceptionToLogicExceptionConverter.cs" />
   </ItemGroup>

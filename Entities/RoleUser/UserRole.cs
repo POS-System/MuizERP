@@ -1,6 +1,5 @@
 ﻿using Entities.Base;
 using Entities.Base.Attributes;
-using System;
 
 namespace Entities
 {

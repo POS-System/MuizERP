@@ -15,26 +15,29 @@ namespace DataAccessLayer
         public IUserRoleRepository UserRoleRepository { get; private set; }
         public IRoleUserRepository RoleUserRepository { get; private set; }
         public IMainMenuRepository MainMenuRepository { get; private set; }
+        public IUserSettingsRepository UserSettingsRepository { get; private set; }
 
         public DALContainer(string connectionString)
         {
             var sqlExceptionConverter = new SqlExceptionToLogicExceptionConverter();
 
-            var dataBaseRepository = new DataBaseRepository(connectionString, sqlExceptionConverter);
+            var dataRepository = new DataRepository(connectionString, sqlExceptionConverter);
 
             var mappers = new MapperContainer();
 
-            SampleEntityDetailsRepository = new SampleEntityDetailsRepository(dataBaseRepository, mappers.Base);
-            SampleEntityRepository = new SampleEntityRepository(dataBaseRepository, SampleEntityDetailsRepository, mappers.Base);
-            CompanyRepository = new CompanyRepository(dataBaseRepository, mappers.Base);     
+            SampleEntityDetailsRepository = new SampleEntityDetailsRepository(dataRepository, mappers.Data);
+            SampleEntityRepository = new SampleEntityRepository(dataRepository, SampleEntityDetailsRepository, mappers.Data);
+            CompanyRepository = new CompanyRepository(dataRepository, mappers.Data);     
             
-            UserRoleRepository = new UserRoleRepository(dataBaseRepository, mappers.UserRole);
-            RoleUserRepository = new RoleUserRepository(dataBaseRepository, mappers.RoleUser);
+            UserRoleRepository = new UserRoleRepository(dataRepository, mappers.UserRole);
+            RoleUserRepository = new RoleUserRepository(dataRepository, mappers.RoleUser);
 
-            RoleRepository = new RoleRepository(dataBaseRepository, RoleUserRepository, mappers.Base);
-            UserRepository = new UserRepository(dataBaseRepository, UserRoleRepository, mappers.Base);
+            RoleRepository = new RoleRepository(dataRepository, RoleUserRepository, mappers.Data);
+            UserRepository = new UserRepository(dataRepository, UserRoleRepository, mappers.Data);
 
-            MainMenuRepository = new MainMenuRepository(dataBaseRepository, mappers.MenuItem);
+            MainMenuRepository = new MainMenuRepository(dataRepository, mappers.MenuItem);
+
+            UserSettingsRepository = new UserSettingsRepository(dataRepository, mappers.UserSettings);
         }
     }
 }

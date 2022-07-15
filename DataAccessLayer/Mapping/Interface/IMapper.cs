@@ -1,8 +1,8 @@
 ﻿
 namespace DataAccessLayer.Mapping.Interface
 {
-    public interface IMapper<in TFrom, in TTo>
+    internal interface IMapper<in TFrom, in TTo>
     {
-        void Map(TFrom from, TTo to);
+        void Map(TFrom drd, TTo item);
     }
 }

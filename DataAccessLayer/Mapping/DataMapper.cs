@@ -11,53 +11,58 @@ namespace DataAccessLayer.Mapping
     /// <summary>
     /// Класс маппер из объекта <see cref="SqlDataReaderWithSchema"/> в <see cref="BaseEntity"/>
     /// </summary>
-    internal sealed class BaseMapper : IMapper<SqlDataReaderWithSchema, BaseEntity>
+    internal sealed class DataMapper : IDataMapper
     {
-        public void Map(SqlDataReaderWithSchema drd, BaseEntity currentItem)
+        public void Map(SqlDataReaderWithSchema drd, BaseEntity item, Action<string> fieldNameAction = null)
         {
-            var currentItemType = currentItem.GetType();
+            var type = item.GetType();
 
             // Получаем значения остальных параметров
-            foreach (var property in currentItemType.GetProperties())
+            foreach (var property in type.GetProperties())
             {
-                var loadParameter = property.GetCustomAttribute<LoadParameterAttribute>();
+                var attribute = property.GetCustomAttribute<LoadParameterAttribute>();
 
                 // Если свойство не нуждается в загрузке значения, пропускаем его
-                if (loadParameter == null) continue;
+                if (attribute == null) continue;
 
-                var parameterName = loadParameter.Name ?? property.Name;
+                var name = attribute.Name ?? property.Name;
                 
-                ValidateDataReaderContainsRequiredField(loadParameter, parameterName, drd, currentItemType);
+                ValidateDataReaderContainsRequiredField(attribute, name, drd, type);
                 
-                if (!CheckDataReaderContainsField(drd, parameterName))
+                if (!CheckDataReaderContainsField(drd, name))
                 {
-                    if (loadParameter.DefaultValue != null)
-                        property.SetValue(currentItem, loadParameter.DefaultValue, null);
+                    if (attribute.DefaultValue != null)
+                        property.SetValue(item, attribute.DefaultValue, null);
 
                     continue;
                 }
 
-                var value = drd[parameterName];
+                if (fieldNameAction != null)
+                    fieldNameAction(name);
+
+                var value = drd[name];
                 if (value == DBNull.Value)
                     continue;
 
-                property.SetValue(currentItem, value, null);
+                property.SetValue(item, value, null);
             }
         }
 
         /// <summary>
         /// Проверка на наличие в <see cref="SqlDataReaderWithSchema"/> обязательного поля.
         /// </summary>
-        /// <param name="loadParameterAttribute">Атрибут автоматического считывания данных.</param>
+        /// <param name="attribute">Атрибут автоматического считывания данных.</param>
         /// <param name="parameterName">Название поля автоматического считывания данных.</param>
         /// <param name="drd">Объект класа <see cref="SqlDataReaderWithSchema"/>.</param>
         /// <param name="fillableItemType">Тип заполняемого объекта в <see cref="SqlDataReaderWithSchema"/>.</param>
-        private static void ValidateDataReaderContainsRequiredField(LoadParameterAttribute loadParameterAttribute, string parameterName, SqlDataReaderWithSchema drd, Type fillableItemType)
+        private static void ValidateDataReaderContainsRequiredField(LoadParameterAttribute attribute, string parameterName, SqlDataReaderWithSchema drd, Type fillableItemType)
         {
-            if (!loadParameterAttribute.Required)
+            if (!attribute.Required)
                 return;
             if (!CheckDataReaderContainsField(drd, parameterName))
-                throw new MappingException(string.Format("В SqlDataReader отсутствует обязательное поле '{0}'. Заполняется объект '{1}'.",
+                throw new MappingException(
+                    string.Format(
+                        "В SqlDataReader отсутствует обязательное поле '{0}'. Заполняется объект '{1}'.",
                         parameterName, fillableItemType));
         }
 

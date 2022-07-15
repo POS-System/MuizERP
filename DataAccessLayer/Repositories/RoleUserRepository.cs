@@ -11,14 +11,15 @@ namespace DataAccessLayer.Repositories
 {
     internal class RoleUserRepository : IRoleUserRepository
     {
-        private readonly DataBaseRepository _dataBaseRepository;
+        private readonly DataRepository _dataRepository;
         private readonly IMapper<SqlDataReaderWithSchema, RoleUser> _roleUserMapper;
 
         public RoleUserRepository(
-            DataBaseRepository dataBaseRepository,
+            DataRepository dataRepository,
             IMapper<SqlDataReaderWithSchema, RoleUser> roleUserMapper)
         {
-            _dataBaseRepository = dataBaseRepository;
+            _dataRepository = dataRepository;
+
             _roleUserMapper = roleUserMapper;            
         }
 
@@ -26,7 +27,7 @@ namespace DataAccessLayer.Repositories
         {
             var result = new EntityCollection<RoleUser>();
 
-            _dataBaseRepository.ReadCollectionWithSchema<RoleUser>(
+            _dataRepository.ReadCollectionWithSchema<RoleUser>(
                 cmd => cmd.ConfigureParameters(parameters),
                 drd =>
                 {
@@ -41,7 +42,7 @@ namespace DataAccessLayer.Repositories
 
         public void SaveItem(RoleUser item, SqlConnection conn)
         {
-            _dataBaseRepository.SaveBaseItem(item, conn);            
+            _dataRepository.SaveBaseItem(item, conn);            
         }
     }
 }

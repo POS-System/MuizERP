@@ -19,12 +19,20 @@ namespace ConsoleClient
             var connectionString = ConfigurationManager.ConnectionStrings["ConnectionERP"].ConnectionString;
             var dalc = new DALContainer(connectionString);
 
-            var mainMenuRepository = dalc.MainMenuRepository;
-
+            var roleRepository = dalc.RoleRepository;
             var parameters = new ParametersContainer();
-            var mainMenu = mainMenuRepository.GetItems(parameters);
+            var roles = roleRepository.GetItems(parameters);
+
+            //var userSettingsRepository = dalc.UserSettingsRepository;
+            //var parameters = new ParametersContainer();
+            //var userSettings = userSettingsRepository.GetItems(parameters);
 
             var user = new User();
+
+            //var mainMenuRepository = dalc.MainMenuRepository;
+
+            //var parameters = new ParametersContainer();
+            //var mainMenu = mainMenuRepository.GetItems(parameters);
 
             /*
             var user = new User() { };
@@ -35,9 +43,9 @@ namespace ConsoleClient
             user.UserRoles[0].Role.Name = "123";
             user.UserRoles[0].Role.Name = null;
 
-            var isChanged = user.IsChanged;
+            var isModified = user.IsModified;
             */
-            
+
             //var isModified = user.IsModified;
 
             //var newCompany = new Company
