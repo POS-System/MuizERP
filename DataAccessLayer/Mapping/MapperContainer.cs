@@ -1,7 +1,6 @@
 ﻿using DataAccessLayer.DataReaders;
 using DataAccessLayer.Mapping.Interface;
 using Entities;
-using Entities.MenuUserHistory;
 
 namespace DataAccessLayer.Mapping
 {
@@ -10,7 +9,6 @@ namespace DataAccessLayer.Mapping
         public IDataMapper Data { get; private set; }
         public IMapper<SqlDataReaderWithSchema, UserRole> UserRole { get; private set; }
         public IMapper<SqlDataReaderWithSchema, RoleUser> RoleUser { get; private set; }
-        public IMapper<SqlDataReaderWithSchema, MenuItem> MenuItem { get; private set; }
         public IMapper<SqlDataReaderWithSchema, UserSettings> UserSettings { get; private set; }
 
         public MapperContainer()
@@ -20,8 +18,6 @@ namespace DataAccessLayer.Mapping
             UserRole = new UserRoleMapper(Data);
 
             RoleUser = new RoleUserMapper(Data);
-
-            MenuItem = new MenuItemMapper(Data);
 
             UserSettings = new UserSettingsMapper(Data);
         }

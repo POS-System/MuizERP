@@ -45,7 +45,7 @@ namespace DataAccessLayer
                 UserMainMenuHistoryRepository,
                 mappers.Data);
 
-            MainMenuRepository = new MainMenuRepository(dataRepository, mappers.MenuItem);
+            MainMenuRepository = new MainMenuRepository(dataRepository, mappers.Data);
 
             UserSettingsRepository = new UserSettingsRepository(dataRepository, mappers.UserSettings);
 

@@ -47,9 +47,13 @@ namespace DataAccessLayer.Repositories
         public void SaveItem(UserMenuItem item, SqlConnection conn)
         {
             var type = item.GetType();
-            type.SetCustomAttributeProperty<SaveParameterAttribute>(
-                nameof(item.MenuItemID), "Name", "MainMenuID");
-            
+            //type.SetCustomAttributeProperty<SaveParameterAttribute>(
+            //    nameof(item.MenuItemID), "Name", "MainMenuID");
+
+            var prop = type.GetProperty(nameof(item.MenuItemID));
+            var attribute = prop.GetCustomAttribute<SaveParameterAttribute>();
+            attribute.Name = "MainMenuID";
+
             _dataRepository.SaveBaseItem(item, conn,
                 cmd =>
                 {                    

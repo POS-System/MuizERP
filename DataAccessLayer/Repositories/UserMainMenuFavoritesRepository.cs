@@ -50,8 +50,12 @@ namespace DataAccessLayer.Repositories
             type.SetCustomAttributeProperty<SaveParameterAttribute>(
                 nameof(item.MenuItemID), "Name", "MainMenuID");
 
+
             _dataRepository.SaveBaseItem(item, conn,
-                cmd => cmd.CommandText = "xp_SaveUserMainMenuFavorites");
+                cmd =>
+                {
+                    cmd.CommandText = "xp_SaveUserMainMenuFavorites";
+                });
         }
     }
 }
