@@ -26,7 +26,7 @@ namespace DataAccessLayer.Repositories
             var result = new EntityCollection<Company>();
 
             _dataRepository.ReadCollectionWithSchema<Company>(
-                cmd => cmd.ConfigureParameters(parameters),
+                cmd => cmd.AddParameters(parameters),
                 drd =>
                 {
                     var item = new Company();

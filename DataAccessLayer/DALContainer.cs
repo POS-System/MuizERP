@@ -16,6 +16,8 @@ namespace DataAccessLayer
         public IRoleUserRepository RoleUserRepository { get; private set; }
         public IMainMenuRepository MainMenuRepository { get; private set; }
         public IUserSettingsRepository UserSettingsRepository { get; private set; }
+        public IUserMainMenuRepository UserMainMenuFavoritesRepository { get; private set; }
+        public IUserMainMenuRepository UserMainMenuHistoryRepository { get; private set; }
 
         public DALContainer(string connectionString)
         {
@@ -33,11 +35,21 @@ namespace DataAccessLayer
             RoleUserRepository = new RoleUserRepository(dataRepository, mappers.RoleUser);
 
             RoleRepository = new RoleRepository(dataRepository, RoleUserRepository, mappers.Data);
-            UserRepository = new UserRepository(dataRepository, UserRoleRepository, mappers.Data);
+            UserMainMenuFavoritesRepository = new UserMainMenuFavoritesRepository(dataRepository, mappers.Data);
+            UserMainMenuHistoryRepository = new UserMainMenuHistoryRepository(dataRepository, mappers.Data);
+
+            UserRepository = new UserRepository(
+                dataRepository,
+                UserRoleRepository,
+                UserMainMenuFavoritesRepository,
+                UserMainMenuHistoryRepository,
+                mappers.Data);
 
             MainMenuRepository = new MainMenuRepository(dataRepository, mappers.MenuItem);
 
             UserSettingsRepository = new UserSettingsRepository(dataRepository, mappers.UserSettings);
+
+
         }
     }
 }

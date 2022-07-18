@@ -31,7 +31,7 @@ namespace DataAccessLayer.Repositories
             var result = new EntityCollection<Role>();
 
             _dataRepository.ReadCollectionWithSchema<Role>(
-                cmd => cmd.ConfigureParameters(parameters),
+                cmd => cmd.AddParameters(parameters),
                 drd =>
                 {
                     var item = new Role();

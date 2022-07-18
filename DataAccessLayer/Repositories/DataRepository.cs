@@ -162,7 +162,20 @@ namespace DataAccessLayer.Repositories
             {
                 var sqlCmd = sqlConn.CreateCommand();
                 sqlCmd.CommandType = CommandType.StoredProcedure;
+
+                var type = typeof(T);
+                var loadCommand = type.GetCustomAttribute<LoadCommandAttribute>();
+                if (loadCommand == null)
+                    throw new GeneratingStoredProcedureNotSupportedException(
+                        string.Format("Объект '{0}' не поддерживает генерацию команды загрузка." +
+                            "Отсутствует [LoadCommandAttribute] аттрибут.", type));
+
+                sqlCmd.CommandText = loadCommand.Name;
+                if (string.IsNullOrEmpty(sqlCmd.CommandText) && !loadCommand.UseEmptyCommandName)
+                    sqlCmd.CommandText = $"xp_Get{type.Name}";
+
                 init(sqlCmd);
+
                 using (var drd = sqlCmd.ExecuteReader())
                 {
                     if (drd.Read())
@@ -353,6 +366,8 @@ namespace DataAccessLayer.Repositories
         public void SaveBaseItem(BaseEntity item, SqlConnection connection, ConfigureSetCommand configureSetCommand = null)
         {
             if (!item.IsModified) return;
+
+            if (item.State == EState.None) return;
 
             var sqlSetCmd = CreateSaveStoredProcedure(item, connection);
 

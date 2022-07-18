@@ -76,6 +76,7 @@
     <Compile Include="Exceptions\InnerApplicationExceptions\SqlSeverIsBusyException.cs" />
     <Compile Include="Exceptions\LogicExceptions\LogicException.cs" />
     <Compile Include="MenuItem\MenuItem.cs" />
+    <Compile Include="UserMenuItem\UserMenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleUser\UserRole.cs" />
     <Compile Include="Role\Role.cs" />

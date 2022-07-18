@@ -10,16 +10,16 @@ namespace DataAccessLayer.Repositories
 {
     internal class SampleEntityRepository : ISampleEntityRepository
     {
-        private readonly DataRepository _dataBaseRepository;
+        private readonly DataRepository _dataRepository;
         private readonly ISampleEntityDetailsRepository _sampleEntitiesDetailsRepository;
         private readonly IDataMapper _dataMapper;
 
         public SampleEntityRepository(
-            DataRepository dataBaseRepository,
+            DataRepository dataRepository,
             ISampleEntityDetailsRepository sampleEntitiesDetailsRepository,
             IDataMapper dataMapper)
         {
-            _dataBaseRepository = dataBaseRepository;
+            _dataRepository = dataRepository;
             _sampleEntitiesDetailsRepository = sampleEntitiesDetailsRepository;
             
             _dataMapper = dataMapper;
@@ -29,8 +29,8 @@ namespace DataAccessLayer.Repositories
         {
             var result = new EntityCollection<SampleEntity>();
 
-            _dataBaseRepository.ReadCollectionWithSchema<SampleEntity>(
-                cmd => cmd.ConfigureParameters(parameters),
+            _dataRepository.ReadCollectionWithSchema<SampleEntity>(
+                cmd => cmd.AddParameters(parameters),
                 drd =>
                 {
                     var item = new SampleEntity();
@@ -50,10 +50,10 @@ namespace DataAccessLayer.Repositories
 
         public void SaveItem(SampleEntity item)
         {
-            _dataBaseRepository.DoInTransaction(conn =>
+            _dataRepository.DoInTransaction(conn =>
             {
-                _dataBaseRepository.SaveBaseItem(item, conn, null);
-                _dataBaseRepository.SaveCollection(
+                _dataRepository.SaveBaseItem(item, conn, null);
+                _dataRepository.SaveCollection(
                     item.SampleEntityDetailsList,
                     entityDetail =>
                     {

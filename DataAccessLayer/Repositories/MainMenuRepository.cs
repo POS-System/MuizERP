@@ -28,7 +28,11 @@ namespace DataAccessLayer.Repositories
             var result = new EntityCollection<MenuItem>();
 
             _dataRepository.ReadCollectionWithSchema<MenuItem>(
-                cmd => cmd.ConfigureParameters(parameters),
+                cmd =>
+                {
+                    cmd.CommandText = "xp_GetMeinMenu";
+                    cmd.AddParameters(parameters);
+                },
                 drd =>
                 {
                     var item = new MenuItem();

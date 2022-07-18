@@ -11,10 +11,9 @@ namespace Entities
 
         private Type _entityType;
         private bool _isFolder;
-        private string _name;
+        private string _caption;
         private string _description;
-
-        private EntityCollection<MenuItem> _childs;
+        private bool _isVisible;
 
         #endregion
 
@@ -48,14 +47,14 @@ namespace Entities
         }
 
         [LoadParameter]
-        public string Name
+        public string Caption
         {
-            get { return _name; }
+            get { return _caption; }
             set
             {
-                if (_name != value)
+                if (_caption != value)
                 {
-                    _name = value;
+                    _caption = value;
                     OnPropertyChanged();
                 }
             }
@@ -75,26 +74,18 @@ namespace Entities
             }
         }
 
-        public EntityCollection<MenuItem> Childs
+        [LoadParameter]
+        public bool IsVisible
         {
-            get { return _childs; }
+            get { return _isVisible; }
             set
             {
-                if (_childs != value)
+                if (_isVisible != value)
                 {
-                    _childs = value;
+                    _isVisible = value;
                     OnPropertyChanged();
                 }
             }
-        }
-
-        #endregion
-
-        #region Constructor
-
-        public MenuItem()
-        {
-            _childs = new EntityCollection<MenuItem>();
         }
 
         #endregion

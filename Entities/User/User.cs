@@ -1,5 +1,6 @@
 ﻿using Entities.Base;
 using Entities.Base.Attributes;
+using Entities.MenuUserHistory;
 using System;
 
 namespace Entities
@@ -25,7 +26,10 @@ namespace Entities
 		private byte _themeID;
 		private string _color;
 
+        private UserSettings _userSettings;
         private EntityCollection<UserRole> _userRoles;
+        private EntityCollection<UserMenuItem> _menuHistory;
+        private EntityCollection<UserMenuItem> _menuFavorites;
 
         #endregion
 
@@ -38,8 +42,11 @@ namespace Entities
             get { return _number; }
             set
             {
-                _number = value;
-                OnPropertyChanged("Number");
+                if (_number != value)
+                {
+                    _number = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -51,8 +58,11 @@ namespace Entities
             get { return _firstName; }
             set 
             {
-                _firstName = value;
-                OnPropertyChanged("FirstName");
+                if (_firstName != value)
+                {
+                    _firstName = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -63,8 +73,11 @@ namespace Entities
             get { return _lastName; }
             set
             {
-                _lastName = value;
-                OnPropertyChanged("LastName");
+                if (_lastName != value)
+                {
+                    _lastName = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -75,8 +88,11 @@ namespace Entities
             get { return _secondName; }
             set 
             {
-                _secondName = value;
-                OnPropertyChanged("SecondName");
+                if (_secondName != value)
+                {
+                    _secondName = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -87,8 +103,11 @@ namespace Entities
             get { return _inn; }
             set
             {
-                _inn = value;
-                OnPropertyChanged("INN");
+                if (_inn != value)
+                {
+                    _inn = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -99,8 +118,11 @@ namespace Entities
             get { return _phone; }
             set
             {
-                _phone = value;
-                OnPropertyChanged("Phone");
+                if (_phone != value)
+                {
+                    _phone = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -111,8 +133,11 @@ namespace Entities
             get { return _email; }
             set
             {
-                _email = value;
-                OnPropertyChanged("Email");
+                if (_email != value)
+                {
+                    _email = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -123,8 +148,11 @@ namespace Entities
             get { return _active; }
             set
             {
-                _active = value;
-                OnPropertyChanged("Active");
+                if (_active != value)
+                {
+                    _active = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -135,8 +163,11 @@ namespace Entities
             get { return _login; }
             set
             {
-                _login = value;
-                OnPropertyChanged("Login");
+                if (_login != value)
+                {
+                    _login = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -147,8 +178,11 @@ namespace Entities
             get { return _password; }
             set
             {
-                _password = value;
-                OnPropertyChanged("Password");
+                if (_password != value)
+                {
+                    _password = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -159,8 +193,11 @@ namespace Entities
             get { return _birthDay; }
             set
             {
-                _birthDay = value;
-                OnPropertyChanged("BirthDay");
+                if (_birthDay != value)
+                {
+                    _birthDay = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -171,8 +208,11 @@ namespace Entities
             get { return _genderID; }
             set
             {
-                _genderID = value;
-                OnPropertyChanged("GenderID");
+                if (_genderID != value)
+                {
+                    _genderID = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -183,8 +223,11 @@ namespace Entities
             get { return _themeID; }
             set
             {
-                _themeID = value;
-                OnPropertyChanged("ThemeID");
+                if (_themeID != value)
+                {
+                    _themeID = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -195,8 +238,24 @@ namespace Entities
             get { return _color; }
             set
             {
-                _color = value;
-                OnPropertyChanged("Color");
+                if (_color != value)
+                {
+                    _color = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public UserSettings UserSettings
+        {
+            get { return _userSettings; }
+            set
+            {
+                if (_userSettings != value)
+                {
+                    _userSettings = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -205,8 +264,37 @@ namespace Entities
             get { return _userRoles; }
             set
             {
-                _userRoles = value;
-                OnPropertyChanged("Roles");
+                if (_userRoles != value)
+                {
+                    _userRoles = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public EntityCollection<UserMenuItem> MenuHistory
+        {
+            get { return _menuHistory; }
+            set
+            {
+                if (_menuHistory != value)
+                {
+                    _menuHistory = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public EntityCollection<UserMenuItem> MenuFavorites
+        {
+            get { return _menuFavorites; }
+            set
+            {
+                if (_menuFavorites != value)
+                {
+                    _menuFavorites = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -216,7 +304,10 @@ namespace Entities
 
         public User()
         {
+            _userSettings = new UserSettings();
             _userRoles = new EntityCollection<UserRole>();
+            _menuFavorites = new EntityCollection<UserMenuItem>();
+            _menuHistory = new EntityCollection<UserMenuItem>();
         }
 
         #endregion

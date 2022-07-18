@@ -1,14 +1,14 @@
 ﻿using Entities.Base;
 using Entities.Base.Attributes;
 
-namespace Entities.UserSettings
+namespace Entities
 {
     [LoadCommand]
     public class UserSettings : BaseEntity
     {
         #region Fields
 
-        private User _user;
+        private int _userID;
         private int _themeID;
         private string _color;
 
@@ -16,14 +16,14 @@ namespace Entities.UserSettings
 
         #region Properties
 
-        public User User
+        public int UserID
         {
-            get { return _user; }
+            get { return _userID; }
             set
             {
-                if (_user != value)
+                if (_userID != value)
                 {
-                    _user = value;
+                    _userID = value;
                     OnPropertyChanged();
                 }
             }
@@ -53,15 +53,6 @@ namespace Entities.UserSettings
                     OnPropertyChanged();
                 }
             }
-        }
-
-        #endregion
-
-        #region Constructor
-
-        public UserSettings()
-        {
-            _user = new User();
         }
 
         #endregion

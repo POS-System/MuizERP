@@ -1,6 +1,6 @@
 ﻿using DataAccessLayer.DataReaders;
 using DataAccessLayer.Mapping.Interface;
-using Entities.UserSettings;
+using Entities;
 
 namespace DataAccessLayer.Mapping
 {
@@ -19,7 +19,6 @@ namespace DataAccessLayer.Mapping
             var type = item.GetType();
 
             _dataMapper.Map(drd, item, name => name = type.Name + name);
-            _dataMapper.Map(drd, item.User);
         }
     }
 }

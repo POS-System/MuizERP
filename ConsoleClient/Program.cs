@@ -3,6 +3,7 @@ using Entities;
 using Entities.Base;
 using Entities.Base.Utils;
 using Entities.Exceptions.InnerApplicationExceptions;
+using Entities.MenuUserHistory;
 using MuizEnums;
 using System;
 using System.Collections.Generic;
@@ -19,15 +20,32 @@ namespace ConsoleClient
             var connectionString = ConfigurationManager.ConnectionStrings["ConnectionERP"].ConnectionString;
             var dalc = new DALContainer(connectionString);
 
-            var roleRepository = dalc.RoleRepository;
-            var parameters = new ParametersContainer();
-            var roles = roleRepository.GetItems(parameters);
+            var userRepository = dalc.UserRepository;
+            var user = userRepository.GetItemById(55);
+            //user.State = EState.Update;
+            //user.Email = "123";
+                        
+            var userMenuItem = new UserMenuItem()
+            {
+                ModifyByUserID = 2,
+                MenuItem = new MenuItem() { ID = 3 },
+                //State = EState.Insert
+            };
+            //userMenuItem.ResetState();
+            //userMenuItem.Fix();
+            userMenuItem.State = EState.Insert;
+
+            user.MenuHistory.Add(userMenuItem);
+
+            var isModified = user.IsModified;
+
+            userRepository.SaveItem(user);
 
             //var userSettingsRepository = dalc.UserSettingsRepository;
             //var parameters = new ParametersContainer();
             //var userSettings = userSettingsRepository.GetItems(parameters);
 
-            var user = new User();
+            var user1 = new User();
 
             //var mainMenuRepository = dalc.MainMenuRepository;
 

@@ -12,17 +12,47 @@ namespace DataAccessLayer.Repositories
     {
         private readonly DataRepository _dataRepository;
         private readonly IUserRoleRepository _userRoleRepository;
+        private readonly IUserMainMenuRepository _menuFavoritesRepository;
+        private readonly IUserMainMenuRepository _menuHistoryRepository;
+
         private readonly IDataMapper _dataMapper;
 
         public UserRepository(
             DataRepository dataRepository,
             IUserRoleRepository userRoleRepository,
+            IUserMainMenuRepository menuFavoritesRepository,
+            IUserMainMenuRepository menuHistoryRepository,
             IDataMapper dataMapper)
         {
             _dataRepository = dataRepository;
             _userRoleRepository = userRoleRepository;
+            _menuFavoritesRepository = menuFavoritesRepository;
+            _menuHistoryRepository = menuHistoryRepository;
 
             _dataMapper = dataMapper;
+        }
+
+        public User GetItemById(int id)
+        {
+            return _dataRepository.GetSingleItem(
+                cmd => cmd.AddIdentifier(id),
+                drd =>
+                {
+                    var item = new User();
+                    _dataMapper.Map(drd, item);
+
+                    var parameters = new ParametersContainer();
+                    parameters.Add<User>(nameof(item.ID), item.ID);
+
+                    item.UserRoles = _userRoleRepository.GetItems(parameters);
+                    item.MenuFavorites = _menuFavoritesRepository.GetItems(parameters);
+                    item.MenuHistory = _menuHistoryRepository.GetItems(parameters);
+
+                    item.Fix();
+                    item.ResetState();
+
+                    return item;
+                });
         }
 
         public EntityCollection<User> GetItems(IParametersContainer parameters)
@@ -30,16 +60,11 @@ namespace DataAccessLayer.Repositories
             var result = new EntityCollection<User>();
 
             _dataRepository.ReadCollectionWithSchema<User>(
-                cmd => cmd.ConfigureParameters(parameters),
+                cmd => cmd.AddParameters(parameters),
                 drd =>
                 {
                     var item = new User();
                     _dataMapper.Map(drd, item);
-
-                    var userRoleParams = new ParametersContainer();
-                    userRoleParams.Add<User>(nameof(item.ID), item.ID);
-
-                    item.UserRoles = _userRoleRepository.GetItems(userRoleParams);
 
                     result.Add(item);
                 });
@@ -61,6 +86,25 @@ namespace DataAccessLayer.Repositories
                             userRole.UserID = item.ID;
                             _userRoleRepository.SaveItem(userRole, conn);
                         });
+
+                    _dataRepository.SaveCollection(
+                        item.MenuFavorites,
+                        userFavorites =>
+                        {
+                            userFavorites.UserID = item.ID;
+                            _menuFavoritesRepository.SaveItem(userFavorites, conn);
+                        });
+
+                    _dataRepository.SaveCollection(
+                        item.MenuHistory,
+                        userHistory =>
+                        {
+                            userHistory.UserID = item.ID;
+                            _menuHistoryRepository.SaveItem(userHistory, conn);
+                        });
+
+                    item.ResetState();
+                    item.Fix();
                 });
         }
     }

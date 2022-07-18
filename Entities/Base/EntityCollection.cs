@@ -60,13 +60,13 @@ namespace Entities.Base
 
         public bool IsModified
         {
-            get {  return this.Any(i => i.IsModified || i.State == EState.Insert || i.State == EState.Delete); }
+            get {  return this.Any(i => i.IsModified || i.State != EState.None); }
         }
 
         public void FixValues()
         {
             foreach (var item in this)
-                item.FixValues();
+                item.Fix();
         }
 
         public void ResetState()

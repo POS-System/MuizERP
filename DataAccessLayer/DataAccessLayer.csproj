@@ -53,12 +53,14 @@
     <Compile Include="Repositories\DataRepository.cs" />
     <Compile Include="DataReaders\DataReaderWithSchema.cs" />
     <Compile Include="Delegates\Delegates.cs" />
+    <Compile Include="Repositories\Interfaces\Base\IGetItemById.cs" />
     <Compile Include="Repositories\Interfaces\ICompanyRepository.cs" />
     <Compile Include="Repositories\Interfaces\IDataBaseRepository.cs" />
     <Compile Include="Repositories\Interfaces\Base\IGetItems.cs" />
     <Compile Include="Repositories\Interfaces\Base\ISave.cs" />
     <Compile Include="Repositories\Interfaces\Base\ISaveInTransaction.cs" />
     <Compile Include="Repositories\Interfaces\IMainMenuRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IUserMainMenuRepository.cs" />
     <Compile Include="Repositories\Interfaces\IRoleRepository.cs" />
     <Compile Include="Repositories\Interfaces\IRoleUserRepository.cs" />
     <Compile Include="Repositories\Interfaces\ISampleEntityDetailsRepository.cs" />
@@ -70,9 +72,11 @@
     <Compile Include="Repositories\Interfaces\IUserRoleRepository.cs" />
     <Compile Include="Repositories\Interfaces\IUserSettingsRepository.cs" />
     <Compile Include="Repositories\MainMenuRepository.cs" />
+    <Compile Include="Repositories\UserMainMenuFavoritesRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\SampleEntityRepository.cs" />
     <Compile Include="Repositories\SampleEntityDetailsRepository.cs" />
+    <Compile Include="Repositories\UserMainMenuHistoryRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\RoleUserRepository.cs" />
     <Compile Include="Repositories\UserRoleRepository.cs" />

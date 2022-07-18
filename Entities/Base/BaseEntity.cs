@@ -216,7 +216,7 @@ namespace Entities.Base
         {
             get
             {
-                if (_fixedEntity == null) return false;
+                if (_fixedEntity == null) return _state != EState.None;
 
                 // Сравниваем приватные поля объектов
 
@@ -261,15 +261,15 @@ namespace Entities.Base
                     if (!currentValue.Equals(fixedValue)) return true;
                 }
 
-                return _state == EState.Insert || _state == EState.Delete;
+                return _state != EState.None;
             }
         }
 
         #endregion
 
-        #region Fixed Value
+        #region Fix values
 
-        public void FixValues()
+        public void Fix()
         {
             var type = GetType();
             _fixedEntity = Activator.CreateInstance(type);
@@ -284,7 +284,7 @@ namespace Entities.Base
                 var entity = value as IBaseEntity;
                 if (entity != null)
                 {
-                    entity.FixValues();
+                    entity.Fix();
                     continue;
                 }
 
@@ -342,8 +342,8 @@ namespace Entities.Base
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
             // Если объект удаляется - больше не меняем его состояние
-            if (State != EState.Delete)
-                State = EState.Update;
+            //if (State != EState.Delete)
+            //    State = EState.Update;
         }
 
         #endregion

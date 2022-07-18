@@ -28,7 +28,7 @@ namespace DataAccessLayer.Repositories
             var result = new EntityCollection<RoleUser>();
 
             _dataRepository.ReadCollectionWithSchema<RoleUser>(
-                cmd => cmd.ConfigureParameters(parameters),
+                cmd => cmd.AddParameters(parameters),
                 drd =>
                 {
                     var item = new RoleUser();

@@ -8,16 +8,17 @@ namespace Entities.Base.Attributes
     public class SaveParameterAttribute : Attribute
     {
 
-        #region Поля
+        #region Fields
 
-        private string              _name;
-        private int                 _size;
-        private ParameterDirection  _direction;
-        private bool                _nullable;
-        private object              _nullValue;
+        private string _name;
+        private int _size;
+        private ParameterDirection _direction;
+        private bool _nullable;
+        private object _nullValue;
+
         #endregion
 
-        #region Свойства
+        #region Properties
 
         /// <summary>
         /// Название SQL параметра
@@ -69,7 +70,7 @@ namespace Entities.Base.Attributes
 
         #endregion
 
-        #region Конструктор
+        #region Constructor
         public SaveParameterAttribute()
         {
             _name = string.Empty;

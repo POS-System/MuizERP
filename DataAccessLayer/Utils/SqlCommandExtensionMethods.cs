@@ -6,7 +6,7 @@ namespace DataAccessLayer.Utils
 {
     internal static class SqlCommandExtensionMethods
     {
-        public static void ConfigureParameters(this SqlCommand cmd, IParametersContainer parameters)
+        public static void AddParameters(this SqlCommand cmd, IParametersContainer parameters)
         {
             foreach (var parameter in parameters.GetParameters())
             {
@@ -17,6 +17,14 @@ namespace DataAccessLayer.Utils
 
                 cmd.Parameters.Add(sqlParameter);
             }
+        }
+
+        public static void AddIdentifier(this SqlCommand cmd, int id)
+        {
+            var sqlParameter = new SqlParameter($"@p_ID", id);
+            sqlParameter.Direction = ParameterDirection.InputOutput;
+
+            cmd.Parameters.Add(sqlParameter);
         }
     }
 }

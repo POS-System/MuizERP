@@ -1,9 +1,9 @@
 ﻿using DataAccessLayer.DataReaders;
 using DataAccessLayer.Mapping.Interface;
 using DataAccessLayer.Repositories.Interfaces;
+using Entities;
 using Entities.Base;
 using Entities.Base.Utils.Interface;
-using Entities.UserSettings;
 
 namespace DataAccessLayer.Repositories
 {

@@ -1,7 +1,7 @@
 ﻿using DataAccessLayer.DataReaders;
 using DataAccessLayer.Mapping.Interface;
 using Entities;
-using Entities.UserSettings;
+using Entities.MenuUserHistory;
 
 namespace DataAccessLayer.Mapping
 {
