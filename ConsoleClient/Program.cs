@@ -21,22 +21,37 @@ namespace ConsoleClient
             var dalc = new DALContainer(connectionString);
 
             var userRepository = dalc.UserRepository;
-            var user = userRepository.GetItemById(55);
-            //user.State = EState.Update;
-            //user.Email = "123";
-                        
-            var userMenuItem = new UserMenuItem()
-            {
-                ModifyByUserID = 2,
-                MenuItem = new MenuItem() { ID = 3 },
-                //State = EState.Insert
-            };
+            var user = userRepository.GetItemByID(55);
+
+            //var userMenuItem = new UserMenuItem()
+            //{
+            //    ModifyByUserID = 1,
+            //    MenuItem = new MenuItem() { ID = 2 },
+            //    State = EState.Insert
+            //};
             //userMenuItem.ResetState();
             //userMenuItem.Fix();
-            userMenuItem.State = EState.Insert;
+            //userMenuItem.State = EState.Insert;
 
-            user.MenuHistory.Add(userMenuItem);
+            //user.MenuHistory.Add(userMenuItem);
 
+            user.Settings = new UserSettings()
+            {
+                ModifyByUserID = 1,
+                Color = "Black",
+                ThemeID = 10,
+                State = EState.Update
+            };
+
+            var favorites = new UserMenuItem()
+            {
+                ModifyByUserID = 1,
+                MenuItem = new MenuItem() { ID = 3 },
+                State = EState.Insert
+            };
+
+            user.MenuFavorites.Add(favorites);
+            
             var isModified = user.IsModified;
 
             userRepository.SaveItem(user);

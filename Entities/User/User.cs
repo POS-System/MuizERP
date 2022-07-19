@@ -26,7 +26,7 @@ namespace Entities
 		private byte _themeID;
 		private string _color;
 
-        private UserSettings _userSettings;
+        private UserSettings _settings;
         private EntityCollection<UserRole> _userRoles;
         private EntityCollection<UserMenuItem> _menuHistory;
         private EntityCollection<UserMenuItem> _menuFavorites;
@@ -246,14 +246,14 @@ namespace Entities
             }
         }
 
-        public UserSettings UserSettings
+        public UserSettings Settings
         {
-            get { return _userSettings; }
+            get { return _settings; }
             set
             {
-                if (_userSettings != value)
+                if (_settings != value)
                 {
-                    _userSettings = value;
+                    _settings = value;
                     OnPropertyChanged();
                 }
             }
@@ -304,7 +304,7 @@ namespace Entities
 
         public User()
         {
-            _userSettings = new UserSettings();
+            _settings = new UserSettings();
             _userRoles = new EntityCollection<UserRole>();
             _menuFavorites = new EntityCollection<UserMenuItem>();
             _menuHistory = new EntityCollection<UserMenuItem>();

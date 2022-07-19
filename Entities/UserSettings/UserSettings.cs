@@ -4,6 +4,7 @@ using Entities.Base.Attributes;
 namespace Entities
 {
     [LoadCommand]
+    [SaveCommand(IgnoreProperties = new[] { "CompanyID" })]
     public class UserSettings : BaseEntity
     {
         #region Fields
@@ -16,6 +17,8 @@ namespace Entities
 
         #region Properties
 
+        [LoadParameter]
+        [SaveParameter]
         public int UserID
         {
             get { return _userID; }
@@ -29,6 +32,8 @@ namespace Entities
             }
         }
 
+        [LoadParameter]
+        [SaveParameter]
         public int ThemeID
         {
             get { return _themeID; }
@@ -42,6 +47,8 @@ namespace Entities
             }
         }
 
+        [LoadParameter]
+        [SaveParameter]
         public string Color
         {
             get { return _color; }
