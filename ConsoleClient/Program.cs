@@ -39,14 +39,14 @@ namespace ConsoleClient
             {
                 ModifyByUserID = 1,
                 Color = "Black",
-                ThemeID = 10,
-                State = EState.Update
+                ThemeID = 5,
+                State = EState.Insert
             };
 
             var favorites = new UserMenuItem()
             {
                 ModifyByUserID = 1,
-                MenuItem = new MenuItem() { ID = 3 },
+                MenuItem = new MenuItem() { ID = 5 },
                 State = EState.Insert
             };
 
