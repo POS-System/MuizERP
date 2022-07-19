@@ -18,7 +18,7 @@ namespace DataAccessLayer.Mapping
         {
             var type = item.GetType();
 
-            _dataMapper.Map(drd, item, name => name = type.Name + name);
+            _dataMapper.Map(drd, item);
         }
     }
 }
