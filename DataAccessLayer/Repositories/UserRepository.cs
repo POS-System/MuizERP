@@ -12,27 +12,27 @@ namespace DataAccessLayer.Repositories
     {
         private readonly DataRepository _dataRepository;
         private readonly IUserRoleRepository _userRoleRepository;
-        private readonly IUserMainMenuRepository _menuFavoritesRepository;
-        private readonly IUserMainMenuRepository _menuHistoryRepository;
+        private readonly IUserMainMenuFavoritesRepository _favoritesRepository;
+        private readonly IUserMainMenuHistoryRepository _historyRepository;
 
         private readonly IDataMapper _dataMapper;
 
         public UserRepository(
             DataRepository dataRepository,
             IUserRoleRepository userRoleRepository,
-            IUserMainMenuRepository menuFavoritesRepository,
-            IUserMainMenuRepository menuHistoryRepository,
+            IUserMainMenuFavoritesRepository favoritesRepository,
+            IUserMainMenuHistoryRepository historyRepository,
             IDataMapper dataMapper)
         {
             _dataRepository = dataRepository;
             _userRoleRepository = userRoleRepository;
-            _menuFavoritesRepository = menuFavoritesRepository;
-            _menuHistoryRepository = menuHistoryRepository;
+            _favoritesRepository = favoritesRepository;
+            _historyRepository = historyRepository;
 
             _dataMapper = dataMapper;
         }
 
-        public User GetItemById(int id)
+        public User GetItemByID(int id)
         {
             return _dataRepository.GetSingleItem(
                 cmd => cmd.AddIdentifier(id),
@@ -41,15 +41,20 @@ namespace DataAccessLayer.Repositories
                     var item = new User();
                     _dataMapper.Map(drd, item);
 
-                    var parameters = new ParametersContainer();
-                    parameters.Add<User>(nameof(item.ID), item.ID);
+                    //var parameters = new ParametersContainer();
+                    //parameters.Add<User>(nameof(item.ID), item.ID);
 
-                    item.UserRoles = _userRoleRepository.GetItems(parameters);
-                    item.MenuFavorites = _menuFavoritesRepository.GetItems(parameters);
-                    item.MenuHistory = _menuHistoryRepository.GetItems(parameters);
+                    item.Settings = GetUserSettingsByUserID(id);
 
-                    item.Fix();
+                    //item.UserRoles = _userRoleRepository.GetItems(parameters);
+                    //item.MenuFavorites = _favoritesRepository.GetItems(parameters);
+                    //item.MenuHistory = _historyRepository.GetItems(parameters);
+                    item.UserRoles = _userRoleRepository.GetItemsByUserID(item.ID);
+                    item.MenuFavorites = _favoritesRepository.GetItemsByForignKey(item.ID);
+                    item.MenuHistory = _historyRepository.GetItemsByForignKey(item.ID);
+
                     item.ResetState();
+                    item.Fix();
 
                     return item;
                 });
@@ -79,6 +84,8 @@ namespace DataAccessLayer.Repositories
                 {
                     _dataRepository.SaveBaseItem(item, conn);
 
+                    _dataRepository.SaveBaseItem(item.Settings, conn);
+
                     _dataRepository.SaveCollection(
                         item.UserRoles,
                         userRole =>
@@ -92,7 +99,7 @@ namespace DataAccessLayer.Repositories
                         userFavorites =>
                         {
                             userFavorites.UserID = item.ID;
-                            _menuFavoritesRepository.SaveItem(userFavorites, conn);
+                            _favoritesRepository.SaveItem(userFavorites, conn);
                         });
 
                     _dataRepository.SaveCollection(
@@ -100,11 +107,24 @@ namespace DataAccessLayer.Repositories
                         userHistory =>
                         {
                             userHistory.UserID = item.ID;
-                            _menuHistoryRepository.SaveItem(userHistory, conn);
+                            _historyRepository.SaveItem(userHistory, conn);
                         });
 
                     item.ResetState();
                     item.Fix();
+                });
+        }
+
+        private UserSettings GetUserSettingsByUserID(int id)
+        {
+            return _dataRepository.GetSingleItemOrDefault(
+                cmd => cmd.AddForignKey<User>(id),
+                drd =>
+                {
+                    var item = new UserSettings();
+                    _dataMapper.Map(drd, item);
+
+                    return item;
                 });
         }
     }

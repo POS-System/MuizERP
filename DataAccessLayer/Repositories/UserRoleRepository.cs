@@ -23,6 +23,23 @@ namespace DataAccessLayer.Repositories
             _userRoleMapper = userRoleMapper;            
         }
 
+        public EntityCollection<UserRole> GetItemsByUserID(int userID)
+        {
+            var result = new EntityCollection<UserRole>();
+
+            _dataRepository.ReadCollectionWithSchema<UserRole>(
+                cmd => cmd.AddForignKey<User>(userID),
+                drd =>
+                {
+                    var item = new UserRole();
+                    _userRoleMapper.Map(drd, item);
+
+                    result.Add(item);
+                });
+
+            return result;
+        }
+
         public EntityCollection<UserRole> GetItems(IParametersContainer parameters)
         {
             var result = new EntityCollection<UserRole>();
