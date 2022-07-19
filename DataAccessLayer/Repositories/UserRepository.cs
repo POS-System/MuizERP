@@ -3,7 +3,6 @@ using DataAccessLayer.Repositories.Interfaces;
 using DataAccessLayer.Utils;
 using Entities;
 using Entities.Base;
-using Entities.Base.Utils;
 using Entities.Base.Utils.Interface;
 
 namespace DataAccessLayer.Repositories
@@ -84,6 +83,7 @@ namespace DataAccessLayer.Repositories
                 {
                     _dataRepository.SaveBaseItem(item, conn);
 
+                    item.Settings.UserID = item.ID;
                     _dataRepository.SaveBaseItem(item.Settings, conn);
 
                     _dataRepository.SaveCollection(
