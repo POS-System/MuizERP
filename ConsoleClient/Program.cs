@@ -54,7 +54,7 @@ namespace ConsoleClient
             
             var isModified = user.IsModified;
 
-            userRepository.SaveItem(user);
+            //userRepository.SaveItem(user);
 
             //var userSettingsRepository = dalc.UserSettingsRepository;
             //var parameters = new ParametersContainer();
@@ -120,46 +120,55 @@ namespace ConsoleClient
             //companyRepository.SaveItem(newCompany);
 
             //var userRepository = dalc.UserRepository;
-            //var roleRepository = dalc.RoleRepository;
+            var roleRepository = dalc.RoleRepository;
             //var userRoleRepository = dalc.UserRoleRepository;
             //var roleUserRepository = dalc.RoleUserRepository;
 
             /*var roleParameters = new ParametersContainer();
             roleParameters.Add("CompanyID", 2);*/
-            //ObservableCollection<Role> roleList = roleRepository.GetItems(new ParametersContainer());
+            ObservableCollection<Role> roleList = roleRepository.GetItems(new ParametersContainer());
             //ObservableCollection<User> userList = userRepository.GetItems(new ParametersContainer());
 
-            /*var newUser = new User
+            var newUser = new User
             {
-                CompanyID = 2,
-                FirstName = "Sasha",
-                LastName = "Тестовая фамилия 1",
-                SecondName = "Тестовое отчество 1",
-                BirthDay = new DateTime(2022, 07, 05),
+                CompanyID = 27,
+                FirstName = "Andery",
+                LastName = "Тестовая фамилия 2",
+                SecondName = "Тестовое отчество 2",
+                BirthDay = new DateTime(2022, 07, 19),
                 Email = "test1@email.ru",
                 GenderID = 0,
-                Login = "login 1",
-                Password = "password ",
+                Login = "login 2",
+                Password = "password 2",
                 Phone = "+79876541232",
                 Active = true,
                 Color = "Color 1",
-                Number = 777,
-                RoleID = 1,
+                Number = 444,
                 ThemeID = 1,
                 INN = "123456789878",
-                ModifyByUserID = 1
+                ModifyByUserID = 1,
+                Settings = new UserSettings
+                {
+                    ThemeID = 99,
+                    Color = "Red",
+                    ModifyByUserID = 1,
+                    State = EState.Insert
+                }
             };
+
+            newUser.State = EState.Insert;
 
             foreach (Role role in roleList)
             {
                 UserRole userRole = new UserRole();
                 userRole.Role.ID = role.ID;
                 userRole.IsChecked = false;
+                userRole.State = EState.Insert;
                 newUser.UserRoles.Add(userRole);
-            }*
+            }
             
             userRepository.SaveItem(newUser);
-            */
+            
             /*
             var newRole = new Role
             {
