@@ -1,6 +1,9 @@
-﻿using Entities.Base.Utils.Interface;
+﻿using Entities.Base;
+using Entities.Base.Attributes;
+using Entities.Base.Utils.Interface;
 using System.Data;
 using System.Data.SqlClient;
+using Entities.Base.Utils;
 
 namespace DataAccessLayer.Utils
 {
@@ -23,6 +26,13 @@ namespace DataAccessLayer.Utils
         {
             var sqlParameter = new SqlParameter($"@p_ID", id);
             sqlParameter.Direction = ParameterDirection.InputOutput;
+
+            cmd.Parameters.Add(sqlParameter);
+        }
+
+        public static void AddForignKey<T>(this SqlCommand cmd, int id)
+        {
+            var sqlParameter = new SqlParameter($"@p_{nameof(T)}ID", id);
 
             cmd.Parameters.Add(sqlParameter);
         }
