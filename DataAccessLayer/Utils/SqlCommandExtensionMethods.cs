@@ -32,7 +32,7 @@ namespace DataAccessLayer.Utils
 
         public static void AddForignKey<T>(this SqlCommand cmd, int id)
         {
-            var sqlParameter = new SqlParameter($"@p_{nameof(T)}ID", id);
+            var sqlParameter = new SqlParameter($"@p_{typeof(T).Name}ID", id);
 
             cmd.Parameters.Add(sqlParameter);
         }
