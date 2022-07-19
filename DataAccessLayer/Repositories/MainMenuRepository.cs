@@ -1,5 +1,4 @@
-﻿using DataAccessLayer.DataReaders;
-using DataAccessLayer.Mapping.Interface;
+﻿using DataAccessLayer.Mapping.Interface;
 using DataAccessLayer.Repositories.Interfaces;
 using DataAccessLayer.Utils;
 using Entities;

@@ -16,8 +16,8 @@ namespace DataAccessLayer
         public IRoleUserRepository RoleUserRepository { get; private set; }
         public IMainMenuRepository MainMenuRepository { get; private set; }
         public IUserSettingsRepository UserSettingsRepository { get; private set; }
-        public IUserMainMenuRepository UserMainMenuFavoritesRepository { get; private set; }
-        public IUserMainMenuRepository UserMainMenuHistoryRepository { get; private set; }
+        public IUserMainMenuFavoritesRepository UserMainMenuFavoritesRepository { get; private set; }
+        public IUserMainMenuHistoryRepository UserMainMenuHistoryRepository { get; private set; }
 
         public DALContainer(string connectionString)
         {

@@ -3,7 +3,7 @@ using Entities;
 
 namespace DataAccessLayer.Repositories.Interfaces
 {
-    public interface IUserRepository : IGetItemById<User>, IGetItems<User>, ISave<User>
+    public interface IUserRepository : IGetItemByID<User>, IGetItems<User>, ISave<User>
     {
     }
 }
