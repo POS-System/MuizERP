@@ -35,8 +35,8 @@ namespace DataAccessLayer
             RoleUserRepository = new RoleUserRepository(dataRepository, mappers.RoleUser);
 
             RoleRepository = new RoleRepository(dataRepository, RoleUserRepository, mappers.Data);
-            UserMainMenuFavoritesRepository = new UserMainMenuFavoritesRepository(dataRepository, mappers.Data);
-            UserMainMenuHistoryRepository = new UserMainMenuHistoryRepository(dataRepository, mappers.Data);
+            UserMainMenuFavoritesRepository = new UserMainMenuFavoritesRepository(dataRepository, mappers.UserMenuItem);
+            UserMainMenuHistoryRepository = new UserMainMenuHistoryRepository(dataRepository, mappers.UserMenuItem);
 
             UserRepository = new UserRepository(
                 dataRepository,
