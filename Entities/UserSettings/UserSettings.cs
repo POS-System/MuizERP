@@ -17,6 +17,20 @@ namespace Entities
 
         #region Properties
 
+        [LoadParameter(Required = false)]
+        public override int CompanyID
+        {
+            get { return _companyID; }
+            set
+            {
+                if (_companyID != value)
+                {
+                    _companyID = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         [LoadParameter]
         [SaveParameter]
         public int UserID
