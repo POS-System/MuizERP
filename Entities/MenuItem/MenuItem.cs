@@ -1,6 +1,5 @@
 ﻿using Entities.Base;
 using Entities.Base.Attributes;
-using System;
 
 namespace Entities
 {
@@ -9,28 +8,15 @@ namespace Entities
     {
         #region Fields
 
-        private Type _entityType;
         private bool _isFolder;
         private string _caption;
         private string _description;
+        private string _alias;
         private bool _isVisible;
 
         #endregion
 
         #region Properties
-
-        public Type EntityType
-        {
-            get { return _entityType; }
-            set
-            {
-                if (_entityType != value)
-                {
-                    _entityType = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
 
         [LoadParameter]
         public bool IsFolder
@@ -69,6 +55,20 @@ namespace Entities
                 if (_description != value)
                 {
                     _description = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        [LoadParameter]
+        public string Alias
+        {
+            get { return _alias; }
+            set
+            {
+                if (_alias != value)
+                {
+                    _alias = value;
                     OnPropertyChanged();
                 }
             }
