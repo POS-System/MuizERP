@@ -35,7 +35,8 @@
             <dxdo:LayoutGroup Orientation="Horizontal">
                 <dxdo:LayoutPanel Name="Navigation" Caption="Navigation" AllowClose="False" ItemWidth="200">
                     <dxa:AccordionControl Name="accordion" AutoExpandAllItems="False" SelectionUnit="SubItemOrRootItem" RootItemDisplayMode="Item" ExpandItemOnHeaderClick="False" 
-                                          ItemsSource="{Binding AppMenu.MenuItems}" ChildrenPath="SubItems" DisplayMemberPath="Caption" SelectedItem="{Binding SelectedItem}">
+                                          ItemsSource="{Binding AppMenu.MenuItems}" ChildrenPath="SubItems" DisplayMemberPath="Caption" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                          SelectedItemChanged="Accordion_SelectedItemChanged">
                     </dxa:AccordionControl>
                 </dxdo:LayoutPanel>
                 

@@ -4,7 +4,7 @@ using Entities.Base.Attributes;
 namespace Entities
 {
     [LoadCommand]
-    public class MenuItem : BaseTreeEntity
+    public class MenuItem : BaseTreeEntity<MenuItem>
     {
         #region Fields
 
