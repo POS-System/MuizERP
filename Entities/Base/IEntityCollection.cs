@@ -15,7 +15,7 @@ namespace Entities.Base
         /// <summary>
         /// Фиксирует текущие значения элементов коллекции.
         /// </summary>
-        void FixValues();
+        void Fix();
 
         /// <summary>
         /// Устанавливает состояние объектов коллекции в None.

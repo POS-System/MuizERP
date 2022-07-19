@@ -292,7 +292,7 @@ namespace Entities.Base
                 var collection = value as IEntityCollection;
                 if (collection != null)
                 {
-                    collection.FixValues();
+                    collection.Fix();
                     continue;
                 }
 

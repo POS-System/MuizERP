@@ -63,7 +63,7 @@ namespace Entities.Base
             get {  return this.Any(i => i.IsModified || i.State != EState.None); }
         }
 
-        public void FixValues()
+        public void Fix()
         {
             foreach (var item in this)
                 item.Fix();
