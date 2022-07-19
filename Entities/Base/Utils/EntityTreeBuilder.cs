@@ -18,6 +18,7 @@ namespace Entities.Base.Utils
             }
 
             result.ResetState();
+            result.Fix();
 
             return result;
         }
