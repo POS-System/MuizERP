@@ -45,6 +45,7 @@
     <Compile Include="Mapping\Interface\IDataMapper.cs" />
     <Compile Include="Mapping\MapperContainer.cs" />
     <Compile Include="Mapping\RoleUserMapper.cs" />
+    <Compile Include="Mapping\UserMenuItemMapper.cs" />
     <Compile Include="Mapping\UserRoleMapper.cs" />
     <Compile Include="Mapping\UserSettingsMapper.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
