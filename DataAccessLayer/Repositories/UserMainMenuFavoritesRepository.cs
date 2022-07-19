@@ -1,9 +1,9 @@
-﻿using DataAccessLayer.Mapping.Interface;
+﻿using DataAccessLayer.DataReaders;
+using DataAccessLayer.Mapping.Interface;
 using DataAccessLayer.Repositories.Interfaces;
 using DataAccessLayer.Utils;
 using Entities;
 using Entities.Base;
-using Entities.Base.Utils.Interface;
 using Entities.MenuUserHistory;
 using System.Data.SqlClient;
 
@@ -12,14 +12,14 @@ namespace DataAccessLayer.Repositories
     internal class UserMainMenuFavoritesRepository : IUserMainMenuFavoritesRepository
     {
         private readonly DataRepository _dataRepository;
-        private readonly IDataMapper _dataMapper;
+        private readonly IMapper<SqlDataReaderWithSchema, UserMenuItem> _userMenuItemMapper;
 
         public UserMainMenuFavoritesRepository(
             DataRepository dataRepository,
-            IDataMapper dataMapper)
+            IMapper<SqlDataReaderWithSchema, UserMenuItem> userMenuItemMapper)
         {
             _dataRepository = dataRepository;
-            _dataMapper = dataMapper;
+            _userMenuItemMapper = userMenuItemMapper;
         }
 
         /*
@@ -58,7 +58,7 @@ namespace DataAccessLayer.Repositories
                 drd =>
                 {
                     var item = new UserMenuItem();
-                    _dataMapper.Map(drd, item);
+                    _userMenuItemMapper.Map(drd, item);
 
                     result.Add(item);
                 });

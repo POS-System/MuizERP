@@ -1,4 +1,5 @@
-﻿using DataAccessLayer.Mapping.Interface;
+﻿using DataAccessLayer.DataReaders;
+using DataAccessLayer.Mapping.Interface;
 using DataAccessLayer.Repositories.Interfaces;
 using DataAccessLayer.Utils;
 using Entities;
@@ -12,14 +13,14 @@ namespace DataAccessLayer.Repositories
     internal class UserMainMenuHistoryRepository : IUserMainMenuHistoryRepository
     {
         private readonly DataRepository _dataRepository;
-        private readonly IDataMapper _dataMapper;
+        private readonly IMapper<SqlDataReaderWithSchema, UserMenuItem> _userMenuItemMapper;
 
         public UserMainMenuHistoryRepository(
             DataRepository dataRepository,
-            IDataMapper dataMapper)
+            IMapper<SqlDataReaderWithSchema, UserMenuItem> userMenuItemMapper)
         {
             _dataRepository = dataRepository;
-            _dataMapper = dataMapper;
+            _userMenuItemMapper = userMenuItemMapper;
         }
 
         public EntityCollection<UserMenuItem> GetItems(IParametersContainer parameters)
@@ -35,7 +36,7 @@ namespace DataAccessLayer.Repositories
                 drd =>
                 {
                     var item = new UserMenuItem();
-                    _dataMapper.Map(drd, item);
+                    _userMenuItemMapper.Map(drd, item);
 
                     result.Add(item);
                 });
@@ -56,7 +57,7 @@ namespace DataAccessLayer.Repositories
                 drd =>
                 {
                     var item = new UserMenuItem();
-                    _dataMapper.Map(drd, item);
+                    _userMenuItemMapper.Map(drd, item);
 
                     result.Add(item);
                 });
