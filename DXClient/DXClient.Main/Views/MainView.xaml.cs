@@ -1,6 +1,7 @@
 ﻿using DevExpress.Mvvm.ModuleInjection;
 using DXClient.Common;
 using DXClient.Main.ViewModels;
+using System.Collections.ObjectModel;
 using System.Windows.Controls;
 
 namespace DXClient.Main.Views
@@ -24,6 +25,12 @@ namespace DXClient.Main.Views
                 if (module != null)
                     Manager.InjectOrNavigate(Regions.Documents, moduleName);
             }
+        }
+
+        private void History_SelectedItemChanged(object sender, DevExpress.Xpf.Accordion.AccordionSelectedItemChangedEventArgs e)
+        {
+            if (Manager.GetModule(Regions.Documents, (string)e.NewItem) != null)
+                Manager.InjectOrNavigate(Regions.Documents, (string)e.NewItem);
         }
     }
 }

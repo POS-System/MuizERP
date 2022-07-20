@@ -128,7 +128,7 @@ namespace DXClient.Main
         protected virtual void ConfigureNavigation()
         {
             //Manager.GetEvents(Regions.Navigation).Navigation += OnNavigation;
-            //Manager.GetEvents(Regions.Documents).Navigation += OnDocumentsNavigation;
+            Manager.GetEvents(Regions.Documents).Navigation += OnDocumentsNavigation;
             //Manager.GetEvents("Module1").Navigation += OnNavigation;
         }
         protected virtual void ShowMainWindow()
@@ -144,7 +144,9 @@ namespace DXClient.Main
         }
         void OnDocumentsNavigation(object sender, NavigationEventArgs e)
         {
-            Manager.Navigate(Regions.Navigation, e.NewViewModelKey);
+            //Manager.Navigate(Regions.Navigation, e.NewViewModelKey);
+            if (e.NewViewModelKey != null)
+                MenuModules.WatchHistories.Add(e.NewViewModelKey);
         }
         void OnClosing(object sender, CancelEventArgs e)
         {

@@ -9,6 +9,7 @@ using Entities.Base;
 using Entities.Base.Utils;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data.Metadata.Edm;
 using System.Linq;
@@ -18,7 +19,7 @@ using System.Threading.Tasks;
 namespace DXClient.Main
 {
 
-    // TODO: Refactor
+    // TODO: надо Рефакторить!
     public static class MenuModules
     {
         private static readonly DALContainer _dal = new DALContainer(ConfigurationManager.ConnectionStrings["ConnectionERP"].ConnectionString);
@@ -45,15 +46,7 @@ namespace DXClient.Main
         }
 
 
-        //public static Module GetModule(MenuItem menuItem)
-        //{
-        //    switch (menuItem.Caption)
-        //    {
-        //        case "Пользователи":
-        //            return new Module(menuItem.Caption, () => AutoGridViewModel<User>.Create(menuItem.Caption), typeof(AutoGridView));
-        //        default:
-        //            return null;
-        //    }
-        //}
+        // TODO: Рефакторить!!!
+        public static ObservableCollection<string> WatchHistories { get; set; } = new ObservableCollection<string>() { "yooo", "12312" };
     }
 }

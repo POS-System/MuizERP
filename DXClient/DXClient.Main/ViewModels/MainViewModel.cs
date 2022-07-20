@@ -1,6 +1,6 @@
 ﻿using DevExpress.Mvvm.ModuleInjection;
 using DevExpress.Mvvm.POCO;
-using DXClient.Common;
+using DevExpress.Xpf.Core;
 using Entities;
 using System;
 using System.Collections.Generic;
@@ -11,6 +11,8 @@ namespace DXClient.Main.ViewModels
 {
     public class MainViewModel
     {
+        public ObservableCollection<string> WatchHistories { get => MenuModules.WatchHistories; set => MenuModules.WatchHistories = value; }
+
         public Menu AppMenu { get; set; }
         public AccMenuItem SelectedItem { get; set; }
 
@@ -41,7 +43,7 @@ namespace DXClient.Main.ViewModels
             return new AccMenuItem()
             {
                 Caption = menuItem.Caption,
-                SubItems = menuItem.Childs.Select(x => ToAccMenuItem(x as MenuItem)).ToList()
+                SubItems = menuItem.Childs.Select(x => ToAccMenuItem(x)).ToList()
             };
         }
     }
@@ -57,8 +59,9 @@ namespace DXClient.Main.ViewModels
     {
         string _caption;
 
-        public string Caption { 
-            get => _caption; 
+        public string Caption
+        {
+            get => _caption;
             set
             {
                 _caption = value;
@@ -66,6 +69,8 @@ namespace DXClient.Main.ViewModels
             }
         }
         public List<AccMenuItem> SubItems { get; set; }
+
+        public Uri ImageUri { get; set; } = DXImageHelper.GetImageUri("SvgImages/Actions/ClearTableStyle.svg");
 
         public string RegionStr { get; set; }
     }

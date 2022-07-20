@@ -33,13 +33,26 @@
         </dxr:RibbonControl>-->
         <dxdo:DockLayoutManager FloatingMode="Desktop" ClosedPanelsBarVisibility="Never">
             <dxdo:LayoutGroup Orientation="Horizontal">
-                <dxdo:LayoutPanel Name="Navigation" Caption="Navigation" AllowClose="False" ItemWidth="200">
-                    <dxa:AccordionControl Name="accordion" AutoExpandAllItems="False" SelectionUnit="SubItemOrRootItem" RootItemDisplayMode="Item" ExpandItemOnHeaderClick="False" 
-                                          ItemsSource="{Binding AppMenu.MenuItems}" ChildrenPath="SubItems" DisplayMemberPath="Caption" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                                          SelectedItemChanged="Accordion_SelectedItemChanged">
-                    </dxa:AccordionControl>
-                </dxdo:LayoutPanel>
-                
+                <dxdo:LayoutGroup Orientation="Vertical" ItemWidth="200">
+                    <dxdo:LayoutPanel Name="Navigation" Caption="Navigation" AllowClose="False" ItemWidth="200">
+                        <dxa:AccordionControl Name="accordion" AutoExpandAllItems="False" SelectionUnit="SubItemOrRootItem" RootItemDisplayMode="Item" ExpandItemOnHeaderClick="False" 
+                                              ItemsSource="{Binding AppMenu.MenuItems}" ChildrenPath="SubItems" DisplayMemberPath="Caption" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                              SelectedItemChanged="Accordion_SelectedItemChanged">
+                            <dxa:AccordionControl.ItemContainerStyle>
+                                <Style TargetType="dxa:AccordionItem">
+                                    <Setter Property="Glyph" Value="{Binding ImageUri}" />
+                                </Style>
+                            </dxa:AccordionControl.ItemContainerStyle>
+                        </dxa:AccordionControl>
+                    </dxdo:LayoutPanel>
+
+                    <dxdo:LayoutPanel Name="WatchHistory" Caption="History" AllowClose="False" ItemHeight="200">
+                        <dxa:AccordionControl Name="History" ItemsSource="{Binding WatchHistories}" SelectedItemChanged="History_SelectedItemChanged">
+                            
+                        </dxa:AccordionControl>
+                    </dxdo:LayoutPanel>
+                </dxdo:LayoutGroup>
+                    
                 <dxdo:DocumentGroup Name="Documents" DestroyOnClosingChildren="False" dxmvvm:UIRegion.Region="{x:Static common:Regions.Documents}">
                     <dxdo:DocumentGroup.ItemStyle>
                         <Style TargetType="dxdo:LayoutPanel">

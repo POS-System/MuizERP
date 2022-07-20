@@ -56,10 +56,10 @@ namespace DXClient.Modules.ViewModels
         /// Автоматическое создание колонок таблицы
         /// </summary>
         /// <typeparam name="EntityType"></typeparam>
-        public void GenerateColumns<EntityType>() 
-            where EntityType : BaseEntity
+        public void GenerateColumns<T>() 
+            where T : BaseEntity
         {
-            var properties = typeof(EntityType).GetProperties();
+            var properties = typeof(T).GetProperties();
             Columns = new ObservableCollection<GridColumn>();
 
 
