@@ -187,7 +187,7 @@ namespace Entities
         }
 
         [LoadParameter]
-        [SaveParameter]
+        [SaveParameter(Nullable = true)]
         public DateTime BirthDay
         {
             get { return _birthDay; }
