@@ -12,6 +12,9 @@ namespace Entities
         private int _userID;
         private int _themeID;
         private string _color;
+        private string _uiStateVersion;
+        private string _uiLogicalState;
+        private string _uiVisualState;
 
         #endregion
 
@@ -71,6 +74,51 @@ namespace Entities
                 if (_color != value)
                 {
                     _color = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        [LoadParameter]
+        [SaveParameter]
+        public string UiStateVersion
+        {
+            get { return _uiStateVersion; }
+            set
+            {
+                if (_uiStateVersion != value)
+                {
+                    _uiStateVersion = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        [LoadParameter]
+        [SaveParameter]
+        public string UiLogicalState
+        {
+            get { return _uiLogicalState; }
+            set
+            {
+                if (_uiLogicalState != value)
+                {
+                    _uiLogicalState = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        [LoadParameter]
+        [SaveParameter]
+        public string UiVisualState
+        {
+            get { return _uiVisualState; }
+            set
+            {
+                if (_uiVisualState != value)
+                {
+                    _uiVisualState = value;
                     OnPropertyChanged();
                 }
             }
