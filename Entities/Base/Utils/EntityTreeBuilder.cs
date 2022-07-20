@@ -6,7 +6,7 @@ namespace Entities.Base.Utils
     public static class EntityTreeBuilder
     {
         public static EntityCollection<T> Build<T>(IEnumerable<T> items)
-            where T : BaseTreeEntity
+            where T : BaseTreeEntity<T>
         {
             var result = new EntityCollection<T>();
 
@@ -24,13 +24,13 @@ namespace Entities.Base.Utils
         }
 
         private static IEnumerable<T> GetChilds<T>(int? ParentID, IEnumerable<T> items)
-            where T : BaseTreeEntity
+            where T : BaseTreeEntity<T>
         {
             return items.Where(i => i.ParentID == ParentID);
         }
 
         private static void AddChilds<T>(T item, IEnumerable<T> items)
-            where T : BaseTreeEntity
+            where T : BaseTreeEntity<T>
         {
             var childs = GetChilds(item.ID, items);
             item.Childs.AddRange(childs);

@@ -2,12 +2,13 @@
 
 namespace Entities.Base
 {
-    public class BaseTreeEntity : BaseSortableEntity
+    public class BaseTreeEntity<T> : BaseSortableEntity
+        where T : BaseTreeEntity<T>
     {
         #region Fields
 
         private int? _parentID;
-        private EntityCollection<BaseTreeEntity> _childs;
+        private EntityCollection<T> _childs;
 
         #endregion
 
@@ -28,7 +29,7 @@ namespace Entities.Base
             }
         }
 
-        public EntityCollection<BaseTreeEntity> Childs
+        public EntityCollection<T> Childs
         {
             get { return _childs; }
             set
@@ -47,7 +48,7 @@ namespace Entities.Base
 
         public BaseTreeEntity()
         {
-            _childs = new EntityCollection<BaseTreeEntity>();
+            _childs = new EntityCollection<T>();
         }
 
         #endregion

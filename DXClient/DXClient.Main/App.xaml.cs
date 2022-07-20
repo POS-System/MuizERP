@@ -81,19 +81,16 @@ namespace DXClient.Main
 
             // TODO: change logic init Modules
             InitMyModules(menuItems);
-            //foreach (var menuItem in menuItems)
-            //{
-            //    Manager.Register(Regions.Documents, new Module(menuItem.Caption, () => ModuleViewModel.Create(menuItem.Caption), typeof(ModuleView)));
-            //}
         }
 
         private void InitMyModules(ObservableCollection<MenuItem> menuItems)
         {
             foreach (var menuItem in menuItems)
             {
-                Manager.Register(Regions.Documents, new Module(menuItem.Caption, () => ModuleViewModel.Create(menuItem.Caption), typeof(ModuleView)));
+                var module = MenuModules.GetModule(menuItem);
+                if (module != null) Manager.Register(Regions.Documents, module);
 
-                InitMyModules(new ObservableCollection<MenuItem>(menuItem.Childs.Cast<MenuItem>()));
+                InitMyModules(menuItem.Childs);
             }
         }
 
@@ -104,9 +101,9 @@ namespace DXClient.Main
 
             RegisterInitModule();
 
-            Manager.Register(Regions.Navigation, new Module(AppModules.Module1, () => new NavigationItem("Module1")));
-            Manager.Register(Regions.Navigation, new Module(AppModules.Module2, () => new NavigationItem("Module2")));
-            Manager.Register("Region1", new Module("Module3", () => new NavigationItem("Module3")));
+            //Manager.Register(Regions.Navigation, new Module(AppModules.Module1, () => new NavigationItem("Module1")));
+            //Manager.Register(Regions.Navigation, new Module(AppModules.Module2, () => new NavigationItem("Module2")));
+            //Manager.Register("Module1", new Module("Module3", () => new NavigationItem("Module3")));
             //Manager.Register(Regions.Documents, new Module(AppModules.Module1, () => ModuleViewModel.Create("Module1"), typeof(ModuleView)));
             //Manager.Register(Regions.Documents, new Module(AppModules.Module2, () => ModuleViewModel.Create("Module2"), typeof(ModuleView)));
             //Manager.Register(Regions.Documents, new Module("Module3", () => ModuleViewModel.Create("Module3"), typeof(ModuleView)));
@@ -126,13 +123,13 @@ namespace DXClient.Main
             Manager.Inject(Regions.MainWindow, AppModules.Main);
             //Manager.Inject(Regions.Navigation, AppModules.Module1);
             //Manager.Inject(Regions.Navigation, AppModules.Module2);
-            Manager.Inject("Region1", "Module3");
+            //Manager.Inject("Module1", "Module3");
         }
         protected virtual void ConfigureNavigation()
         {
             //Manager.GetEvents(Regions.Navigation).Navigation += OnNavigation;
             Manager.GetEvents(Regions.Documents).Navigation += OnDocumentsNavigation;
-            //Manager.GetEvents("Region1").Navigation += OnNavigation;
+            //Manager.GetEvents("Module1").Navigation += OnNavigation;
         }
         protected virtual void ShowMainWindow()
         {
@@ -148,6 +145,8 @@ namespace DXClient.Main
         void OnDocumentsNavigation(object sender, NavigationEventArgs e)
         {
             //Manager.Navigate(Regions.Navigation, e.NewViewModelKey);
+            if (e.NewViewModelKey != null)
+                MenuModules.WatchHistories.Add(e.NewViewModelKey);
         }
         void OnClosing(object sender, CancelEventArgs e)
         {

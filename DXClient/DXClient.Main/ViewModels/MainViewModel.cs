@@ -1,5 +1,6 @@
 ﻿using DevExpress.Mvvm.ModuleInjection;
 using DevExpress.Mvvm.POCO;
+using DevExpress.Xpf.Core;
 using Entities;
 using System;
 using System.Collections.Generic;
@@ -10,28 +11,18 @@ namespace DXClient.Main.ViewModels
 {
     public class MainViewModel
     {
-        AccMenuItem _selectedItem;
-        Func<string> _selectedItemChanged;
+        public ObservableCollection<string> WatchHistories { get => MenuModules.WatchHistories; set => MenuModules.WatchHistories = value; }
 
         public Menu AppMenu { get; set; }
-        public AccMenuItem SelectedItem 
-        {
-            get => _selectedItem;
-            set
-            {
-                _selectedItem = value;
-                _selectedItemChanged?.Invoke("");
-            }
-        }
+        public AccMenuItem SelectedItem { get; set; }
+
+        protected IModuleManager Manager { get => ModuleManager.DefaultManager; }
 
         public MainViewModel()
-        {
-        }
+        { }
 
-        public MainViewModel(ObservableCollection<MenuItem> menuItems, Func<string> selectedItemChanged) : base()
+        public MainViewModel(ObservableCollection<MenuItem> menuItems) : base()
         {
-            _selectedItemChanged = selectedItemChanged;
-
             InitMenuItems(menuItems);
         }
 
@@ -41,8 +32,6 @@ namespace DXClient.Main.ViewModels
             AppMenu.MenuItems = menuItems.Select(x => ToAccMenuItem(x)).ToList();
             //SelectedItem = AppMenu.MenuItems[0];
         }
-
-        //public ObservableCollection<AccMenuItem> MenuItems { get; private set; }
 
         public static MainViewModel Create(ObservableCollection<MenuItem> menuItems)
         {
@@ -54,49 +43,25 @@ namespace DXClient.Main.ViewModels
             return new AccMenuItem()
             {
                 Caption = menuItem.Caption,
-                SubItems = menuItem.Childs.Select(x => ToAccMenuItem(x as MenuItem)).ToList()
+                SubItems = menuItem.Childs.Select(x => ToAccMenuItem(x)).ToList()
             };
         }
     }
-
 
     public class Menu
     {
         public List<AccMenuItem> MenuItems { get; set; }
         public Menu()
-        {
-            //MenuItems = GetMenuItems();
-        }
-
-        //private static List<MenuItem> GetMenuItems()
-        //{
-        //    List<MenuItem> items = new List<MenuItem>();
-        //    List<MenuItem> subitems = new List<MenuItem>();
-        //    subitems.Add(new MenuItem() { Caption = "SubItem3" });
-        //    items.Add(new MenuItem()
-        //    {
-        //        Caption = "Item1",
-        //        SubItems = new List<MenuItem>() { new MenuItem() { Caption = "SubItem1" },
-        //            new MenuItem() { Caption = "SubItem2", SubItems=subitems }
-        //        }
-        //    });
-        //    items.Add(new MenuItem()
-        //    {
-        //        Caption = "Item2",
-        //        SubItems = new List<AccMenuItem>() { new MenuItem() { Caption = "SubItem1" },
-        //            new MenuItem() { Caption = "SubItem2" }
-        //        }
-        //    });
-        //    return items;
-        //}
+        { }
     }
 
     public class AccMenuItem
     {
         string _caption;
 
-        public string Caption { 
-            get => _caption; 
+        public string Caption
+        {
+            get => _caption;
             set
             {
                 _caption = value;
@@ -105,8 +70,8 @@ namespace DXClient.Main.ViewModels
         }
         public List<AccMenuItem> SubItems { get; set; }
 
+        public Uri ImageUri { get; set; } = DXImageHelper.GetImageUri("SvgImages/Actions/ClearTableStyle.svg");
+
         public string RegionStr { get; set; }
     }
-
-    
 }

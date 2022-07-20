@@ -8,7 +8,18 @@ namespace DXClient.Main.ViewModels
     [Serializable]
     public class NavigationItem : INavigationItem, ISupportState<NavigationItem>
     {
-        public string Caption { get; set; }
+        string _caption;
+
+        public string Caption
+        {
+            get => _caption;
+            set
+            {
+                _caption = value;
+                RegionStr = value;
+            }
+        }
+        public string RegionStr { get; set; }
         public NavigationItem() { }
         public NavigationItem(string caption)
         {

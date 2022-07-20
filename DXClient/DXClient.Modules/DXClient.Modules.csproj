@@ -39,6 +39,7 @@
     <Reference Include="DevExpress.Xpf.Grid.v22.1" />
     <Reference Include="DevExpress.Xpf.Grid.v22.1.Core" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,20 +57,35 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModels\AutoModuleViewModel.cs" />
+    <Compile Include="ViewModels\AutoGridViewModel.cs" />
     <Compile Include="ViewModels\ModuleViewModel.cs" />
+    <Compile Include="Views\AutoGridView.xaml.cs">
+      <DependentUpon>AutoGridView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ModuleView.xaml.cs">
       <DependentUpon>ModuleView.xaml</DependentUpon>
     </Compile>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\AutoGridView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ModuleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{49F71201-7CD5-4398-B397-2D779B136DCC}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Entities\Entities.csproj">
+      <Project>{31DF6DAE-79FB-4D9F-AC6E-237F80E552C5}</Project>
+      <Name>Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DXClient.Common\DXClient.Common.csproj">
       <Project>{1fe324cd-00cf-42da-865f-0ba5b82e7163}</Project>
       <Name>DXClient.Common</Name>
