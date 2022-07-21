@@ -2,7 +2,7 @@
 {
     public enum EHierarchyDirection
     {
-        Up,
-        Down
+        Up = 1,
+        Down = -1
     }
 }
