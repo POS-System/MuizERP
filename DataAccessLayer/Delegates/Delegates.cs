@@ -10,6 +10,16 @@ namespace DataAccessLayer.Delegates
     internal delegate void InitSqlCommand(SqlCommand sqlCommand);
 
     /// <summary>
+    /// Делегат для создания и конфигурирования объекта <see cref="SqlCommand"/>.
+    /// </summary>
+    internal delegate SqlCommand PrepareSqlCommand(SqlConnection connection);
+
+    /// <summary>
+    /// Делегат для дополнительного конфигурирования объекта <see cref="SqlCommand"/>.
+    /// </summary>
+    internal delegate void ConfigureSqlCommand(SqlCommand command);
+
+    /// <summary>
     /// Делегат  для чтения данных из объекта <see cref="SqlDataReaderWithSchema"/>.
     /// </summary>
     internal delegate void ReadDataReaderWithSchema(SqlDataReaderWithSchema dataReader);
@@ -18,16 +28,6 @@ namespace DataAccessLayer.Delegates
     /// Делегат для обратки исключения.
     /// </summary>
     internal delegate void CatchException(Exception exception);
-
-    /// <summary>
-    /// Делегат для создания  и конфигурирования объекта <see cref="SqlCommand"/>.
-    /// </summary>
-    internal delegate SqlCommand PrepareSetCommand(SqlConnection connection);
-
-    /// <summary>
-    /// Делегат для дополнительного конфигурирования объекта <see cref="SqlCommand"/>.
-    /// </summary>
-    internal delegate void ConfigureSetCommand(SqlCommand command);
 
     /// <summary>
     /// Делегат для выполнения в отдельной транзакции.
