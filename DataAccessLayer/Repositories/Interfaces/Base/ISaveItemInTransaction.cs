@@ -7,7 +7,7 @@ namespace DataAccessLayer.Repositories.Interfaces.Base
     /// Интерфейс для сохранения объекта типа <see cref="T"/> в транзакции.
     /// </summary>
     /// <typeparam name="T">Тип сохраняемого объекта.</typeparam>
-    public interface ISaveInTransaction<T> where T : BaseEntity
+    public interface ISaveItemInTransaction<T> where T : BaseEntity
     {
         /// <summary>
         /// Сохранение объекта в транзакции.

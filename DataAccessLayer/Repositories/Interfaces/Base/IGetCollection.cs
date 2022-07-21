@@ -7,13 +7,13 @@ namespace DataAccessLayer.Repositories.Interfaces.Base
     /// Интерфейс для получения коллекции объектов типа <see cref="T"/>.
     /// </summary>
     /// <typeparam name="T">Тип сохраняемого объекта.</typeparam>
-    public interface IGetItems<T> where T : BaseEntity
+    public interface IGetCollection<T> where T : BaseEntity
     {
         /// <summary>
         /// Получение коллекции объектов.
         /// </summary>
         /// <param name="parameters">Контейнер с параметрами хранимой процедуры.</param>
         /// <returns></returns>
-        EntityCollection<T> GetItems(IParametersContainer parameters);
+        EntityCollection<T> GetCollection(IParametersContainer parameters);
     }
 }

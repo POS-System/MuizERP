@@ -6,7 +6,7 @@ namespace DataAccessLayer.Repositories.Interfaces.Base
     /// Интерфейс для сохранения объекта типа <see cref="T"/>.
     /// </summary>
     /// <typeparam name="T">Тип сохраняемого объекта.</typeparam>
-    public interface ISave<T> where T : BaseEntity
+    public interface ISaveItem<T> where T : BaseEntity
     {
         /// <summary>
         /// Сохранение объекта.
