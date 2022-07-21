@@ -1,11 +1,10 @@
-using Entities.Base.Utils;
 using Entities.Base.Utils.Interface;
 using System;
 
 namespace TestExceptionsClient.Base.ExceptionHandlers
 {
     public sealed class SystemExceptionHandlerFactory :
-        IKeyedFactory<IExceptionHandler, Tuple<IntPtr, ICustomLogger>>
+        IKeyedFactory<Tuple<IntPtr, ICustomLogger>, IExceptionHandler>
     {
         public IExceptionHandler Create(Tuple<IntPtr, ICustomLogger> param)
         {
