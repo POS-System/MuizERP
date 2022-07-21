@@ -5,7 +5,7 @@ using MuizEnums;
 namespace Entities
 {
     [LoadCommand]
-    [HierarhyCommnad(EHierarchyDirection.Up)]
+    [HierarhyCommnad(EHierarchyDirection.Down)]
     [SaveCommand(IgnoreProperties = new[] { "CompanyID" })]
     public class Company : BaseSortableEntity
     {
@@ -26,8 +26,11 @@ namespace Entities
             get { return _companyID; }
             set
             {
-                _companyID = value;
-                OnPropertyChanged("CompanyID");
+                if (_companyID != value)
+                {
+                    _companyID = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -38,11 +41,14 @@ namespace Entities
             get { return _parentID; }
             set
             {
-                _parentID = value;
-                OnPropertyChanged("ParentID");
+                if (_parentID != value)
+                {
+                    _parentID = value;
+                    OnPropertyChanged();
+                }
             }
         }
-        
+
         [LoadParameter]
         [SaveParameter]
         public string Name
@@ -50,11 +56,14 @@ namespace Entities
             get { return _name; }
             set
             {
-                _name = value;
-                OnPropertyChanged("ParentID");
+                if (_name != value)
+                {
+                    _name = value;
+                    OnPropertyChanged();
+                }
             }
         }
-        
+
         [LoadParameter]
         [SaveParameter]
         public string INN
@@ -62,8 +71,25 @@ namespace Entities
             get { return _inn; }
             set
             {
-                _inn = value;
-                OnPropertyChanged("INN");
+                if (_inn != value)
+                {
+                    _inn = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        [LoadParameter(Required = false)]
+        public override byte[] TimeStamp
+        {
+            get { return _timeStamp; }
+            set
+            {
+                if (_timeStamp != value)
+                {
+                    _timeStamp = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
