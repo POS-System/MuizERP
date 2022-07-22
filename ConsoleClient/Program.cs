@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 
 namespace ConsoleClient
@@ -20,9 +21,59 @@ namespace ConsoleClient
             var connectionString = ConfigurationManager.ConnectionStrings["ConnectionERP"].ConnectionString;
             var dalc = new DALContainer(connectionString);
 
+            var companyRepository = dalc.CompanyRepository;
+            var parameters = new ParametersContainer();
+            parameters.Add("CompanyID", 2);
+            var companies = companyRepository.GetCollection(parameters);
+            
             var userRepository = dalc.UserRepository;
+            /*
             var user = userRepository.GetItemByID(55);
+            user.Settings.UiLogicalState = "777";
+            userRepository.SaveItem(user);
+            */
 
+            Random random = new Random();
+            var users = new EntityCollection<User>();
+
+            for (int i = 0; i < 1000000; i++)
+            {
+                var number = random.Next(1, 1000);
+                var now = DateTime.Now.Date;
+
+                var addUser = new User
+                {
+                    ID = 0,
+                    CompanyID = 27,
+                    Number = number,
+                    FirstName = "FirstName " + number,
+                    SecondName = "SecondName " + number,
+                    LastName = "LastName " + number,
+                    INN = "INN " + number,
+                    Phone = "Phone " + number,
+                    Email = "email" + number + "@email.ru",
+                    Active = true,
+                    Login = "Login " + number,
+                    Password = "Password " + number,
+                    BirthDay = now,
+                    GenderID = 0,
+                    ThemeID = 0,
+                    Color = "Color",
+                    CreateDate = now,
+                    CreateByUserID = 1,
+                    ModifyDate = now,
+                    ModifyByUserID = 1,
+                    State = EState.Insert
+                };
+
+                users.Add(addUser);
+            }
+
+            Debug.WriteLine($"Before repository {DateTime.Now}");
+            userRepository.SaveCollection(users);
+            Debug.WriteLine($"After repository {DateTime.Now}");
+
+            var user1 = new User();
             //var userMenuItem = new UserMenuItem()
             //{
             //    ModifyByUserID = 1,
@@ -35,24 +86,24 @@ namespace ConsoleClient
 
             //user.MenuHistory.Add(userMenuItem);
 
-            user.Settings = new UserSettings()
-            {
-                ModifyByUserID = 1,
-                Color = "Black",
-                ThemeID = 5,
-                State = EState.Insert
-            };
+            //user.Settings = new UserSettings()
+            //{
+            //    ModifyByUserID = 1,
+            //    Color = "Black",
+            //    ThemeID = 5,
+            //    State = EState.Insert
+            //};
 
-            var favorites = new UserMenuItem()
-            {
-                ModifyByUserID = 1,
-                MenuItem = new MenuItem() { ID = 5 },
-                State = EState.Insert
-            };
+            //var favorites = new UserMenuItem()
+            //{
+            //    ModifyByUserID = 1,
+            //    MenuItem = new MenuItem() { ID = 5 },
+            //    State = EState.Insert
+            //};
 
-            user.MenuFavorites.Add(favorites);
-            
-            var isModified = user.IsModified;
+            //user.MenuFavorites.Add(favorites);
+
+            //var isModified = user.IsModified;
 
             //userRepository.SaveItem(user);
 
@@ -60,7 +111,7 @@ namespace ConsoleClient
             //var parameters = new ParametersContainer();
             //var userSettings = userSettingsRepository.GetItems(parameters);
 
-            var user1 = new User();
+
 
             //var mainMenuRepository = dalc.MainMenuRepository;
 
@@ -126,7 +177,7 @@ namespace ConsoleClient
 
             /*var roleParameters = new ParametersContainer();
             roleParameters.Add("CompanyID", 2);*/
-            ObservableCollection<Role> roleList = roleRepository.GetItems(new ParametersContainer());
+            ObservableCollection<Role> roleList = roleRepository.GetCollection(new ParametersContainer());
             //ObservableCollection<User> userList = userRepository.GetItems(new ParametersContainer());
 
             var newUser = new User
@@ -166,9 +217,9 @@ namespace ConsoleClient
                 userRole.State = EState.Insert;
                 newUser.UserRoles.Add(userRole);
             }
-            
+
             userRepository.SaveItem(newUser);
-            
+
             /*
             var newRole = new Role
             {

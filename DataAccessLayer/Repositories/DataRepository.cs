@@ -15,7 +15,6 @@ using System.Linq;
 using Entities.Base.Utils;
 using Entities.Base.Utils.Interface;
 using System.Reflection;
-using System.Diagnostics;
 
 namespace DataAccessLayer.Repositories
 {
