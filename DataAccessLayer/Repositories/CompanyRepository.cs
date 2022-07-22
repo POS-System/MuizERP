@@ -4,6 +4,7 @@ using DataAccessLayer.Utils;
 using Entities;
 using Entities.Base;
 using Entities.Base.Utils.ParametersContainers;
+using Entities.Base.Utils.Validators;
 
 namespace DataAccessLayer.Repositories
 {
@@ -16,13 +17,17 @@ namespace DataAccessLayer.Repositories
             DataRepository dataRepository,
             IDataMapper dataMapper)
         {
-            _dataRepository = dataRepository;
+            ArgumentValidator.ValidateThatArgumentNotNull(dataRepository, nameof(dataRepository));
+            ArgumentValidator.ValidateThatArgumentNotNull(dataMapper, nameof(dataMapper));
 
+            _dataRepository = dataRepository;
             _dataMapper = dataMapper;
         }
 
         public EntityCollection<Company> GetCollection(IParametersContainer parameters)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(parameters, nameof(parameters));
+
             var result = new EntityCollection<Company>();
 
             _dataRepository.ReadCollectionWithSchema<Company>(
@@ -40,6 +45,8 @@ namespace DataAccessLayer.Repositories
 
         public void SaveItem(Company item)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(item, nameof(item));
+
             _dataRepository.DoInConnectionSession(
                 conn => _dataRepository.SaveBaseItem(item, conn));
         }
