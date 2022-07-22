@@ -91,14 +91,14 @@ namespace MuizClient.Controls
         }
 
         public void InitGridData<T, V>(T repository) 
-            where T : IGetItems<V>, ISave<V> 
+            where T : IGetCollection<V>, ISaveItem<V> 
             where V : BaseEntity
         {
             _itemType = typeof(V);
 
             if (grid?.Columns?.Count < 1) GenerateColumns<V>();
 
-            updateGridData = () => SetGridData(repository.GetItems(_parametersContainer));
+            updateGridData = () => SetGridData(repository.GetCollection(_parametersContainer));
             saveGridData = (item) => repository.SaveItem(item as V);
 
             updateGridData();
