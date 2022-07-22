@@ -3,7 +3,7 @@ using Entities;
 
 namespace DataAccessLayer.Repositories.Interfaces
 {
-    public interface IUserSettingsRepository : IGetItems<UserSettings>
+    public interface IUserSettingsRepository : IGetCollection<UserSettings>
     {
     }
 }

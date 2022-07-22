@@ -23,7 +23,7 @@ namespace DataAccessLayer.Repositories
             _roleUserMapper = roleUserMapper;            
         }
 
-        public EntityCollection<RoleUser> GetItems(IParametersContainer parameters)
+        public EntityCollection<RoleUser> GetCollection(IParametersContainer parameters)
         {
             var result = new EntityCollection<RoleUser>();
 

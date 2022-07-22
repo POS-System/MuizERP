@@ -59,7 +59,7 @@ namespace DataAccessLayer.Repositories
                 });
         }
 
-        public EntityCollection<User> GetItems(IParametersContainer parameters)
+        public EntityCollection<User> GetCollection(IParametersContainer parameters)
         {
             var result = new EntityCollection<User>();
 
@@ -126,6 +126,11 @@ namespace DataAccessLayer.Repositories
 
                     return item;
                 });
+        }
+
+        public void SaveCollection(IEntityCollection<User> collection)
+        {
+            _dataRepository.SaveCollectionWithDataTable(collection);
         }
     }
 }

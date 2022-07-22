@@ -26,7 +26,7 @@ namespace DataAccessLayer.Repositories
             _dataMapper = dataMapper;
         }
 
-        public EntityCollection<Role> GetItems(IParametersContainer parameters)
+        public EntityCollection<Role> GetCollection(IParametersContainer parameters)
         {
             var result = new EntityCollection<Role>();
 
@@ -40,7 +40,7 @@ namespace DataAccessLayer.Repositories
                     var roleUserParams = new ParametersContainer();
                     roleUserParams.Add<Role>(nameof(item.ID), item.ID);
 
-                    item.RoleUsers = _roleUserRepository.GetItems(roleUserParams);
+                    item.RoleUsers = _roleUserRepository.GetCollection(roleUserParams);
 
                     result.Add(item);
                 });

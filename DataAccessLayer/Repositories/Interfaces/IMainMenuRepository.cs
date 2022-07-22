@@ -3,7 +3,7 @@ using Entities;
 
 namespace DataAccessLayer.Repositories.Interfaces
 {
-    public interface IMainMenuRepository : IGetItems<MenuItem>
+    public interface IMainMenuRepository : IGetCollection<MenuItem>
     {
     }
 }

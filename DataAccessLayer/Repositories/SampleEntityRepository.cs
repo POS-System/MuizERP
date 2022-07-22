@@ -25,7 +25,7 @@ namespace DataAccessLayer.Repositories
             _dataMapper = dataMapper;
         }
 
-        public EntityCollection<SampleEntity> GetItems(IParametersContainer parameters)
+        public EntityCollection<SampleEntity> GetCollection(IParametersContainer parameters)
         {
             var result = new EntityCollection<SampleEntity>();
 
@@ -40,7 +40,7 @@ namespace DataAccessLayer.Repositories
                     var detailsParams = new ParametersContainer();
                     detailsParams.Add<SampleEntity>(nameof(item.ID), item.ID);
 
-                    item.SampleEntityDetailsList = _sampleEntitiesDetailsRepository.GetItems(detailsParams);
+                    item.SampleEntityDetailsList = _sampleEntitiesDetailsRepository.GetCollection(detailsParams);
                     
                     result.Add(item);
                 });

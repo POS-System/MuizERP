@@ -3,7 +3,7 @@ using Entities;
 
 namespace DataAccessLayer.Repositories.Interfaces
 {
-    public interface IRoleRepository : ISave<Role>, IGetItems<Role>
+    public interface IRoleRepository : ISaveItem<Role>, IGetCollection<Role>
     {        
     }
 }

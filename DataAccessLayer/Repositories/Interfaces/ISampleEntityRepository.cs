@@ -3,7 +3,7 @@ using Entities;
 
 namespace DataAccessLayer.Repositories.Interfaces
 {
-    public interface ISampleEntityRepository : ISave<SampleEntity>, IGetItems<SampleEntity>
+    public interface ISampleEntityRepository : ISaveItem<SampleEntity>, IGetCollection<SampleEntity>
     {
     }
 }

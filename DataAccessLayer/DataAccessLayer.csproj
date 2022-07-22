@@ -42,12 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Factories\DataTableFactory.cs" />
     <Compile Include="Mapping\Interface\IDataMapper.cs" />
     <Compile Include="Mapping\MapperContainer.cs" />
     <Compile Include="Mapping\RoleUserMapper.cs" />
     <Compile Include="Mapping\UserMenuItemMapper.cs" />
     <Compile Include="Mapping\UserRoleMapper.cs" />
     <Compile Include="Mapping\UserSettingsMapper.cs" />
+    <Compile Include="Providers\TypeBySqlTypeNameProvider.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
     <Compile Include="DALContainer.cs" />
     <Compile Include="Repositories\DataRepository.cs" />
@@ -55,11 +57,12 @@
     <Compile Include="Delegates\Delegates.cs" />
     <Compile Include="Repositories\Interfaces\Base\IGetItemByID.cs" />
     <Compile Include="Repositories\Interfaces\Base\IGetItemsByForegnKeyID.cs" />
+    <Compile Include="Repositories\Interfaces\Base\ISaveCollection.cs" />
     <Compile Include="Repositories\Interfaces\ICompanyRepository.cs" />
     <Compile Include="Repositories\Interfaces\IDataBaseRepository.cs" />
-    <Compile Include="Repositories\Interfaces\Base\IGetItems.cs" />
-    <Compile Include="Repositories\Interfaces\Base\ISave.cs" />
-    <Compile Include="Repositories\Interfaces\Base\ISaveInTransaction.cs" />
+    <Compile Include="Repositories\Interfaces\Base\IGetCollection.cs" />
+    <Compile Include="Repositories\Interfaces\Base\ISaveItem.cs" />
+    <Compile Include="Repositories\Interfaces\Base\ISaveItemInTransaction.cs" />
     <Compile Include="Repositories\Interfaces\IMainMenuRepository.cs" />
     <Compile Include="Repositories\Interfaces\IUserMainMenuFavoritesRepository.cs" />
     <Compile Include="Repositories\Interfaces\IUserMainMenuHistoryRepository.cs" />

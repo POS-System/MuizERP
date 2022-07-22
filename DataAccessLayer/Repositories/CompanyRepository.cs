@@ -21,7 +21,7 @@ namespace DataAccessLayer.Repositories
             _dataMapper = dataMapper;
         }
 
-        public EntityCollection<Company> GetItems(IParametersContainer parameters)
+        public EntityCollection<Company> GetCollection(IParametersContainer parameters)
         {
             var result = new EntityCollection<Company>();
 
@@ -40,7 +40,8 @@ namespace DataAccessLayer.Repositories
 
         public void SaveItem(Company item)
         {
-            _dataRepository.DoInTransaction(conn => _dataRepository.SaveBaseItem(item, conn));
+            _dataRepository.DoInConnectionSession(
+                conn => _dataRepository.SaveBaseItem(item, conn));
         }
     }
 }

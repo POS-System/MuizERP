@@ -21,7 +21,7 @@ namespace DataAccessLayer.Repositories
             _userSettingsMapper = userSettingsMapper;
         }
 
-        public EntityCollection<UserSettings> GetItems(IParametersContainer parameters)
+        public EntityCollection<UserSettings> GetCollection(IParametersContainer parameters)
         {
             var result = new EntityCollection<UserSettings>();
 

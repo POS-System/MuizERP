@@ -22,7 +22,7 @@ namespace DataAccessLayer.Repositories
             _dataMapper = dataMapper;
         }
 
-        public EntityCollection<MenuItem> GetItems(IParametersContainer parameters)
+        public EntityCollection<MenuItem> GetCollection(IParametersContainer parameters)
         {
             var result = new EntityCollection<MenuItem>();
 

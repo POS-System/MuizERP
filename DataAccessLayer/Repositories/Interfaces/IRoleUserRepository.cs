@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories.Interfaces
 {
-    public interface IRoleUserRepository : ISaveInTransaction<RoleUser>, IGetItems<RoleUser>
+    public interface IRoleUserRepository : ISaveItemInTransaction<RoleUser>, IGetCollection<RoleUser>
     {
     }
 }
