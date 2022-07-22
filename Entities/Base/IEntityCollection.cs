@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace Entities.Base
 {
     /// <summary>
-    /// Интевфейс для работы с состояниями объектов коллекции.
+    /// Интерфейс для работы с состояниями объектов коллекции.
     /// </summary>
-    public interface IEntityCollection
+    public interface IEntityCollection : IEnumerable
     {
         /// <summary>
         /// Признак изменения элементов коллекции.

@@ -1,7 +1,10 @@
-﻿using DataAccessLayer.Mapping;
+﻿using DataAccessLayer.Factories;
+using DataAccessLayer.Mapping;
+using DataAccessLayer.Providers;
 using DataAccessLayer.Repositories;
 using DataAccessLayer.Repositories.Interfaces;
 using DataAccessLayer.Utils;
+using Entities.Base.Providers;
 
 namespace DataAccessLayer
 {
@@ -21,9 +24,13 @@ namespace DataAccessLayer
 
         public DALContainer(string connectionString)
         {
-            var sqlExceptionConverter = new SqlExceptionToLogicExceptionConverter();
+            var dataTableFactory = new DataTableFactory(
+                new TypeBySqlTypeNameProvider(), new NameByPropertyProvider());
 
-            var dataRepository = new DataRepository(connectionString, sqlExceptionConverter);
+            var dataRepository = new DataRepository(
+                connectionString,
+                sqlExcepionConverter: new SqlExceptionToLogicExceptionConverter(),
+                dataTableFactory);
 
             var mappers = new MapperContainer();
 
@@ -48,8 +55,6 @@ namespace DataAccessLayer
             MainMenuRepository = new MainMenuRepository(dataRepository, mappers.Data);
 
             UserSettingsRepository = new UserSettingsRepository(dataRepository, mappers.UserSettings);
-
-
         }
     }
 }

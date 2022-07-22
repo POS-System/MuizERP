@@ -55,7 +55,10 @@
     <Compile Include="Base\BaseSortableEntity.cs" />
     <Compile Include="Base\Enums\EHierarchyDirection.cs" />
     <Compile Include="Base\IEntityCollection.cs" />
+    <Compile Include="Base\Providers\NameByPropertyProvider.cs" />
+    <Compile Include="Base\Utils\Interface\IKeyedProvider.cs" />
     <Compile Include="Base\Utils\Interface\IParametersContainer.cs" />
+    <Compile Include="Base\Utils\Interface\IProvider.cs" />
     <Compile Include="Base\Utils\ParametersContainer.cs" />
     <Compile Include="Base\Utils\EntityTreeBuilder.cs" />
     <Compile Include="Base\Utils\Interface\IConverter.cs" />
@@ -72,6 +75,7 @@
     <Compile Include="Exceptions\InnerApplicationExceptions\SqlDataReaderExpectsRecordException.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\SqlServerDeleteRecordException.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\SqlServerInsertRecordException.cs" />
+    <Compile Include="Exceptions\InnerApplicationExceptions\SqlServerTypeSchemaNotFoundException.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\SqlServerUpdateRecordException.cs" />
     <Compile Include="Exceptions\InnerApplicationExceptions\SqlSeverIsBusyException.cs" />
     <Compile Include="Exceptions\LogicExceptions\LogicException.cs" />
