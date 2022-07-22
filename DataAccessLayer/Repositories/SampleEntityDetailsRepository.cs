@@ -3,7 +3,7 @@ using DataAccessLayer.Repositories.Interfaces;
 using DataAccessLayer.Utils;
 using Entities;
 using Entities.Base;
-using Entities.Base.Utils.Interface;
+using Entities.Base.Utils.ParametersContainers;
 using System.Data.SqlClient;
 
 namespace DataAccessLayer.Repositories

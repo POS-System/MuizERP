@@ -1,7 +1,6 @@
-﻿using Entities.Base.Utils.Interface;
-using System;
+﻿using System;
 
-namespace Entities.Base.Utils
+namespace Entities.Base.Utils.Loggers
 {
     public sealed class LoggerWrapper : ICustomLogger
     {

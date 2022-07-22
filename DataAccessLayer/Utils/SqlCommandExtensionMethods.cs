@@ -1,9 +1,6 @@
-﻿using Entities.Base;
-using Entities.Base.Attributes;
-using Entities.Base.Utils.Interface;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
-using Entities.Base.Utils;
+using Entities.Base.Utils.ParametersContainers;
 
 namespace DataAccessLayer.Utils
 {

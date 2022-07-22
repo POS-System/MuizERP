@@ -1,5 +1,5 @@
 ﻿using Entities.Base.Attributes;
-using Entities.Base.Utils.Interface;
+using Entities.Base.Utils.Providers;
 using System.Reflection;
 
 namespace Entities.Base.Providers

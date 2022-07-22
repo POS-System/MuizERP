@@ -1,5 +1,5 @@
 ﻿
-namespace Entities.Base.Utils.Interface
+namespace Entities.Base.Utils.Factories
 {
     public interface IKeyedFactory<in TParam, out TResult>
     {

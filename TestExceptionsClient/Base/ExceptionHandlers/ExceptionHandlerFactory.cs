@@ -1,5 +1,6 @@
 ﻿using System;
-using Entities.Base.Utils.Interface;
+using Entities.Base.Utils.Factories;
+using Entities.Base.Utils.Loggers;
 
 namespace TestExceptionsClient.Base.ExceptionHandlers
 {

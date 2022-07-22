@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Entities.Base.Utils.Interface
+namespace Entities.Base.Utils.ParametersContainers
 {
     public interface IParametersContainer
     {

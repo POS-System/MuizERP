@@ -1,5 +1,6 @@
 using Entities.Base.Utils;
 using Entities.Base.Utils.Interface;
+using Entities.Base.Utils.Loggers;
 using Entities.Exceptions.InnerApplicationExceptions;
 using System;
 

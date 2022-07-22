@@ -13,8 +13,10 @@ using Entities.Base;
 using MuizEnums;
 using System.Linq;
 using Entities.Base.Utils;
-using Entities.Base.Utils.Interface;
 using System.Reflection;
+using Entities.Base.Utils.Converters;
+using Entities.Base.Utils.Factories;
+using Entities.Base.Utils.Validators;
 
 namespace DataAccessLayer.Repositories
 {
@@ -35,6 +37,10 @@ namespace DataAccessLayer.Repositories
             IConverter<SqlException, Exception> sqlExcepionConverter,
             IKeyedFactory<IEntityCollection, IEnumerable<DataRow>, DataTable> dataTableFactory)
         {
+            ArgumentValidator.ValidateThatArgumentNotNullOrEmpty(connectionString, nameof(connectionString));
+            ArgumentValidator.ValidateThatArgumentNotNull(sqlExcepionConverter, nameof(sqlExcepionConverter));
+            ArgumentValidator.ValidateThatArgumentNotNull(dataTableFactory, nameof(dataTableFactory));
+
             _connectionString = connectionString;
             _sqlExcepionConverter = sqlExcepionConverter;
             _dataTableFactory = dataTableFactory;
@@ -48,6 +54,8 @@ namespace DataAccessLayer.Repositories
         /// <param name="inside"></param>
         public void DoInTransaction(InsideTransaction inside)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(inside, nameof(inside));
+
             var options = new TransactionOptions();
             options.IsolationLevel = IsolationLevel.ReadCommitted;
             options.Timeout = TransactionManager.MaximumTimeout;
@@ -65,6 +73,8 @@ namespace DataAccessLayer.Repositories
         /// <param name="action">Действие выполняемое в контексте соединения БД</param>
         public void DoInConnectionSession(Action<SqlConnection> action)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(action, nameof(action));
+
             if (Transaction.Current != null && _connectionInTransaction == null)
                 throw new InvalidOperationException("Попытка использования SqlConnection вне транзакции.");
 
@@ -76,6 +86,8 @@ namespace DataAccessLayer.Repositories
 
         private void DoInConnectionSessionOutsideTransaction(Action<SqlConnection> action)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(action, nameof(action));
+
             using (var connection = CreateSqlConnection())
             {
                 try
@@ -92,6 +104,8 @@ namespace DataAccessLayer.Repositories
 
         private void DoInConnectionSessionInsideTransaction(Action<SqlConnection> action)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(action, nameof(action));
+
             try
             {
                 action(_connectionInTransaction);
@@ -104,6 +118,8 @@ namespace DataAccessLayer.Repositories
 
         private void DoInConnectionSessionWithTran(Action<SqlConnection> action)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(action, nameof(action));
+
             if (_connectionInTransaction != null)
                 throw new InvalidOperationException("Попытка создания второго SqlConnection в одной транзакции.");
 
@@ -136,6 +152,9 @@ namespace DataAccessLayer.Repositories
         /// <returns>Заполненный из датаридера объект или NULL.</returns>
         public T GetSingleItem<T>(InitSqlCommand init, Func<SqlDataReaderWithSchema, T> read)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(init, nameof(init));
+            ArgumentValidator.ValidateThatArgumentNotNull(read, nameof(read));
+
             var result = default(T);
             DoInConnectionSession(
                 connection =>
@@ -177,6 +196,9 @@ namespace DataAccessLayer.Repositories
         /// <returns>Заполненный из датаридера объект или default.</returns>
         public T GetSingleItemOrDefault<T>(InitSqlCommand init, Func<SqlDataReaderWithSchema, T> read)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(init, nameof(init));
+            ArgumentValidator.ValidateThatArgumentNotNull(read, nameof(read));
+
             try
             {
                 return GetSingleItem(init, read);
@@ -198,6 +220,9 @@ namespace DataAccessLayer.Repositories
         /// <returns>Заполненный из датаридера объект.</returns>
         public T GetSingleItemOrThrowLogicException<T>(InitSqlCommand init, Func<SqlDataReaderWithSchema, T> read)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(init, nameof(init));
+            ArgumentValidator.ValidateThatArgumentNotNull(read, nameof(read));
+
             try
             {
                 return GetSingleItem(init, read);
@@ -216,6 +241,9 @@ namespace DataAccessLayer.Repositories
         /// <param name="source"></param>
         public void ReadFirstItem(InitSqlCommand init, ReadDataReaderWithSchema read)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(init, nameof(init));
+            ArgumentValidator.ValidateThatArgumentNotNull(read, nameof(read));
+
             DoInConnectionSession(
                 connection =>
                 {
@@ -253,6 +281,10 @@ namespace DataAccessLayer.Repositories
             Action<SqlDataReaderWithSchema, TCollection> read)
             where TCollection : IEnumerable<TItem>
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(createCollection, nameof(createCollection));
+            ArgumentValidator.ValidateThatArgumentNotNull(init, nameof(init));
+            ArgumentValidator.ValidateThatArgumentNotNull(read, nameof(read));
+
             var result = createCollection();
 
             DoInConnectionSession(
@@ -290,6 +322,10 @@ namespace DataAccessLayer.Repositories
             string commandName,
             Action<SqlDataReaderWithSchema, TCollection> read) where TCollection : IEnumerable<TItem>
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(createCollection, nameof(createCollection));
+            ArgumentValidator.ValidateThatArgumentNotNull(commandName, nameof(commandName));
+            ArgumentValidator.ValidateThatArgumentNotNull(read, nameof(read));
+
             return GetCollectionWithSchema<TCollection, TItem>(
                 createCollection,
                 cmd => cmd.CommandText = commandName,
@@ -303,6 +339,9 @@ namespace DataAccessLayer.Repositories
         /// <param name="read">Делегат, выполняющий чтение данных из датаридера в объект. И добавляющий объект в коллекцию.</param>
         public void ReadCollectionWithSchema<T>(InitSqlCommand init, ReadDataReaderWithSchema read)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(init, nameof(init));
+            ArgumentValidator.ValidateThatArgumentNotNull(read, nameof(read));
+
             DoInConnectionSession(
                 connection =>
                 {
@@ -344,6 +383,9 @@ namespace DataAccessLayer.Repositories
         /// <param name="read">Делегат, выполняющий чтение данных из датаридера в объект. И добавляющий объект в коллекцию.</param>
         public void ReadCollectionWithSchema<T>(string commandName, ReadDataReaderWithSchema read)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(commandName, nameof(commandName));
+            ArgumentValidator.ValidateThatArgumentNotNull(read, nameof(read));
+
             ReadCollectionWithSchema<T>(sqlCmd => { sqlCmd.CommandText = commandName; }, read);
         }
 
@@ -355,10 +397,12 @@ namespace DataAccessLayer.Repositories
         /// Сохраняет BaseItem-объект, используя переданный объект хранимой процедуры. По завершении выставляет объекту статус ItemStates.None.
         /// </summary>
         /// <param name="item"></param>
-        /// <param name="Cmd"></param>
-        public void SaveBaseItem(SqlCommand Cmd)
+        /// <param name="sqlCmd"></param>
+        public void SaveBaseItem(SqlCommand sqlCmd)
         {
-            Cmd.ExecuteNonQuery();
+            ArgumentValidator.ValidateThatArgumentNotNull(sqlCmd, nameof(sqlCmd));
+
+            sqlCmd.ExecuteNonQuery();
         }
 
         /// <summary>
@@ -369,6 +413,9 @@ namespace DataAccessLayer.Repositories
         /// <param name="prepare"></param>
         public void SaveBaseItem(SqlConnection connection, PrepareSqlCommand prepare)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(connection, nameof(connection));
+            ArgumentValidator.ValidateThatArgumentNotNull(prepare, nameof(prepare));
+
             var sqlCmd = prepare(connection);
             SaveBaseItem(sqlCmd);
         }
@@ -381,6 +428,9 @@ namespace DataAccessLayer.Repositories
         /// <param name="configureSqlCommand"></param>
         public void SaveBaseItem(BaseEntity item, SqlConnection connection, ConfigureSqlCommand configureSqlCommand = null)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(item, nameof(item));
+            ArgumentValidator.ValidateThatArgumentNotNull(connection, nameof(connection));
+
             if (!item.IsModified) return;
 
             var sqlCmd = CreateSaveStoredProcedure(item, connection);
@@ -408,6 +458,9 @@ namespace DataAccessLayer.Repositories
         public void SaveCollection<T>(IEntityCollection<T> collection, Action<T> itemSaveAction)
             where T : BaseEntity
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(collection, nameof(collection));
+            ArgumentValidator.ValidateThatArgumentNotNull(itemSaveAction, nameof(itemSaveAction));
+
             if (!collection.IsModified) return;
 
             foreach (var item in collection)
@@ -421,6 +474,8 @@ namespace DataAccessLayer.Repositories
         /// <param name="configureSqlCommand">Делегат для конфигурирования sql-команды.</param>
         public void SaveCollectionWithDataTable(IEntityCollection collection, ConfigureSqlCommand configureSqlCommand = null)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(collection, nameof(collection));
+
             if (!collection.IsModified) return;
 
             DoInConnectionSession(
@@ -440,6 +495,9 @@ namespace DataAccessLayer.Repositories
 
         private SqlCommand CreateSaveStoredProcedure(IEntityCollection collection, SqlConnection connection)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(collection, nameof(collection));
+            ArgumentValidator.ValidateThatArgumentNotNull(connection, nameof(connection));
+
             var type = collection.GetType().GetGenericArguments()[0];
 
             var saveCommand = GetSaveCommand(type);
@@ -475,6 +533,9 @@ namespace DataAccessLayer.Repositories
         /// <returns></returns>
         private SqlCommand CreateSaveStoredProcedure(BaseEntity item, SqlConnection connection)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(item, nameof(item));
+            ArgumentValidator.ValidateThatArgumentNotNull(connection, nameof(connection));
+
             var sqlCmd = connection.CreateCommand();
             sqlCmd.CommandType = CommandType.StoredProcedure;
 
@@ -548,6 +609,8 @@ namespace DataAccessLayer.Repositories
 
         private static bool CheckValueIsNull(object value, SaveParameterAttribute parameter)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(parameter, nameof(parameter));
+
             return (value == null && parameter.NullValue == null) ||
                    (value != null && value.Equals(parameter.NullValue)) ||
                    (value is DateTime && DateTime.MinValue == (DateTime)value) ||
@@ -556,12 +619,17 @@ namespace DataAccessLayer.Repositories
 
         private static bool CheckValueIsIdentifier(PropertyInfo property, BaseEntity item)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(property, nameof(property));
+            ArgumentValidator.ValidateThatArgumentNotNull(item, nameof(item));
+
             return property.Name == nameof(item.ID) &&
                 property.PropertyType == typeof(int);
         }
 
         private LoadCommandAttribute GetLoadCommand(Type type)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(type, nameof(type));
+
             var attribute = type.GetCustomAttribute<LoadCommandAttribute>();
             if (attribute == null)
                 throw new GeneratingStoredProcedureNotSupportedException(
@@ -573,6 +641,8 @@ namespace DataAccessLayer.Repositories
 
         private SaveCommandAttribute GetSaveCommand(Type type)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(type, nameof(type));
+
             var attribute = type.GetCustomAttribute<SaveCommandAttribute>();
 
             if (attribute == null)
@@ -584,6 +654,9 @@ namespace DataAccessLayer.Repositories
 
         private IEnumerable<DataRow> GetTableTypeSchema(SqlConnection connection, string tableTypeName)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(connection, nameof(connection));
+            ArgumentValidator.ValidateThatArgumentNotNullOrEmpty(tableTypeName, nameof(tableTypeName));
+
             var schema = connection.GetSchema("StructuredTypeMembers")
                 .AsEnumerable()
                 .Where(r => r.ItemArray[2].Equals(tableTypeName))

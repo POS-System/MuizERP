@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
-using Entities.Base.Utils.Interface;
+using Entities.Base.Utils.Converters;
 using Entities.Exceptions.InnerApplicationExceptions;
 
 namespace DataAccessLayer.Utils

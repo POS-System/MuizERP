@@ -1,5 +1,5 @@
 ﻿
-namespace Entities.Base.Utils.Interface
+namespace Entities.Base.Utils.Providers
 {
     public interface IKeyedProvider<in TParam, out TResult>
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Entities.Base.Utils.Interface
+namespace Entities.Base.Utils.Loggers
 {
     public interface ICustomLogger
     {

@@ -1,5 +1,7 @@
 ﻿using Entities.Base;
-using Entities.Base.Utils.Interface;
+using Entities.Base.Utils.Factories;
+using Entities.Base.Utils.Providers;
+using Entities.Base.Utils.Validators;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,6 +19,9 @@ namespace DataAccessLayer.Factories
             IKeyedProvider<string, Type> columnTypeProvider,
             IKeyedProvider<PropertyInfo, string> columnNameProvider)
         {
+            ArgumentValidator.ValidateThatArgumentNotNull(columnTypeProvider, "columnTypeProvider");
+            ArgumentValidator.ValidateThatArgumentNotNull(columnNameProvider, "columnNameProvider");
+
             _columnTypeProvider = columnTypeProvider;
             _columnNameProvider = columnNameProvider;
         }

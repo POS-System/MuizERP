@@ -3,7 +3,7 @@ using DataAccessLayer.Mapping.Interface;
 using DataAccessLayer.Repositories.Interfaces;
 using Entities;
 using Entities.Base;
-using Entities.Base.Utils.Interface;
+using Entities.Base.Utils.ParametersContainers;
 
 namespace DataAccessLayer.Repositories
 {

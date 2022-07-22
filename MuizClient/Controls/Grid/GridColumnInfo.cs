@@ -1,4 +1,5 @@
 ﻿using Entities.Base.Utils;
+using Entities.Base.Utils.ParametersContainers;
 using MuizClient.Helpers.FilterValue;
 using System.Collections.Generic;
 using System.ComponentModel;

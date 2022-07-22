@@ -1,5 +1,5 @@
 ﻿using Entities.Base;
-using Entities.Base.Utils.Interface;
+using Entities.Base.Utils.ParametersContainers;
 
 namespace DataAccessLayer.Repositories.Interfaces.Base
 {
