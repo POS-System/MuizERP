@@ -59,7 +59,7 @@
     <Compile Include="Repositories\Interfaces\Base\IGetItemsByForegnKeyID.cs" />
     <Compile Include="Repositories\Interfaces\Base\ISaveCollection.cs" />
     <Compile Include="Repositories\Interfaces\ICompanyRepository.cs" />
-    <Compile Include="Repositories\Interfaces\IDataBaseRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IDataRepository.cs" />
     <Compile Include="Repositories\Interfaces\Base\IGetCollection.cs" />
     <Compile Include="Repositories\Interfaces\Base\ISaveItem.cs" />
     <Compile Include="Repositories\Interfaces\Base\ISaveItemInTransaction.cs" />

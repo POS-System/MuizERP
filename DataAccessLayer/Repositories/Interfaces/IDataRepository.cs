@@ -3,7 +3,6 @@ using DataAccessLayer.Delegates;
 using Entities.Base;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 
 namespace DataAccessLayer.Repositories.Interfaces
@@ -11,8 +10,70 @@ namespace DataAccessLayer.Repositories.Interfaces
     /// <summary>
     ///  Базовые методы для работы с БД
     /// </summary>
-    internal interface IDataBaseDataRepository
+    internal interface IDataRepository
     {
+        #region Wrappers
+
+        /// <summary>
+        /// Управляет созданием и завершением транзакции, передаваемой делегату inside
+        /// </summary>
+        /// <param name="inside"></param>
+        void DoInTransaction(InsideTransaction inside);
+
+        /// <summary>
+        /// Выполняет дествие в контексте соединения с БД
+        /// </summary>
+        /// <param name="action">Действие выполняемое в контексте соединения БД</param>
+        void DoInConnectionSession(Action<SqlConnection> action);
+
+        #endregion
+
+        #region Read single / first item
+
+        /// <summary>
+        /// Выполнение sql команды и чтение первой записи из датаридера в объект.
+        /// Если датаридер не содержит ни одной записи, генерируется ошибка <see cref="SqlDataReaderExpectsRecordException"/>.
+        /// Если датаридер содержит более одной записи, генерируется ошибка <see cref="SqlDataReaderExpectsOnlyOneRecordException"/>.
+        /// </summary>
+        /// <typeparam name="T">Тип объекта, в который заполняются поля из датаридера.</typeparam>
+        /// <param name="init">Делегат, инициализирующий sql команду.</param>
+        /// <param name="read">Делегат, выполняющий чтение данных из датаридера.</param>
+        /// <returns>Заполненный из датаридера объект или NULL.</returns>
+        T GetSingleItem<T>(InitSqlCommand init, Func<SqlDataReaderWithSchema, T> read);
+
+        /// <summary>
+        /// Выполнение sql команды и чтение первой записи из датаридера в объект.
+        /// Если датаридер не содержит ни одной записи, возвращает default.
+        /// Если датаридер содержит более одной записи, генерируется ошибка <see cref="SqlDataReaderExpectsOnlyOneRecordException"/>.
+        /// </summary>
+        /// <typeparam name="T">Тип объекта, в который заполняются поля из датаридера.</typeparam>
+        /// <param name="init">Делегат, инициализирующий sql команду.</param>
+        /// <param name="read">Делегат, выполняющий чтение данных из датаридера.</param>
+        /// <returns>Заполненный из датаридера объект или default.</returns>
+        T GetSingleItemOrDefault<T>(InitSqlCommand init, Func<SqlDataReaderWithSchema, T> read);
+
+        /// <summary>
+        /// Выполнение sql команды и чтение первой записи из датаридера в объект.
+        /// Если датаридер не содержит ни одной записи, генерируется логическая ошибка.
+        /// Если датаридер содержит более одной записи, генерируется ошибка <see cref="SqlDataReaderExpectsOnlyOneRecordException"/>.
+        /// </summary>
+        /// <typeparam name="T">Тип объекта, в который заполняются поля из датаридера.</typeparam>
+        /// <param name="init">Делегат, инициализирующий sql команду.</param>
+        /// <param name="read">Делегат, выполняющий чтение данных из датаридера.</param>
+        /// <returns>Заполненный из датаридера объект.</returns>
+        T GetSingleItemOrThrowLogicException<T>(InitSqlCommand init, Func<SqlDataReaderWithSchema, T> read);
+
+        /// <summary>
+        /// Выполнение sql команды и чтение первой записи из датаридера.
+        /// </summary>
+        /// <param name="init"></param>
+        /// <param name="read"></param>
+        void ReadFirstItem(InitSqlCommand init, ReadDataReaderWithSchema read);
+
+        #endregion
+
+        #region Read collection
+
         /// <summary>
         /// Выполнение sql команды и чтение записей в коллекцию.
         /// </summary>
@@ -28,7 +89,6 @@ namespace DataAccessLayer.Repositories.Interfaces
             Action<SqlDataReaderWithSchema, TCollection> read)
             where TCollection : IEnumerable<TItem>
             where TItem : BaseEntity;
-
 
         /// <summary>
         /// Выполнение sql команды и чтение записей в коллекцию.
@@ -61,59 +121,9 @@ namespace DataAccessLayer.Repositories.Interfaces
         /// <param name="read">Делегат, выполняющий чтение данных из датаридера в объект. И добавляющий объект в коллекцию.</param>
         void ReadCollectionWithSchema(string commandName, ReadDataReaderWithSchema read);
 
-        /// <summary>
-        /// Выполнение sql команды и чтение первой записи из датаридера в объект.
-        /// Если датаридер не содержит ни одной записи, генерируется ошибка <see cref="SqlDataReaderExpectsRecordException"/>.
-        /// Если датаридер содержит более одной записи, генерируется ошибка <see cref="SqlDataReaderExpectsOnlyOneRecordException"/>.
-        /// </summary>
-        /// <typeparam name="T">Тип объекта, в который заполняются поля из датаридера.</typeparam>
-        /// <param name="init">Делегат, инициализирующий sql команду.</param>
-        /// <param name="read">Делегат, выполняющий чтение данных из датаридера.</param>
-        /// <returns>Заполненный из датаридера объект или NULL.</returns>
-        T GetSingleItem<T>(InitSqlCommand init, Func<SqlDataReaderWithSchema, T> read);
+        #endregion
 
-
-        /// <summary>
-        /// Выполнение sql команды и чтение первой записи из датаридера в объект.
-        /// Если датаридер не содержит ни одной записи, возвращает default.
-        /// Если датаридер содержит более одной записи, генерируется ошибка <see cref="SqlDataReaderExpectsOnlyOneRecordException"/>.
-        /// </summary>
-        /// <typeparam name="T">Тип объекта, в который заполняются поля из датаридера.</typeparam>
-        /// <param name="init">Делегат, инициализирующий sql команду.</param>
-        /// <param name="read">Делегат, выполняющий чтение данных из датаридера.</param>
-        /// <returns>Заполненный из датаридера объект или default.</returns>
-        T GetSingleItemOrDefault<T>(InitSqlCommand init, Func<SqlDataReaderWithSchema, T> read);
-
-
-        /// <summary>
-        /// Выполнение sql команды и чтение первой записи из датаридера в объект.
-        /// Если датаридер не содержит ни одной записи, генерируется логическая ошибка.
-        /// Если датаридер содержит более одной записи, генерируется ошибка <see cref="SqlDataReaderExpectsOnlyOneRecordException"/>.
-        /// </summary>
-        /// <typeparam name="T">Тип объекта, в который заполняются поля из датаридера.</typeparam>
-        /// <param name="init">Делегат, инициализирующий sql команду.</param>
-        /// <param name="read">Делегат, выполняющий чтение данных из датаридера.</param>
-        /// <returns>Заполненный из датаридера объект.</returns>
-        T GetSingleItemOrThrowLogicException<T>(InitSqlCommand init, Func<SqlDataReaderWithSchema, T> read);
-
-        /// <summary>
-        /// Выполнение sql команды и чтение первой записи из датаридера.
-        /// </summary>
-        /// <param name="init"></param>
-        /// <param name="read"></param>
-        void ReadFirstItem(InitSqlCommand init, ReadDataReaderWithSchema read);
-
-        /// <summary>
-        /// Управляет созданием и завершением транзакции, передаваемой делегату inside
-        /// </summary>
-        /// <param name="inside"></param>
-        void DoInTransaction(InsideTransaction inside);
-
-        /// <summary>
-        /// Выполняет дествие в контексте соединения с БД
-        /// </summary>
-        /// <param name="action">Действие выполняемое в контексте соединения БД</param>
-        void DoInConnectionSession(Action<SqlConnection> action);
+        #region Save item
 
         /// <summary>
         /// Сохраняет BaseItem-объект, используя свойства, помеченные атрибутом [SaveCommand], для формирования хранимой процедуры
@@ -122,7 +132,7 @@ namespace DataAccessLayer.Repositories.Interfaces
         /// <param name="connection"></param>
         /// <param name="configureSetCommand"></param>
         /// <param name="getOutputValues"></param>
-        void SetBaseItem(BaseEntity item, SqlConnection connection, ConfigureSetCommand configureSetCommand = null, GetValuesFromOutputParameters getOutputValues = null);
+        void SaveBaseItem(BaseEntity item, SqlConnection connection, ConfigureSqlCommand configureSetCommand = null, GetValuesFromOutputParameters getOutputValues = null);
 
         /// <summary>
         /// Сохраняет BaseItem-объект, используя делегат prepare для описания параметров хранимой процедуры
@@ -131,7 +141,7 @@ namespace DataAccessLayer.Repositories.Interfaces
         /// <param name="connection"></param>
         /// <param name="prepare"></param>
         /// <param name="getOutputValues"></param>
-        void SetBaseItem(BaseEntity item, SqlConnection connection, PrepareSetCommand prepare, GetValuesFromOutputParameters getOutputValues = null);
+        void SaveBaseItem(BaseEntity item, SqlConnection connection, PrepareSqlCommand prepare, GetValuesFromOutputParameters getOutputValues = null);
 
         /// <summary>
         /// Сохраняет BaseItem-объект, используя переданный объект хранимой процедуры. По завершении выставляет объекту статус ItemStates.None.
@@ -139,12 +149,12 @@ namespace DataAccessLayer.Repositories.Interfaces
         /// <param name="item"></param>
         /// <param name="sqlSetCmd"></param>
         /// <param name="getOutputValues"></param>
-        void SetBaseItem(BaseEntity item, SqlCommand sqlSetCmd, GetValuesFromOutputParameters getOutputValues = null);
+        void SaveBaseItem(BaseEntity item, SqlCommand sqlSetCmd, GetValuesFromOutputParameters getOutputValues = null);
         
         /// <summary>
         /// Сохраняет BaseItem-объект, используя свойства, помеченные атрибутом [SaveCommand], для формирования хранимой процедуры
         /// </summary>
-        void SetBaseItem(BaseEntity item, SqlConnection connection, int editUserId, ConfigureSetCommand configureSetCommand, GetValuesFromOutputParameters getOutputValues = null);
+        void SaveBaseItem(BaseEntity item, SqlConnection connection, int editUserId, ConfigureSqlCommand configureSetCommand, GetValuesFromOutputParameters getOutputValues = null);
 
         /// <summary>
         /// Сохраняет BaseItem-объект, используя свойства, помеченные атрибутом [SaveCommand], для формирования хранимой процедуры
@@ -153,16 +163,11 @@ namespace DataAccessLayer.Repositories.Interfaces
         /// <param name="connection"></param>
         /// <param name="editUserId"></param>
         /// <param name="getOutputValues"></param>
-        void SetBaseItem(BaseEntity item, SqlConnection connection, int editUserId, GetValuesFromOutputParameters getOutputValues = null);
+        void SaveBaseItem(BaseEntity item, SqlConnection connection, int editUserId, GetValuesFromOutputParameters getOutputValues = null);
 
-        /// <summary>
-        /// Метод создания SqlCommand с заполнением параметров для сохранения объекта через рефлексию
-        /// </summary>
-        /// <param name="sqlConn">Покдлючение к БД</param>
-        /// <param name="item">Сохраняемый объект</param>
-        /// <param name="editUserId">Идентификатор пользователя, от чьего имени сохраняем информацию</param>
-        /// <returns></returns>
-        SqlCommand CreateSetStoredProcedure(BaseEntity item, SqlConnection sqlConn, int editUserId = 0);
+        #endregion
+
+        #region Save collection
 
         /// <summary>
         /// Шаблонный метод сохранения коллекции элементов. По окончании сохранения каждого элемена метод очищает коллекцию от удаленных членов.
@@ -170,6 +175,16 @@ namespace DataAccessLayer.Repositories.Interfaces
         /// <typeparam name="T"></typeparam>
         /// <param name="collection"></param>
         /// <param name="itemSaveAction"></param>
-        void SaveCollection<T>(ObservableCollection<T> collection, Action<T> itemSaveAction) where T : BaseEntity;
+        void SaveCollection<T>(EntityCollection<T> collection, Action<T> itemSaveAction)
+            where T : BaseEntity;
+
+        /// <summary>
+        /// Сохраняет коллекцию объектов с помощью DataTable.
+        /// </summary>
+        /// <param name="collection">Коллекция объектов</param>
+        /// <param name="configureSqlCommand">Делегат для конфигурирования sql-команды.</param>
+        void SaveCollectionWithDataTable(IEntityCollection collection, ConfigureSqlCommand configureSqlCommand = null);
+
+        #endregion
     }
 }
