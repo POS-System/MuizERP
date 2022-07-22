@@ -1,4 +1,6 @@
 ﻿using Entities.Base;
+using Entities.Base.Attributes;
+using Entities.Base.Utils;
 using Entities.Base.Utils.Factories;
 using Entities.Base.Utils.Providers;
 using Entities.Base.Utils.Validators;
@@ -82,17 +84,10 @@ namespace DataAccessLayer.Factories
 
         private IEnumerable<PropertyInfo> GetEntityProperties(IEntityCollection collection)
         {
-            var type = collection.GetType().GetGenericArguments()[0]; 
+            var type = collection.GetType().GetGenericArguments()[0];
 
-            return type.GetProperties()
-                .Where(
-                    p =>
-                        p.CanWrite &&
-                        !p.PropertyType.IsEnum &&
-                        !p.Name.Equals("TimeStamp") &&
-                        !typeof(BaseEntity).IsAssignableFrom(p.PropertyType) &&
-                        !(p.PropertyType.IsGenericType &&
-                        p.PropertyType.GetGenericTypeDefinition().Equals(typeof(EntityCollection<>))));
+            return type.GetCustomPropertiesWithAttribute<SaveParameterAttribute>()
+                .Where(p => p.Name != "TimeStamp");
         }
     }
 }
